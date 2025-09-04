@@ -10,7 +10,7 @@ import Leetcode from './components/Leetcode.js';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { TypeAnimation } from 'react-type-animation';
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaDownload } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaDownload } from 'react-icons/fa/index.js';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import Lottie from 'lottie-react';

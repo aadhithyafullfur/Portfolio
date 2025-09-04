@@ -4,10 +4,9 @@
   "type": "module",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && npm run copy-images",
+    "build": "CI=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "copy-images": "powershell -Command \"Copy-Item -Path ./public/images,./public/logos -Destination ./build -Recurse -Force\""
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.1.0",

@@ -19,22 +19,32 @@ app.use(express.json());
 
 let db;
 
-async function connectDB() {
-  try {
-    const client = new MongoClient(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      ssl: true,
-      tls: true,
-      retryWrites: true
-    });
-    await client.connect();
-    db = client.db('portfolioDB');
-    console.log('MongoDB Connected successfully✅');
-  } catch (err) {
-    console.error('MongoDB connection error:', err);
-    console.error('Connection string:', MONGO_URI.replace(/\/\/[^:]+:[^@]+@/, '//****:****@'));
-    process.exit(1);
+async function connectDB(retries = 5) {
+  while (retries > 0) {
+    try {
+      const client = new MongoClient(MONGO_URI, {
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+        ssl: true,
+        tls: true,
+        tlsAllowInvalidCertificates: true,
+        tlsAllowInvalidHostnames: true
+      });
+      await client.connect();
+      db = client.db('portfolioDB');
+      console.log('MongoDB Connected successfully✅');
+      return;
+    } catch (err) {
+      console.error(`MongoDB connection attempt failed (${retries} retries left):`, err);
+      console.error('Connection string:', MONGO_URI.replace(/\/\/[^:]+:[^@]+@/, '//****:****@'));
+      retries--;
+      if (retries === 0) {
+        console.error('All connection attempts failed');
+        process.exit(1);
+      }
+      // Wait for 5 seconds before retrying
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
   }
 }
 

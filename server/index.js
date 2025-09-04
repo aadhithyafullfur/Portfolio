@@ -21,12 +21,19 @@ let db;
 
 async function connectDB() {
   try {
-    const client = new MongoClient(MONGO_URI);
+    const client = new MongoClient(MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      ssl: true,
+      tls: true,
+      retryWrites: true
+    });
     await client.connect();
     db = client.db('portfolioDB');
     console.log('MongoDB Connected successfully✅');
   } catch (err) {
     console.error('MongoDB connection error:', err);
+    console.error('Connection string:', MONGO_URI.replace(/\/\/[^:]+:[^@]+@/, '//****:****@'));
     process.exit(1);
   }
 }

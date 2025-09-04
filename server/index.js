@@ -10,9 +10,10 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 app.use(cors({
-  origin: '*',
+  origin: ['http://localhost:3000', 'https://portfolio-aadhithyafullfur.vercel.app'],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
+  credentials: true
 }));
 
 app.use(express.json());

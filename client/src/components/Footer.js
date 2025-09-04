@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin } from 'react-icons/fa/index.js';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 function Footer() {
   return (

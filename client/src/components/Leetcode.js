@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGithub, FaCode } from 'react-icons/fa/index.js';
+import { FaGithub, FaCode } from 'react-icons/fa';
 
 function Leetcode() {
   return (

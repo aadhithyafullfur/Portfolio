@@ -2,7 +2,7 @@ services:
   - type: web
     name: portfolio-client
     env: static
-    buildCommand: npm install --legacy-peer-deps && npx cross-env CI=false npm run build
+    buildCommand: npm cache clean --force && rm -rf node_modules && npm install --legacy-peer-deps && npm run build
     staticPublishPath: ./build
     envVars:
       - key: REACT_APP_API_URL

@@ -48,10 +48,10 @@ button, a {
   opacity: 1;
 }
 
-/* Mobile specific particles enhancement */
+/* Hide particles on mobile devices */
 @media (max-width: 768px) {
-  #particles-js canvas {
-    filter: brightness(1.6) contrast(1.4) saturate(1.8);
+  #particles-js {
+    display: none;
   }
 }
 

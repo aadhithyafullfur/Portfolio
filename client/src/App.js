@@ -111,16 +111,21 @@ const App = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    // Initialize particles.js with enhanced mobile visibility
+    // Initialize particles.js only for desktop (not mobile)
     const isMobile = window.innerWidth <= 768;
+    
+    // Don't initialize particles on mobile devices
+    if (isMobile) {
+      return;
+    }
     
     window.particlesJS('particles-js', {
       particles: {
         number: {
-          value: isMobile ? 50 : 100,
+          value: 100,
           density: {
             enable: true,
-            value_area: isMobile ? 400 : 800
+            value_area: 800
           }
         },
         color: {
@@ -144,25 +149,25 @@ const App = () => {
           }
         },
         size: {
-          value: isMobile ? 3 : 2.5,
+          value: 2.5,
           random: true,
           anim: {
             enable: true,
             speed: 2,
-            size_min: isMobile ? 1.5 : 1,
+            size_min: 1,
             sync: false
           }
         },
         line_linked: {
           enable: true,
-          distance: isMobile ? 120 : 180,
+          distance: 180,
           color: '#FF6B9D',
-          opacity: isMobile ? 0.6 : 0.4,
-          width: isMobile ? 2 : 1.5
+          opacity: 0.4,
+          width: 1.5
         },
         move: {
           enable: true,
-          speed: isMobile ? 1.5 : 1,
+          speed: 1,
           direction: 'none',
           random: true,
           straight: false,
@@ -202,20 +207,20 @@ const App = () => {
         },
         modes: {
           grab: {
-            distance: isMobile ? 120 : 150,
+            distance: 150,
             line_linked: {
               opacity: 1
             }
           },
           bubble: {
-            distance: isMobile ? 100 : 130,
-            size: isMobile ? 6 : 8,
+            distance: 130,
+            size: 8,
             duration: 1,
             opacity: 0.9,
             speed: 5
           },
           repulse: {
-            distance: isMobile ? 60 : 80,
+            distance: 80,
             duration: 1
           },
           push: {

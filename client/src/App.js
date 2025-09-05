@@ -115,48 +115,37 @@ const App = () => {
     window.particlesJS('particles-js', {
       particles: {
         number: {
-          value: window.innerWidth > 768 ? 100 : 50,
+          value: window.innerWidth > 768 ? 60 : 30,
           density: {
-            enable: true,
-            value_area: 1000
+            enable: false
           }
         },
         color: {
           value: ['#8A2BE2', '#9370DB', '#8B008B']
         },
         shape: {
-          type: 'circle',
-          stroke: {
-            width: 0,
-            color: '#000000'
-          }
+          type: 'circle'
         },
         opacity: {
           value: 0.3,
-          random: true,
+          random: false,
           anim: {
-            enable: true,
-            speed: 1,
-            opacity_min: 0.1,
-            sync: false
+            enable: false
           }
         },
         size: {
-          value: 3,
+          value: 2,
           random: true,
           anim: {
-            enable: true,
-            speed: 2,
-            size_min: 0.1,
-            sync: false
+            enable: false
           }
         },
         line_linked: {
           enable: true,
-          distance: 200,
+          distance: 150,
           color: '#8A2BE2',
-          opacity: 0.3,
-          width: 0.8
+          opacity: 0.2,
+          width: 1
         },
         move: {
           enable: true,
@@ -164,51 +153,40 @@ const App = () => {
           direction: 'none',
           random: false,
           straight: false,
-          out_mode: 'bounce',
-          bounce: true,
+          out_mode: 'out',
+          bounce: false,
           attract: {
-            enable: true,
-            rotateX: 600,
-            rotateY: 1200
+            enable: false
           }
         }
       },
       interactivity: {
-        detect_on: 'window',
+        detect_on: 'canvas',
         events: {
           onhover: {
             enable: true,
-            mode: ['grab', 'bubble']
+            mode: 'grab'
           },
           onclick: {
             enable: true,
-            mode: 'push'
+            mode: 'repulse'
           },
           resize: true
         },
         modes: {
           grab: {
-            distance: 200,
+            distance: 140,
             line_linked: {
-              opacity: 0.4
+              opacity: 0.3
             }
           },
-          bubble: {
-            distance: 200,
-            size: 6,
-            duration: 2,
-            opacity: 0.8,
-            speed: 3
-          },
-          push: {
-            particles_nb: 4
-          },
-          remove: {
-            particles_nb: 2
+          repulse: {
+            distance: 100,
+            duration: 0.4
           }
         }
       },
-      retina_detect: true
+      retina_detect: false
     });
   }, []);
 

@@ -111,57 +111,72 @@ const App = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    // Initialize particles.js
+    // Initialize particles.js with enhanced mobile visibility
+    const isMobile = window.innerWidth <= 768;
+    
     window.particlesJS('particles-js', {
       particles: {
         number: {
-          value: window.innerWidth > 768 ? 60 : 30,
+          value: isMobile ? 50 : 100,
           density: {
-            enable: false
+            enable: true,
+            value_area: isMobile ? 400 : 800
           }
         },
         color: {
-          value: ['#8A2BE2', '#9370DB', '#8B008B']
+          value: ['#FF6B9D', '#C44569', '#F8B500', '#00D2FF', '#3742FA']
         },
         shape: {
-          type: 'circle'
+          type: 'circle',
+          stroke: {
+            width: 2,
+            color: '#FF6B9D'
+          }
         },
         opacity: {
-          value: 0.3,
-          random: false,
+          value: isMobile ? 0.9 : 0.7,
+          random: true,
           anim: {
-            enable: false
+            enable: true,
+            speed: 2,
+            opacity_min: isMobile ? 0.5 : 0.3,
+            sync: false
           }
         },
         size: {
-          value: 2,
+          value: isMobile ? 3 : 2.5,
           random: true,
           anim: {
-            enable: false
+            enable: true,
+            speed: 2,
+            size_min: isMobile ? 1.5 : 1,
+            sync: false
           }
         },
         line_linked: {
           enable: true,
-          distance: 150,
-          color: '#8A2BE2',
-          opacity: 0.2,
-          width: 1
+          distance: isMobile ? 120 : 180,
+          color: '#FF6B9D',
+          opacity: isMobile ? 0.6 : 0.4,
+          width: isMobile ? 2 : 1.5
         },
         move: {
           enable: true,
-          speed: 1,
+          speed: isMobile ? 2 : 1.5,
           direction: 'none',
-          random: false,
+          random: true,
           straight: false,
-          out_mode: 'out',
-          bounce: false,
+          out_mode: 'bounce',
+          bounce: true,
           attract: {
-            enable: false
+            enable: true,
+            rotateX: 1200,
+            rotateY: 2400
           }
         }
       },
       interactivity: {
-        detect_on: 'canvas',
+        detect_on: 'window',
         events: {
           onhover: {
             enable: true,
@@ -171,23 +186,113 @@ const App = () => {
             enable: true,
             mode: 'repulse'
           },
+          ontouchstart: {
+            enable: true,
+            mode: 'repulse'
+          },
+          ontouchmove: {
+            enable: true,
+            mode: 'grab'
+          },
           resize: true
         },
         modes: {
           grab: {
-            distance: 140,
+            distance: isMobile ? 100 : 140,
             line_linked: {
-              opacity: 0.3
+              opacity: 1
             }
           },
+          bubble: {
+            distance: isMobile ? 120 : 160,
+            size: isMobile ? 8 : 10,
+            duration: 1.5,
+            opacity: 0.8,
+            speed: 3
+          },
           repulse: {
-            distance: 100,
-            duration: 0.4
+            distance: isMobile ? 80 : 100,
+            duration: 0.8
+          },
+          push: {
+            particles_nb: 3
+          },
+          remove: {
+            particles_nb: 2
           }
         }
       },
-      retina_detect: false
+      retina_detect: true
     });
+
+    // Enhanced cursor interaction with gravity-like effect
+    const canvas = document.querySelector('#particles-js canvas');
+    if (canvas) {
+      let mouseX = 0;
+      let mouseY = 0;
+      
+      const handleMouseMove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+        
+        // Apply stronger attraction effect
+        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
+          const pJS = window.pJSDom[0].pJS;
+          pJS.interactivity.mouse.pos_x = mouseX;
+          pJS.interactivity.mouse.pos_y = mouseY;
+          
+          // Enhance particle attraction to mouse
+          pJS.particles.array.forEach(particle => {
+            const dx = mouseX - particle.x;
+            const dy = mouseY - particle.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 120) {
+              const force = (120 - distance) / 120;
+              particle.vx += dx * force * 0.001;
+              particle.vy += dy * force * 0.001;
+            }
+          });
+        }
+      };
+      
+      const handleTouchMove = (e) => {
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        mouseX = touch.clientX - rect.left;
+        mouseY = touch.clientY - rect.top;
+        
+        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
+          const pJS = window.pJSDom[0].pJS;
+          pJS.interactivity.mouse.pos_x = mouseX;
+          pJS.interactivity.mouse.pos_y = mouseY;
+          
+          // Enhanced touch interaction
+          pJS.particles.array.forEach(particle => {
+            const dx = mouseX - particle.x;
+            const dy = mouseY - particle.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 100) {
+              const force = (100 - distance) / 100;
+              particle.vx += dx * force * 0.002;
+              particle.vy += dy * force * 0.002;
+            }
+          });
+        }
+      };
+      
+      canvas.addEventListener('mousemove', handleMouseMove);
+      canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+      
+      // Cleanup event listeners
+      return () => {
+        canvas.removeEventListener('mousemove', handleMouseMove);
+        canvas.removeEventListener('touchmove', handleTouchMove);
+      };
+    }
   }, []);
 
   return (

@@ -72,9 +72,18 @@ function About() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-base leading-relaxed text-gray-300"
+              className="text-base leading-relaxed text-gray-300 space-y-4"
             >
-e at Kongu Engineering College. I’ve built impactful full-stack and machine learning projects like <strong className="text-white">QuikCart</strong> and <strong className="text-white">Traffic Prediction System</strong> using React, Node.js, Flask, and scikit-learn. Certified by Microsoft and IBM, and awarded at <strong className="text-white">BYTS Hackathon 2025</strong>, I’m committed to building intelligent digital solutions and growing as a developer.              I’m currently pursuing a B.Tech in Artificial Intelligence and Data Scienc
+              <p>
+                I’m a <span className="font-semibold text-white">B.Tech student in Artificial Intelligence and Data Science</span> at Kongu Engineering College. I’ve built impactful full-stack and machine learning projects like 
+                <strong className="text-white"> QuikCart </strong> and 
+                <strong className="text-white"> Traffic Prediction System </strong> 
+                using React, Node.js, Flask, and scikit-learn.
+              </p>
+              <p>
+                Certified by <strong className="text-white">Microsoft</strong> and <strong className="text-white">IBM</strong>, and awarded at 
+                <strong className="text-white"> BYTS Hackathon 2025</strong>, I’m committed to creating intelligent digital solutions and continuously growing as a developer.
+              </p>
             </motion.div>
 
             {/* Cards Grid */}

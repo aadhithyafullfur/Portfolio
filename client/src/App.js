@@ -17,47 +17,19 @@ import Lottie from 'lottie-react';
 import loaderData from './assets/loader.json';
 import { Particles } from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
+import particlesConfig from './config/particlesConfig';
 
-const SymbolsBackground = () => {
-  const [symbols, setSymbols] = useState([]);
-
-  useEffect(() => {
-    const generatedSymbols = [];
-    const symbolChars = ['< />', '{ }', '</>', '=>', '++', '&&'];
-    
-    // Reduce symbols on mobile for better performance
-    const symbolCount = window.innerWidth > 768 ? 30 : 10;
-
-    for (let i = 0; i < symbolCount; i++) {
-      generatedSymbols.push({
-        id: i,
-        text: symbolChars[Math.floor(Math.random() * symbolChars.length)],
-        left: `${Math.random() * 100}vw`,
-        delay: `${Math.random() * 15}s`,
-        fontSize: `${Math.random() * (window.innerWidth > 768 ? 16 : 12) + (window.innerWidth > 768 ? 16 : 14)}px`,
-      });
-    }
-
-    setSymbols(generatedSymbols);
-  }, []);
+const ParticlesBackground = () => {
+  const particlesInit = async (main) => {
+    await loadFull(main);
+  };
 
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" id="symbols">
-      {symbols.map((symbol) => (
-        <div
-          key={symbol.id}
-          className="absolute text-purple-400 animate-fall"
-          style={{
-            left: symbol.left,
-            animationDelay: symbol.delay,
-            fontSize: symbol.fontSize,
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {symbol.text}
-        </div>
-      ))}
-    </div>
+    <Particles
+      id="tsparticles"
+      init={particlesInit}
+      options={particlesConfig}
+    />
   );
 };
 
@@ -154,9 +126,9 @@ function App() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black text-white relative overflow-hidden">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      <ParticlesBackground />
       <Navbar />
-      <SymbolsBackground />
 
       <Section id="home" className="min-h-screen flex items-center justify-center py-16 sm:py-20 relative z-10">
         <div className="container flex flex-col-reverse lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8">

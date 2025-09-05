@@ -128,15 +128,20 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    // Initialize particles.js for all devices with mobile optimization
+    // Initialize particles.js only for desktop (not mobile)
+    
+    // Don't initialize particles on mobile devices
+    if (isMobile) {
+      return;
+    }
     
     window.particlesJS('particles-js', {
       particles: {
         number: {
-          value: isMobile ? 50 : 100, // Fewer particles on mobile
+          value: 100,
           density: {
             enable: true,
-            value_area: isMobile ? 1200 : 800 // Larger area on mobile for fewer particles
+            value_area: 800
           }
         },
         color: {
@@ -178,14 +183,14 @@ const App = () => {
         },
         move: {
           enable: true,
-          speed: isMobile ? 0.8 : 1, // Slower on mobile
+          speed: 1,
           direction: 'none',
           random: true,
           straight: false,
           out_mode: 'bounce',
           bounce: true,
           attract: {
-            enable: !isMobile, // Disable attraction on mobile for better performance
+            enable: true,
             rotateX: 1500,
             rotateY: 3000
           }
@@ -195,7 +200,7 @@ const App = () => {
         detect_on: 'window',
         events: {
           onhover: {
-            enable: !isMobile, // Disable hover on mobile
+            enable: true,
             mode: 'grab'
           },
           onclick: {
@@ -203,15 +208,15 @@ const App = () => {
             mode: 'bubble'
           },
           ontouchstart: {
-            enable: isMobile, // Enable touch events on mobile
+            enable: true,
             mode: 'bubble'
           },
           ontouchmove: {
-            enable: isMobile,
+            enable: true,
             mode: 'grab'
           },
           ontouchend: {
-            enable: isMobile,
+            enable: true,
             mode: 'repulse'
           },
           resize: true

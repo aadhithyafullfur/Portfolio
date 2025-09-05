@@ -1,14 +1,12 @@
-import React, { Suspense, useState, useRef, useEffect, useCallback, lazy } from 'react';
-// Lazy load non-critical components
-const Navbar = lazy(() => import('./components/Navbar.js'));
-const Footer = lazy(() => import('./components/Footer.js'));
+import React, { Suspense, useState, useRef, useEffect, useCallback } from 'react';
+import Navbar from './components/Navbar.js';
 import About from './components/About.js';
 import Certifications from './components/Certifications.js';
 import Skills from './components/Skills.js';
 import Projects from './components/Projects.js';
 import Contact from './components/Contact.js';
+import Footer from './components/Footer.js';
 import Leetcode from './components/Leetcode.js';
-import LoadingSpinner from './components/LoadingSpinner.js';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { TypeAnimation } from 'react-type-animation';
@@ -85,22 +83,21 @@ const Bitmoji3D = ({ isHovered }) => {
   );
 };
 
-const Section = React.memo(({ children, id, className }) => {
+const Section = ({ children, id, className }) => {
   const { ref, inView } = useInView({ 
     triggerOnce: true, 
-    threshold: window.innerWidth <= 768 ? 0.02 : 0.1, // Lower threshold for mobile
-    rootMargin: window.innerWidth <= 768 ? '50px' : '0px' // Earlier trigger on mobile
+    threshold: window.innerWidth <= 768 ? 0.05 : 0.1 
   });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: window.innerWidth <= 768 ? 15 : 50 }} // Reduced animation distance on mobile
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: window.innerWidth <= 768 ? 15 : 50 }}
+      initial={{ opacity: 0, y: window.innerWidth <= 768 ? 30 : 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: window.innerWidth <= 768 ? 30 : 50 }}
       transition={{ 
-        duration: window.innerWidth <= 768 ? 0.3 : 0.8,  // Faster animations on mobile
+        duration: window.innerWidth <= 768 ? 0.6 : 0.8, 
         ease: 'easeOut',
-        delay: window.innerWidth <= 768 ? 0 : 0 
+        delay: window.innerWidth <= 768 ? 0.1 : 0 
       }}
       id={id}
       className={className}
@@ -108,27 +105,14 @@ const Section = React.memo(({ children, id, className }) => {
       <div className="relative z-10">{children}</div>
     </motion.div>
   );
-});
+};
 
 const App = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Detect mobile device and set state
-    const checkMobile = () => {
-      const mobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      setIsMobile(mobile);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   useEffect(() => {
     // Initialize particles.js only for desktop (not mobile)
+    const isMobile = window.innerWidth <= 768;
     
     // Don't initialize particles on mobile devices
     if (isMobile) {
@@ -414,9 +398,7 @@ const App = () => {
 
       {/* Content container */}
       <div className="relative" style={{ zIndex: 2 }}>
-        <Suspense fallback={<LoadingSpinner height="60px" />}>
-          <Navbar />
-        </Suspense>
+        <Navbar />
         <main>
           <Section id="home" className="min-h-screen flex items-center justify-center py-16 sm:py-20">
         <div className="container flex flex-col-reverse lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -432,8 +414,8 @@ const App = () => {
           >
             <TypeAnimation
               sequence={['Hi, I am Aadhithya R 👋', 2000]}
-              speed={isMobile ? 80 : 60} // Faster on mobile
-              deletionSpeed={isMobile ? 60 : 40}
+              speed={60}
+              deletionSpeed={40}
               repeat={Infinity}
               wrapper="h2"
               cursor
@@ -441,8 +423,8 @@ const App = () => {
             />
             <TypeAnimation
               sequence={['A Full‑Stack Developer 💻', 2000, 'ML Enthusiast 🤖', 2000]}
-              speed={isMobile ? 30 : 10} // Much faster on mobile
-              deletionSpeed={isMobile ? 70 : 50}
+              speed={10}
+              deletionSpeed={50}
               repeat={Infinity}
               wrapper="h3"
               cursor
@@ -504,27 +486,15 @@ const App = () => {
               }`}
               style={{ cursor: 'pointer' }}
             >
-              {!isMobile ? (
-                <Suspense fallback={
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Lottie animationData={loaderData} className="w-24 h-24 sm:w-32 sm:h-32" />
-                  </div>
-                }>
-                  <Canvas>
-                    <Bitmoji3D isHovered={isHovered} />
-                  </Canvas>
-                </Suspense>
-              ) : (
-                // Static image for mobile instead of 3D canvas
-                <div 
-                  className="w-full h-full bg-cover bg-center"
-                  style={{
-                    backgroundImage: "url('/images/bitmoji.png')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }}
-                />
-              )}
+              <Suspense fallback={
+                <div className="w-full h-full flex items-center justify-center">
+                  <Lottie animationData={loaderData} className="w-24 h-24 sm:w-32 sm:h-32" />
+                </div>
+              }>
+                <Canvas>
+                  <Bitmoji3D isHovered={isHovered} />
+                </Canvas>
+              </Suspense>
             </div>
           </motion.div>
         </div>
@@ -554,9 +524,7 @@ const App = () => {
             <Contact />
           </Section>
         </main>
-        <Suspense fallback={<LoadingSpinner height="80px" />}>
-          <Footer />
-        </Suspense>
+        <Footer />
       </div>
     </div>
   );

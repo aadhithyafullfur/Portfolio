@@ -92,30 +92,15 @@ function Navbar() {
         `}
       </style>
 
-      {/* Mobile Menu Overlay */}
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
-
       <nav
         className={`fixed top-0 w-full z-50 backdrop-blur-md transition-colors duration-500 ${
           scrolled ? 'bg-primary-black/90 shadow-lg' : 'bg-primary-black/60'
         }`}
         style={{ fontFamily: "'Poppins', sans-serif" }}
       >
-        <div className="container mx-auto flex items-center justify-between py-4 px-6 lg:px-12 relative">
+        <div className="container mx-auto flex items-center justify-between py-4 px-6 lg:px-12">
           {/* Profile Image + Portfolio Text */}
-          <motion.div 
-            className="flex items-center gap-3 cursor-pointer select-none"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
+          <div className="flex items-center gap-3 cursor-pointer select-none">
             <img
               src="images/profile.jpg" // Make sure the image is in the public folder
               alt="Profile"
@@ -135,143 +120,65 @@ function Navbar() {
             >
               Portfolio
             </Link>
-          </motion.div>
+          </div>
 
-          {/* Mobile Menu Button - More professional design */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isOpen}
-            className={`lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300 ${
-              isOpen 
-                ? 'bg-purple-500/20 text-purple-400' 
-                : 'bg-white/10 text-white hover:bg-white/20'
-            } focus:outline-none focus:ring-2 focus:ring-purple-400 backdrop-blur-sm`}
+            className="lg:hidden text-text-light focus:outline-none focus:ring-2 focus:ring-purple-500 rounded"
           >
-            <div className="w-6 h-6 relative flex flex-col justify-center">
-              <motion.span
-                animate={{
-                  rotate: isOpen ? 45 : 0,
-                  y: isOpen ? 0 : -8,
-                  transformOrigin: 'center'
-                }}
-                className="absolute w-6 h-0.5 bg-current rounded-full"
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <motion.path
+                initial={false}
+                animate={{ d: isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16' }}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
               />
-              <motion.span
-                animate={{ opacity: isOpen ? 0 : 1 }}
-                className="absolute w-6 h-0.5 bg-current rounded-full"
-                transition={{ duration: 0.2 }}
-              />
-              <motion.span
-                animate={{
-                  rotate: isOpen ? -45 : 0,
-                  y: isOpen ? 0 : 8,
-                  transformOrigin: 'center'
-                }}
-                className="absolute w-6 h-0.5 bg-current rounded-full"
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-              />
-            </div>
+            </svg>
           </button>
 
-          {/* Professional Mobile Menu */}
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ 
-              opacity: isOpen ? 1 : 0, 
-              y: isOpen ? 0 : -20,
-              scale: isOpen ? 1 : 0.95,
-              pointerEvents: isOpen ? 'auto' : 'none'
-            }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute top-full left-0 right-0 mx-4 mt-2 bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-purple-900/95 backdrop-blur-xl rounded-2xl border border-purple-500/20 shadow-2xl lg:hidden overflow-hidden"
-          >
-            <div className="p-6">
-              {/* Close Button */}
-              <div className="flex justify-end mb-4">
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 text-gray-400 hover:text-white hover:bg-white/20 transition-all duration-200"
-                  aria-label="Close menu"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Navigation Links */}
-              <div className="space-y-1 mb-6">
-                {navLinks.map(({ id, label }, index) => (
-                  <motion.div
+          {/* Mobile Menu */}
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="absolute top-full left-0 w-full bg-gray-900/95 backdrop-blur-lg py-4 lg:hidden border-t border-purple-500/20"
+            >
+              <div className="flex flex-col items-center space-y-4">
+                {navLinks.map(({ id, label }) => (
+                  <Link
                     key={id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ 
-                      opacity: isOpen ? 1 : 0, 
-                      x: isOpen ? 0 : -20 
+                    to={id}
+                    spy={true}
+                    smooth={true}
+                    offset={-80}
+                    duration={500}
+                    onClick={() => {
+                      setActiveLink(id);
+                      setIsOpen(false);
                     }}
-                    transition={{ 
-                      delay: isOpen ? index * 0.1 + 0.1 : 0,
-                      duration: 0.3
-                    }}
+                    className="text-lg font-medium py-2 px-4 rounded-lg transition-all duration-300"
+                    style={activeLink === id ? animatedGradientText : { color: '#ddd' }}
                   >
-                    <Link
-                      to={id}
-                      spy={true}
-                      smooth={true}
-                      offset={-80}
-                      duration={500}
-                      onClick={() => {
-                        setActiveLink(id);
-                        setIsOpen(false);
-                      }}
-                      className={`block w-full text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
-                        activeLink === id
-                          ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 text-white shadow-lg'
-                          : 'text-gray-300 hover:bg-white/10 hover:text-white'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                          activeLink === id 
-                            ? 'bg-gradient-to-r from-purple-400 to-pink-400' 
-                            : 'bg-gray-500'
-                        }`} />
-                        <span>{label}</span>
-                      </div>
-                    </Link>
-                  </motion.div>
+                    {label}
+                  </Link>
                 ))}
-              </div>
-
-              {/* Download CV Button - Enhanced */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ 
-                  opacity: isOpen ? 1 : 0, 
-                  y: isOpen ? 0 : 20 
-                }}
-                transition={{ delay: isOpen ? 0.4 : 0, duration: 0.3 }}
-              >
                 <motion.a
                   href="Aadhithya R resume .pdf"
                   download
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full block text-center px-6 py-4 rounded-xl font-semibold bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-400/20"
-                  onClick={() => setIsOpen(false)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-5 py-2 rounded-lg font-semibold bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 text-white shadow-md"
                 >
-                  <div className="flex items-center justify-center space-x-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <span>Download Resume</span>
-                  </div>
+                  Download CV
                 </motion.a>
-              </motion.div>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          )}
 
           {/* Desktop Nav Links */}
           <div className="hidden lg:flex items-center space-x-8">

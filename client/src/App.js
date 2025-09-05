@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense, useState, useRef } from 'react';
+import React, { Suspense, useState, useRef, useEffect, useCallback } from 'react';
 import Navbar from './components/Navbar.js';
 import About from './components/About.js';
 import Certifications from './components/Certifications.js';
@@ -15,21 +15,48 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import Lottie from 'lottie-react';
 import loaderData from './assets/loader.json';
-import { Particles } from 'react-tsparticles';
-import { loadFull } from 'tsparticles';
-import particlesConfig from './config/particlesConfig';
+// Particles.js is loaded from public/js/particles.js
 
-const ParticlesBackground = () => {
-  const particlesInit = async (main) => {
-    await loadFull(main);
-  };
+const SymbolsBackground = () => {
+  const [symbols, setSymbols] = useState([]);
+
+  useEffect(() => {
+    const generatedSymbols = [];
+    const symbolChars = ['< />', '{ }', '</>', '=>', '++', '&&'];
+    
+    // Reduce symbols on mobile for better performance
+    const symbolCount = window.innerWidth > 768 ? 30 : 10;
+
+    for (let i = 0; i < symbolCount; i++) {
+      generatedSymbols.push({
+        id: i,
+        text: symbolChars[Math.floor(Math.random() * symbolChars.length)],
+        left: `${Math.random() * 100}vw`,
+        delay: `${Math.random() * 15}s`,
+        fontSize: `${Math.random() * (window.innerWidth > 768 ? 16 : 12) + (window.innerWidth > 768 ? 16 : 14)}px`,
+      });
+    }
+
+    setSymbols(generatedSymbols);
+  }, []);
 
   return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      options={particlesConfig}
-    />
+    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" id="symbols">
+      {symbols.map((symbol) => (
+        <div
+          key={symbol.id}
+          className="absolute text-purple-400 animate-fall"
+          style={{
+            left: symbol.left,
+            animationDelay: symbol.delay,
+            fontSize: symbol.fontSize,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {symbol.text}
+        </div>
+      ))}
+    </div>
   );
 };
 
@@ -56,10 +83,6 @@ const Bitmoji3D = ({ isHovered }) => {
   );
 };
 
-const particlesInit = async (main) => {
-  await loadFull(main);
-};
-
 const Section = ({ children, id, className }) => {
   const { ref, inView } = useInView({ 
     triggerOnce: true, 
@@ -79,58 +102,141 @@ const Section = ({ children, id, className }) => {
       id={id}
       className={className}
     >
-      <Particles
-        id={`tsparticles-${id}`}
-        init={particlesInit}
-        options={{
-          background: { color: { value: '#000' } },
-          particles: {
-            number: { 
-              value: window.innerWidth > 768 ? 80 : 40, 
-              density: { enable: true, value_area: 800 } 
-            },
-            color: { value: '#8A2BE2' },
-            shape: { type: 'circle' },
-            opacity: { value: 0.5, random: true },
-            size: { 
-              value: window.innerWidth > 768 ? 3 : 2, 
-              random: { enable: true, minimumValue: 1 } 
-            },
-            move: { 
-              enable: true, 
-              speed: window.innerWidth > 768 ? 2 : 1, 
-              direction: 'none', 
-              random: true 
-            },
-          },
-          interactivity: {
-            events: { 
-              onHover: { enable: window.innerWidth > 768, mode: 'repulse' } 
-            },
-            modes: { 
-              repulse: { 
-                distance: window.innerWidth > 768 ? 100 : 50, 
-                duration: 0.4 
-              } 
-            },
-          },
-        }}
-        className="absolute inset-0 z-0"
-      />
       <div className="relative z-10">{children}</div>
     </motion.div>
   );
 };
 
-function App() {
+const App = () => {
   const [isHovered, setIsHovered] = useState(false);
 
-  return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      <ParticlesBackground />
-      <Navbar />
+  useEffect(() => {
+    // Initialize particles.js
+    window.particlesJS('particles-js', {
+      particles: {
+        number: {
+          value: window.innerWidth > 768 ? 100 : 50,
+          density: {
+            enable: true,
+            value_area: 1000
+          }
+        },
+        color: {
+          value: ['#8A2BE2', '#9370DB', '#8B008B']
+        },
+        shape: {
+          type: 'circle',
+          stroke: {
+            width: 0,
+            color: '#000000'
+          }
+        },
+        opacity: {
+          value: 0.3,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 1,
+            opacity_min: 0.1,
+            sync: false
+          }
+        },
+        size: {
+          value: 3,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 2,
+            size_min: 0.1,
+            sync: false
+          }
+        },
+        line_linked: {
+          enable: true,
+          distance: 200,
+          color: '#8A2BE2',
+          opacity: 0.3,
+          width: 0.8
+        },
+        move: {
+          enable: true,
+          speed: 1,
+          direction: 'none',
+          random: false,
+          straight: false,
+          out_mode: 'bounce',
+          bounce: true,
+          attract: {
+            enable: true,
+            rotateX: 600,
+            rotateY: 1200
+          }
+        }
+      },
+      interactivity: {
+        detect_on: 'window',
+        events: {
+          onhover: {
+            enable: true,
+            mode: ['grab', 'bubble']
+          },
+          onclick: {
+            enable: true,
+            mode: 'push'
+          },
+          resize: true
+        },
+        modes: {
+          grab: {
+            distance: 200,
+            line_linked: {
+              opacity: 0.4
+            }
+          },
+          bubble: {
+            distance: 200,
+            size: 6,
+            duration: 2,
+            opacity: 0.8,
+            speed: 3
+          },
+          push: {
+            particles_nb: 4
+          },
+          remove: {
+            particles_nb: 2
+          }
+        }
+      },
+      retina_detect: true
+    });
+  }, []);
 
-      <Section id="home" className="min-h-screen flex items-center justify-center py-16 sm:py-20 relative z-10">
+  return (
+    <div className="min-h-screen text-white relative">
+      {/* Fixed dark background */}
+      <div 
+        className="fixed inset-0" 
+        style={{ 
+          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.97) 0%, rgba(0, 0, 0, 0.99) 100%)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          zIndex: 0 
+        }} 
+      />
+      
+      {/* Particles.js container */}
+      <div 
+        id="particles-js" 
+        className="fixed inset-0" 
+        style={{ zIndex: 1 }}
+      />
+
+      {/* Content container */}
+      <div className="relative" style={{ zIndex: 2 }}>
+        <Navbar />
+        <main>
+          <Section id="home" className="min-h-screen flex items-center justify-center py-16 sm:py-20">
         <div className="container flex flex-col-reverse lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -230,27 +336,37 @@ function App() {
         </div>
       </Section>
 
-      <Section id="about" className="py-24 sm:py-32 bg-gray-800">
+  <Section id="about" className="py-24 sm:py-32">
         <About />
       </Section>
-      <Section id="certifications" className="py-24 sm:py-32 bg-gray-900">
-        <Certifications />
-      </Section>
-      <Section id="skills" className="py-24 sm:py-32 bg-gray-800">
-        <Skills />
-      </Section>
-      <Section id="projects" className="py-24 sm:py-32 bg-gray-900">
-        <Projects />
-      </Section>
-      <Section id="leetcode" className="py-24 sm:py-32 bg-gray-800">
-        <Leetcode />
-      </Section>
-      <Section id="contact" className="py-24 sm:py-32 bg-gray-900">
-        <Contact />
-      </Section>
-      <Footer />
+          <Section id="about" className="py-24 sm:py-32">
+            <About />
+          </Section>
+
+          <Section id="certifications" className="py-24 sm:py-32">
+            <Certifications />
+          </Section>
+
+          <Section id="skills" className="py-24 sm:py-32">
+            <Skills />
+          </Section>
+
+          <Section id="projects" className="py-24 sm:py-32">
+            <Projects />
+          </Section>
+
+          <Section id="leetcode" className="py-24 sm:py-32">
+            <Leetcode />
+          </Section>
+
+          <Section id="contact" className="py-24 sm:py-32">
+            <Contact />
+          </Section>
+        </main>
+        <Footer />
+      </div>
     </div>
   );
-}
+};
 
 export default App;

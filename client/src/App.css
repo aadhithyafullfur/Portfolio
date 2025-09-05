@@ -110,12 +110,12 @@ button, a {
 /* Mobile-specific enhancements */
 @media (max-width: 768px) {
   #particles-js canvas {
-    filter: brightness(1.8) contrast(1.5) saturate(1.4);
-    opacity: 1;
+    filter: brightness(1.2) contrast(1.1) saturate(1.0);
+    opacity: 0.7; /* Slightly more transparent on mobile */
   }
   
   #particles-js::before {
-    background: radial-gradient(circle at center, rgba(255, 107, 157, 0.15) 0%, rgba(196, 69, 105, 0.1) 50%, transparent 80%);
+    background: radial-gradient(circle at center, rgba(255, 107, 157, 0.08) 0%, rgba(196, 69, 105, 0.05) 50%, transparent 80%);
   }
 }
 
@@ -178,6 +178,7 @@ button, a {
   /* Disable particle glow animation on mobile */
   #particles-js canvas {
     animation: none !important;
+    filter: brightness(1.2) contrast(1.1) saturate(1.0) !important;
   }
   
   /* Reduce motion for users who prefer it */

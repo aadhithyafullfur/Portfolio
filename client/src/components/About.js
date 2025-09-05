@@ -22,7 +22,7 @@ function About() {
         style={{ perspective: '1000px' }}
       >
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12">
-          {/* Animated Bitmoji Avatar */}
+          {/* Animated Avatar */}
           <motion.div
             className="relative w-56 h-56 group"
             initial={{ opacity: 0, x: -20, rotateY: -15 }}
@@ -48,7 +48,7 @@ function About() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-4xl font-extrabold text-accent-purple"
             >
-              About<span className="text-white"></span>
+              About<span className="text-white"> Me</span>
             </motion.h2>
 
             {/* Personal Introduction */}
@@ -59,34 +59,24 @@ function About() {
               className="text-base leading-relaxed space-y-4 text-gray-200"
             >
               <p>
-                Hello, my name is <span className="font-semibold text-white">Aadhithya R</span>. I’m from Perundurai, Erode. I’m a passionate and curious individual with a deep interest in the field of technology and software development. I enjoy learning new things, exploring creative ideas, and working on meaningful projects.
+                Hello, my name is <span className="font-semibold text-white">Aadhithya R</span>, 
+                from Perundurai, Erode. I’m an enthusiastic learner with a deep interest 
+                in <span className="text-white font-semibold">Artificial Intelligence Engineering</span> 
+                and <span className="text-white font-semibold">MERN stack development</span>.
               </p>
               <p>
-                I’m always eager to grow, both personally and professionally, and I believe in continuous learning. I enjoy collaborating with others, sharing knowledge, and contributing to a positive and productive environment.
-              </p>
-              <p className="text-sm text-gray-400">Thank you for the opportunity to introduce myself.</p>
-            </motion.div>
-
-            {/* Professional Summary */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-base leading-relaxed text-gray-300 space-y-4"
-            >
-              <p>
-                I’m a <span className="font-semibold text-white">B.Tech student in Artificial Intelligence and Data Science</span> at Kongu Engineering College. I’ve built impactful full-stack and machine learning projects like 
-                <strong className="text-white"> QuikCart </strong> and 
-                <strong className="text-white"> Traffic Prediction System </strong> 
-                using React, Node.js, Flask, and scikit-learn.
+                I enjoy exploring how intelligent systems can solve real-world problems 
+                and how full-stack development can bring innovative ideas to life. 
+                My curiosity drives me to continuously learn, experiment, and improve.
               </p>
               <p>
-                Certified by <strong className="text-white">Microsoft</strong> and <strong className="text-white">IBM</strong>, and awarded at 
-                <strong className="text-white"> BYTS Hackathon 2025</strong>, I’m committed to creating intelligent digital solutions and continuously growing as a developer.
+                I believe in collaboration, knowledge sharing, and personal growth. 
+                Alongside academics, I also like exploring technology trends, problem-solving, 
+                and building creative solutions.
               </p>
             </motion.div>
 
-            {/* Cards Grid */}
+            {/* Education & Achievements */}
             <div className="grid md:grid-cols-2 gap-6">
               {/* Education Card */}
               <motion.div
@@ -113,8 +103,8 @@ function About() {
                 <h3 className="text-xl font-semibold text-accent-purple mb-3">🏆 Achievements</h3>
                 <ul className="space-y-2 text-sm text-gray-200">
                   <li><strong>Best Implementation Award</strong> – BYTS India Hackathon 2025</li>
-                  <li><strong>LeetCode:</strong> Solved over 100+ coding problems</li>
                   <li><strong>Microsoft Certified:</strong> Azure International Certificate (2025)</li>
+                  <li><strong>LeetCode:</strong> Solved over 150+ coding problems</li>
                 </ul>
               </motion.div>
             </div>

@@ -53,6 +53,38 @@ button, a {
   #particles-js {
     display: none;
   }
+  
+  /* Mobile performance optimizations */
+  * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
+  
+  /* Reduce animations on mobile */
+  .animate-float,
+  [class*="animate-"] {
+    animation-duration: 2s !important;
+    animation-iteration-count: 1 !important;
+  }
+  
+  /* Simplify glassmorphism on mobile */
+  .glass {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(5px) !important;
+  }
+  
+  /* Reduce motion for better performance */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 /* Enhanced particles visibility and interactions */
@@ -112,4 +144,48 @@ button, a {
 
 #particles-js canvas {
   animation: particleGlow 4s ease-in-out infinite;
+}
+
+/* Performance Optimizations */
+.app {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  /* Reduce animations for mobile */
+  * {
+    animation-duration: 0.3s !important;
+    transition-duration: 0.3s !important;
+  }
+  
+  /* Hardware acceleration for mobile */
+  .hero-section,
+  .section-container {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* Optimize images for mobile */
+  img {
+    will-change: auto;
+    transform: translateZ(0);
+    content-visibility: auto;
+  }
+  
+  /* Disable particle glow animation on mobile */
+  #particles-js canvas {
+    animation: none !important;
+  }
+  
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }

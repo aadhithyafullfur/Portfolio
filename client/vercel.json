@@ -1,29 +1,30 @@
-﻿{
+{
   "version": 2,
   "builds": [
     {
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "buildCommand": "CI=false npm run build",
-        "outputDirectory": "build"
+        "distDir": "build"
       }
     }
   ],
   "env": {
+    "CI": "false",
     "REACT_APP_API_URL": "https://portfolio-server-m729.onrender.com"
   },
+  "buildCommand": "npm run build",
   "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
     {
       "src": "/js/(.*)",
       "dest": "/js/$1",
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"
       }
-    },
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
     },
     {
       "src": "/favicon.ico",
@@ -36,9 +37,6 @@
     {
       "src": "/robots.txt",
       "dest": "/robots.txt"
-    },
-    {
-      "handle": "filesystem"
     },
     {
       "src": "/(.*)",

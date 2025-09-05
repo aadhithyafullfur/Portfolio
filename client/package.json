@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=false npm install --legacy-peer-deps && react-scripts build",
+    "build": "npm install --legacy-peer-deps && CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -18,7 +18,7 @@
     "react": "18.2.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.10.0",
+    "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.5.2",
     "react-parallax-tilt": "^1.7.156",
     "react-router-dom": "^6.14.0",
@@ -29,6 +29,7 @@
     "three": "0.149.0"
   },
   "devDependencies": {
+    "cross-env": "^10.0.0",
     "react-scripts": "^5.0.1",
     "tailwindcss": "^3.3.2"
   },

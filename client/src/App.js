@@ -315,9 +315,6 @@ const App = () => {
       </Section>
 
   <Section id="about" className="py-24 sm:py-32">
-        <About />
-      </Section>
-          <Section id="about" className="py-24 sm:py-32">
             <About />
           </Section>
 

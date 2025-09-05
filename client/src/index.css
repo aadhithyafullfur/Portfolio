@@ -3,28 +3,12 @@
   @tailwind utilities;
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
-  html {
-    scroll-behavior: smooth;
-    /* Enhanced smooth scrolling for mobile */
-    -webkit-overflow-scrolling: touch;
-  }
-
-  @media (max-width: 768px) {
-    html {
-      scroll-behavior: smooth;
-      /* Optimize scroll performance on mobile */
-      -webkit-overflow-scrolling: touch;
-      scroll-padding-top: 80px;
-    }
-  }
-
   body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
     color: #e0e0e0;
     overflow-x: hidden;
-    line-height: 1.6;
   }
 
   * {
@@ -33,24 +17,10 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 800;
-    line-height: 1.2;
   }
 
   button, a {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Smooth mobile interactions */
-  @media (max-width: 768px) {
-    button, a {
-      transition: all 0.2s ease-out;
-    }
-    
-    * {
-      transition-property: transform, opacity, background-color;
-      transition-duration: 0.3s;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    transition: all 0.3s ease;
   }
 
   .glass {
@@ -116,103 +86,6 @@
     }
     100% {
       transform: translateY(100vh);
-    }
-  }
-
-  @keyframes mobileSlideUp {
-    0% {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  /* Mobile-specific improvements */
-  @media (max-width: 768px) {
-    body {
-      font-size: 14px;
-      /* Enable hardware acceleration for smoother animations */
-      -webkit-transform: translate3d(0,0,0);
-      transform: translate3d(0,0,0);
-    }
-    
-    .symbol {
-      font-size: 14px !important;
-      /* Optimize animation performance */
-      will-change: transform;
-      backface-visibility: hidden;
-    }
-
-    /* Improve touch targets */
-    button, a {
-      min-height: 44px;
-      min-width: 44px;
-      /* Smooth touch feedback */
-      -webkit-tap-highlight-color: rgba(138, 43, 226, 0.1);
-    }
-
-    /* Better spacing for mobile */
-    .container {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-    
-    /* Enhanced mobile transitions */
-    .transition-smooth {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .hover-lift:hover {
-      transform: translateY(-2px);
-    }
-    
-    /* Mobile-specific smooth animations */
-    .mobile-fade-in {
-      animation: mobileSlideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-  }
-
-  @media (max-width: 480px) {
-    .symbol {
-      font-size: 12px !important;
-    }
-  }
-
-  /* Improve performance on mobile */
-  @media (max-width: 768px) {
-    * {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-  }
-
-  /* Reduce motion for users who prefer it */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-    
-    html {
-      scroll-behavior: auto;
-    }
-  }
-
-  /* Mobile touch optimization (keep exact same design) */
-  @media (max-width: 768px) {
-    /* Improve mobile performance without changing visuals */
-    * {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-    
-    /* Ensure touch targets are accessible */
-    button, a {
-      min-height: 44px;
     }
   }
   

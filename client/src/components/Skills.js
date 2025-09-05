@@ -45,29 +45,20 @@ function Skills() {
 
   // Animation variants for container and items
   const containerVariants = {
-    hidden: { opacity: 0, x: window.innerWidth <= 768 ? 30 : 50 },
+    hidden: { opacity: 0, x: 50 },
     visible: { 
       opacity: 1, 
       x: 0,
       transition: {
-        staggerChildren: window.innerWidth <= 768 ? 0.1 : 0.15,
+        staggerChildren: 0.15,
         when: "beforeChildren",
-        duration: window.innerWidth <= 768 ? 0.6 : 0.8,
-        ease: 'easeOut'
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: window.innerWidth <= 768 ? 15 : 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: window.innerWidth <= 768 ? 0.4 : 0.5,
-        ease: 'easeOut'
-      }
-    }
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
   };
 
   return (
@@ -83,45 +74,45 @@ function Skills() {
         Skills & Expertise
       </motion.h2>
 
-      {/* Skill Categories in responsive grid */}
+      {/* Skill Categories in horizontal "sleeping line" */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12 max-w-7xl mx-auto"
+        className="flex space-x-6 overflow-x-auto no-scrollbar pb-6"
       >
         {skillCategories.map((category, index) => (
           <motion.div
             key={index}
             variants={itemVariants}
-            className={`p-4 sm:p-5 rounded-xl cursor-pointer border text-center transition-all duration-300 h-full
+            className={`min-w-[260px] p-5 rounded-xl cursor-pointer border text-center transition-all duration-300
               ${
                 activeCategory === index
                   ? 'border-purple-500 bg-purple-900/20'
                   : 'border-gray-700 hover:bg-gray-800/30'
               }`}
             onClick={() => setActiveCategory(index === activeCategory ? null : index)}
-            whileHover={{ y: -3, boxShadow: '0 5px 15px rgba(128, 90, 213, 0.3)' }}
+            whileHover={{ y: -5, boxShadow: '0 10px 20px rgba(128, 90, 213, 0.5)' }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
-            <h3 className="text-lg sm:text-xl font-semibold text-purple-400 mb-2 sm:mb-3">{category.title}</h3>
-            <div className="flex flex-wrap justify-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+            <h3 className="text-xl font-semibold text-purple-400 mb-3">{category.title}</h3>
+            <div className="flex flex-wrap justify-center gap-2 mb-3">
               {category.skills.map((skill, i) => (
                 <span
                   key={i}
-                  className="px-2 sm:px-3 py-1 bg-gray-700 rounded-full text-xs sm:text-sm text-gray-200"
+                  className="px-3 py-1 bg-gray-700 rounded-full text-sm text-gray-200"
                 >
                   {skill}
                 </span>
               ))}
             </div>
-            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{category.description}</p>
+            <p className="text-gray-300 whitespace-normal">{category.description}</p>
           </motion.div>
         ))}
       </motion.div>
 
       {/* Description below */}
-      <p className="text-sm sm:text-lg text-gray-300 max-w-4xl mx-auto mb-12 sm:mb-16 text-center px-4 leading-relaxed">
+      <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-16 text-center">
         I specialize in full-stack development and machine learning, crafting responsive web apps and predictive models with modern languages and tools.
       </p>
 
@@ -131,14 +122,14 @@ function Skills() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}
       >
-        <h3 className="text-2xl sm:text-3xl font-semibold text-purple-400 text-center mb-6 sm:mb-8">
+        <h3 className="text-3xl font-semibold text-purple-400 text-center mb-8">
           Technology Stack
         </h3>
-        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
+        <div className="flex flex-wrap justify-center items-center gap-8">
           {skills.map((skill, index) => (
             <motion.div
               key={index}
-              className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl border border-gray-700 bg-gray-800 flex items-center justify-center transition-transform hover:border-purple-500"
+              className="w-20 h-20 rounded-xl border border-gray-700 bg-gray-800 flex items-center justify-center transition-transform"
               whileHover={{ scale: 1.05 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -147,8 +138,8 @@ function Skills() {
               <motion.img
                 src={skill.icon}
                 alt={skill.name}
-                className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 object-contain"
-                whileHover={{ rotate: 10, scale: 1.1 }}
+                className="w-10 h-10 object-contain"
+                whileHover={{ rotate: 10, scale: 1.2 }}
                 transition={{ type: "spring", stiffness: 300 }}
               />
             </motion.div>

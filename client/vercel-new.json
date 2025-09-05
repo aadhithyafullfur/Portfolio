@@ -1,4 +1,4 @@
-﻿{
+{
   "version": 2,
   "builds": [
     {
@@ -13,6 +13,7 @@
     "CI": "false",
     "REACT_APP_API_URL": "https://portfolio-server-m729.onrender.com"
   },
+  "buildCommand": "npm run build",
   "routes": [
     {
       "src": "/static/(.*)",

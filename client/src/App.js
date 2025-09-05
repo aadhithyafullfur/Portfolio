@@ -162,7 +162,7 @@ const App = () => {
         },
         move: {
           enable: true,
-          speed: isMobile ? 2 : 1.5,
+          speed: isMobile ? 1.5 : 1,
           direction: 'none',
           random: true,
           straight: false,
@@ -170,8 +170,8 @@ const App = () => {
           bounce: true,
           attract: {
             enable: true,
-            rotateX: 1200,
-            rotateY: 2400
+            rotateX: 1500,
+            rotateY: 3000
           }
         }
       },
@@ -184,38 +184,42 @@ const App = () => {
           },
           onclick: {
             enable: true,
-            mode: 'repulse'
+            mode: 'bubble'
           },
           ontouchstart: {
             enable: true,
-            mode: 'repulse'
+            mode: 'bubble'
           },
           ontouchmove: {
             enable: true,
             mode: 'grab'
           },
+          ontouchend: {
+            enable: true,
+            mode: 'repulse'
+          },
           resize: true
         },
         modes: {
           grab: {
-            distance: isMobile ? 100 : 140,
+            distance: isMobile ? 120 : 150,
             line_linked: {
               opacity: 1
             }
           },
           bubble: {
-            distance: isMobile ? 120 : 160,
-            size: isMobile ? 8 : 10,
-            duration: 1.5,
-            opacity: 0.8,
-            speed: 3
+            distance: isMobile ? 100 : 130,
+            size: isMobile ? 6 : 8,
+            duration: 1,
+            opacity: 0.9,
+            speed: 5
           },
           repulse: {
-            distance: isMobile ? 80 : 100,
-            duration: 0.8
+            distance: isMobile ? 60 : 80,
+            duration: 1
           },
           push: {
-            particles_nb: 3
+            particles_nb: 2
           },
           remove: {
             particles_nb: 2
@@ -230,11 +234,13 @@ const App = () => {
     if (canvas) {
       let mouseX = 0;
       let mouseY = 0;
+      let isInteracting = false;
       
       const handleMouseMove = (e) => {
         const rect = canvas.getBoundingClientRect();
         mouseX = e.clientX - rect.left;
         mouseY = e.clientY - rect.top;
+        isInteracting = true;
         
         // Apply stronger attraction effect
         if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
@@ -248,10 +254,42 @@ const App = () => {
             const dy = mouseY - particle.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
+            if (distance < 150) {
+              const force = (150 - distance) / 150;
+              particle.vx += dx * force * 0.003;
+              particle.vy += dy * force * 0.003;
+              
+              // Add some randomness for natural movement
+              particle.vx += (Math.random() - 0.5) * 0.1;
+              particle.vy += (Math.random() - 0.5) * 0.1;
+            }
+          });
+        }
+      };
+      
+      const handleTouchStart = (e) => {
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        mouseX = touch.clientX - rect.left;
+        mouseY = touch.clientY - rect.top;
+        isInteracting = true;
+        
+        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
+          const pJS = window.pJSDom[0].pJS;
+          pJS.interactivity.mouse.pos_x = mouseX;
+          pJS.interactivity.mouse.pos_y = mouseY;
+          
+          // Strong initial attraction on touch
+          pJS.particles.array.forEach(particle => {
+            const dx = mouseX - particle.x;
+            const dy = mouseY - particle.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
             if (distance < 120) {
               const force = (120 - distance) / 120;
-              particle.vx += dx * force * 0.001;
-              particle.vy += dy * force * 0.001;
+              particle.vx += dx * force * 0.005;
+              particle.vy += dy * force * 0.005;
             }
           });
         }
@@ -263,13 +301,14 @@ const App = () => {
         const touch = e.touches[0];
         mouseX = touch.clientX - rect.left;
         mouseY = touch.clientY - rect.top;
+        isInteracting = true;
         
         if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
           const pJS = window.pJSDom[0].pJS;
           pJS.interactivity.mouse.pos_x = mouseX;
           pJS.interactivity.mouse.pos_y = mouseY;
           
-          // Enhanced touch interaction
+          // Enhanced touch interaction with stronger force
           pJS.particles.array.forEach(particle => {
             const dx = mouseX - particle.x;
             const dy = mouseY - particle.y;
@@ -277,20 +316,57 @@ const App = () => {
             
             if (distance < 100) {
               const force = (100 - distance) / 100;
-              particle.vx += dx * force * 0.002;
-              particle.vy += dy * force * 0.002;
+              particle.vx += dx * force * 0.004;
+              particle.vy += dy * force * 0.004;
+              
+              // Add movement trail effect
+              particle.vx += (Math.random() - 0.5) * 0.2;
+              particle.vy += (Math.random() - 0.5) * 0.2;
             }
           });
         }
       };
       
+      const handleTouchEnd = (e) => {
+        e.preventDefault();
+        isInteracting = false;
+        
+        // Add dispersal effect when touch ends
+        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
+          const pJS = window.pJSDom[0].pJS;
+          
+          pJS.particles.array.forEach(particle => {
+            const dx = mouseX - particle.x;
+            const dy = mouseY - particle.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 80) {
+              // Repulse particles when touch ends
+              particle.vx -= dx * 0.002;
+              particle.vy -= dy * 0.002;
+            }
+          });
+        }
+      };
+      
+      const handleMouseLeave = () => {
+        isInteracting = false;
+      };
+      
+      // Add all event listeners
       canvas.addEventListener('mousemove', handleMouseMove);
+      canvas.addEventListener('mouseleave', handleMouseLeave);
+      canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
       canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+      canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
       
       // Cleanup event listeners
       return () => {
         canvas.removeEventListener('mousemove', handleMouseMove);
+        canvas.removeEventListener('mouseleave', handleMouseLeave);
+        canvas.removeEventListener('touchstart', handleTouchStart);
         canvas.removeEventListener('touchmove', handleTouchMove);
+        canvas.removeEventListener('touchend', handleTouchEnd);
       };
     }
   }, []);

@@ -25,7 +25,7 @@ function Leetcode() {
           <h2 className="text-2xl font-semibold text-white">GitHub Contributions</h2>
         </div>
         <img
-          src="https://ghchart.rshah.org/000000/aadhithyafullfur"
+          src="https://ghchart.rshah.org/8b5cf6/aadhithyafullfur"
           alt="GitHub Contribution Chart"
           className="rounded-xl border border-gray-600 w-full max-w-xl hover:scale-105 transition-transform duration-300"
         />

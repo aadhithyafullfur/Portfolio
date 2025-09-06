@@ -56,9 +56,11 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/contact', async (req, res) => {
+  console.log('Received contact form request:', req.body);
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
+    console.log('Validation failed - missing fields');
     return res.status(400).json({ success: false, message: 'All fields are required' });
   }
 

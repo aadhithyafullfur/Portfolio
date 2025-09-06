@@ -36,8 +36,12 @@ function Contact() {
       setStatus('');
       setSuccess(null);
       try {
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001/api/contact';
+        console.log('Sending request to:', apiUrl);
+        console.log('Form data:', form);
+        
         const response = await axios.post(
-          process.env.REACT_APP_API_URL || 'http://localhost:5000/api/contact',
+          apiUrl,
           form,
           {
             headers: { 'Content-Type': 'application/json' },

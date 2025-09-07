@@ -11,7 +11,7 @@ function Skills() {
     { icon: '/logos/js.png', name: 'JavaScript' },
     { icon: '/logos/react.png', name: 'React' },
     { icon: '/logos/nodejs.png', name: 'Node.js' },
-    { icon: '/logos/express.png', name: 'Express' },
+    { icon: '/logos/express.png', name: 'Express.js' },
     { icon: '/logos/mongodb.png', name: 'MongoDB' },
     { icon: '/logos/git.png', name: 'Git' },
     { icon: '/logos/azure.png', name: 'Azure' },
@@ -20,24 +20,24 @@ function Skills() {
 
   const skillCategories = [
     {
-      title: "Frontend Development",
+      title: "Frontend Engineering",
       skills: ["React", "JavaScript", "HTML5", "CSS3"],
-      description: "Building responsive and interactive user interfaces with modern frameworks"
+      description: "Expertise in building modern, performant, and accessible user interfaces using React and the latest web standards. Strong focus on responsive design, UI/UX best practices, and seamless user experiences."
     },
     {
-      title: "Backend Development",
-      skills: ["Node.js", "Express", "Python", "Java"],
-      description: "Developing robust server-side applications and RESTful APIs"
+      title: "Backend & API Development",
+      skills: ["Node.js", "Express.js", "Python", "Java"],
+      description: "Proficient in architecting scalable server-side applications, RESTful APIs, and microservices. Experienced with authentication, business logic, and integration of third-party services."
     },
     {
-      title: "Database & Cloud",
+      title: "Database & Cloud Solutions",
       skills: ["MongoDB", "Azure"],
-      description: "Designing scalable database architectures and cloud solutions"
+      description: "Skilled in designing and managing NoSQL databases, cloud deployments, and DevOps workflows. Focused on reliability, security, and scalability for production environments."
     },
     {
-      title: "Tools & Design",
+      title: "Collaboration & Design Tools",
       skills: ["Git", "Canva"],
-      description: "Version control, collaboration tools, and design applications"
+      description: "Adept with version control, agile collaboration, and visual design tools to streamline development and deliver polished products."
     }
   ];
 
@@ -72,7 +72,7 @@ function Skills() {
 
   return (
     <div className="container mx-auto px-4">
-      {/* Title */}
+      {/* Section Intro */}
       <motion.h2
         variants={itemVariants}
         initial="hidden"
@@ -82,6 +82,9 @@ function Skills() {
       >
         Skills & Expertise
       </motion.h2>
+      <p className="text-base sm:text-lg text-gray-300 max-w-3xl mb-8 sm:mb-10 text-left leading-relaxed">
+        I bring a holistic approach to software engineering, blending strong technical skills with a passion for clean code, scalable architecture, and user-centric design. My expertise spans the full stack, from crafting beautiful interfaces to deploying robust cloud solutions.
+      </p>
 
       {/* Skill Categories in responsive grid */}
       <motion.div
@@ -94,35 +97,35 @@ function Skills() {
           <motion.div
             key={index}
             variants={itemVariants}
-            className={`p-4 sm:p-5 rounded-xl cursor-pointer border text-center transition-all duration-300 h-full
+            className={`p-5 sm:p-6 rounded-2xl cursor-pointer border text-center shadow-md transition-all duration-300 h-full
               ${
                 activeCategory === index
-                  ? 'border-purple-500 bg-purple-900/20'
+                  ? 'border-purple-500 bg-gradient-to-br from-purple-900/40 to-pink-900/20 shadow-lg'
                   : 'border-gray-700 hover:bg-gray-800/30'
               }`}
             onClick={() => setActiveCategory(index === activeCategory ? null : index)}
             whileHover={{ y: -3, boxShadow: '0 5px 15px rgba(128, 90, 213, 0.3)' }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
-            <h3 className="text-lg sm:text-xl font-semibold text-purple-400 mb-2 sm:mb-3">{category.title}</h3>
+            <h3 className="text-lg sm:text-xl font-semibold text-purple-400 mb-2 sm:mb-3 tracking-wide uppercase">{category.title}</h3>
             <div className="flex flex-wrap justify-center gap-1 sm:gap-2 mb-2 sm:mb-3">
               {category.skills.map((skill, i) => (
                 <span
                   key={i}
-                  className="px-2 sm:px-3 py-1 bg-gray-700 rounded-full text-xs sm:text-sm text-gray-200"
+                  className="px-2 sm:px-3 py-1 bg-gray-700 rounded-full text-xs sm:text-sm text-gray-200 font-medium tracking-wide"
                 >
                   {skill}
                 </span>
               ))}
             </div>
-            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{category.description}</p>
+            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed font-light">{category.description}</p>
           </motion.div>
         ))}
       </motion.div>
 
-      {/* Description below */}
+      {/* Professional Summary */}
       <p className="text-sm sm:text-lg text-gray-300 max-w-4xl mx-auto mb-12 sm:mb-16 text-center px-4 leading-relaxed">
-        I specialize in full-stack development and machine learning, crafting responsive web apps and predictive models with modern languages and tools.
+        My commitment to continuous learning and cross-functional teamwork enables me to deliver high-quality solutions that drive business value and delight users.
       </p>
 
       {/* Technology Stack */}
@@ -131,15 +134,15 @@ function Skills() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}
       >
-        <h3 className="text-2xl sm:text-3xl font-semibold text-purple-400 text-center mb-6 sm:mb-8">
+        <h3 className="text-2xl sm:text-3xl font-semibold text-purple-400 text-center mb-6 sm:mb-8 tracking-wide">
           Technology Stack
         </h3>
         <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
           {skills.map((skill, index) => (
             <motion.div
               key={index}
-              className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl border border-gray-700 bg-gray-800 flex items-center justify-center transition-transform hover:border-purple-500"
-              whileHover={{ scale: 1.05 }}
+              className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl border border-gray-700 bg-gray-800 flex items-center justify-center transition-transform hover:border-purple-500 shadow-sm"
+              whileHover={{ scale: 1.08 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: index * 0.05 }}

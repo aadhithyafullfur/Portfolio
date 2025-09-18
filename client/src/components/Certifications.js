@@ -39,13 +39,13 @@ const certifications = [
 
 function Certifications() {
   return (
-    <div className="container py-20 px-4">
+    <div className="container py-12 px-4">
       {/* Animated Title */}
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-16"
+        className="text-center mb-10"
       >
         <AnimatedText
           text="My Certifications"
@@ -85,7 +85,7 @@ function Certifications() {
                 className="rounded-2xl h-full"
                 style={{ borderRadius: '1rem' }}
               >
-              <div className="bg-black p-6 rounded-2xl h-full min-h-[400px] flex flex-col relative overflow-hidden">                
+              <div className="bg-black p-5 rounded-2xl h-full min-h-[320px] flex flex-col relative overflow-hidden">                
                 {/* Clean background for better electric border visibility */}
                 <div className="absolute inset-0 bg-black/95 rounded-2xl"></div>
                 
@@ -116,11 +116,11 @@ function Certifications() {
                     transition={{ type: "spring", stiffness: 300 }}
                     className="relative"
                   >
-                    <div className="w-32 h-32 rounded-2xl bg-black flex items-center justify-center relative z-10">
+                    <div className="w-24 h-24 rounded-2xl bg-black flex items-center justify-center relative z-10">
                       <img 
                         src={cert.certImage} 
                         alt={`${cert.name} certificate badge`}
-                        className="w-20 h-20 object-contain opacity-100"
+                        className="w-16 h-16 object-contain opacity-100"
                       />
                     </div>
                     {/* Electric glow animation */}
@@ -216,7 +216,7 @@ function Certifications() {
 
             {/* Mobile: Clean Professional Card */}
             <div className="block md:hidden">
-              <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-500/50 p-6 rounded-2xl h-full min-h-[350px] flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/10">
+              <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-500/50 p-5 rounded-2xl h-full min-h-[280px] flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/10">
                 
                 {/* Header with Company Logo and Title */}
                 <div className="flex items-center gap-4 mb-6">
@@ -234,12 +234,12 @@ function Certifications() {
                 </div>
 
                 {/* Certificate Badge */}
-                <div className="flex justify-center mb-6">
-                  <div className="w-28 h-28 rounded-xl bg-gray-800 flex items-center justify-center">
+                <div className="flex justify-center mb-4">
+                  <div className="w-20 h-20 rounded-xl bg-gray-800 flex items-center justify-center">
                     <img 
                       src={cert.certImage} 
                       alt={`${cert.name} certificate badge`}
-                      className="w-16 h-16 object-contain opacity-100"
+                      className="w-12 h-12 object-contain opacity-100"
                     />
                   </div>
                 </div>
@@ -284,7 +284,7 @@ function Certifications() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
-        className="flex justify-center mt-16 gap-4"
+        className="flex justify-center mt-8 gap-4"
       >
         {certifications.map((cert, index) => (
           <motion.div

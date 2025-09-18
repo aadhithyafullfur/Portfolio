@@ -72,18 +72,19 @@ function Certifications() {
             initial={{ opacity: 0, y: 30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: index * 0.15, duration: 0.6 }}
-            whileHover={{ scale: 1.02, y: -8 }}
+            whileHover={{ scale: window.innerWidth >= 768 ? 1.02 : 1, y: window.innerWidth >= 768 ? -8 : 0 }}
             className="relative group"
           >
-            {/* Enhanced Electric Border Card */}
-            <ElectricBorder
-              color="#FF0066"
-              speed={0.5}
-              chaos={2}
-              thickness={3}
-              className="rounded-2xl h-full"
-              style={{ borderRadius: '1rem' }}
-            >
+            {/* Desktop: Electric Border Card */}
+            <div className="hidden md:block">
+              <ElectricBorder
+                color="#FF0066"
+                speed={0.5}
+                chaos={2}
+                thickness={3}
+                className="rounded-2xl h-full"
+                style={{ borderRadius: '1rem' }}
+              >
               <div className="bg-black p-6 rounded-2xl h-full min-h-[400px] flex flex-col relative overflow-hidden">                
                 {/* Clean background for better electric border visibility */}
                 <div className="absolute inset-0 bg-black/95 rounded-2xl"></div>
@@ -211,6 +212,69 @@ function Certifications() {
             
             {/* Minimal Electric Glow for Border Visibility */}
             <div className="absolute inset-0 rounded-2xl opacity-20 blur-lg -z-10 transition-all duration-500 group-hover:opacity-40 bg-red-500/20"></div>
+            </div>
+
+            {/* Mobile: Clean Professional Card */}
+            <div className="block md:hidden">
+              <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-500/50 p-6 rounded-2xl h-full min-h-[350px] flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/10">
+                
+                {/* Header with Company Logo and Title */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center">
+                    <img 
+                      src={cert.certImage} 
+                      alt={`${cert.issuer} logo`}
+                      className="w-8 h-8 object-contain opacity-100"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-lg">{cert.issuer}</h3>
+                    <p className="text-pink-300 text-sm font-medium">{cert.name}</p>
+                  </div>
+                </div>
+
+                {/* Certificate Badge */}
+                <div className="flex justify-center mb-6">
+                  <div className="w-28 h-28 rounded-xl bg-gray-800 flex items-center justify-center">
+                    <img 
+                      src={cert.certImage} 
+                      alt={`${cert.name} certificate badge`}
+                      className="w-16 h-16 object-contain opacity-100"
+                    />
+                  </div>
+                </div>
+
+                {/* Skills Section */}
+                <div className="flex-1 mb-6">
+                  <h4 className="text-white font-semibold text-sm mb-3">Skills:</h4>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {cert.skills}
+                  </p>
+                </div>
+
+                {/* Date and View Button */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-cyan-400 text-sm">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                    </svg>
+                    {cert.date}
+                  </div>
+                  
+                  <a
+                    href={cert.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-sm font-medium rounded-lg transition-all duration-300"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    View Credential
+                  </a>
+                </div>
+              </div>
+            </div>
           </motion.div>
         ))}
       </div>

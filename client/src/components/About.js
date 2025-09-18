@@ -31,12 +31,12 @@ function About() {
             whileHover={{ scale: 1.06, rotate: 2 }}
           >
             <div
-              className="w-full h-full bg-cover bg-center rounded-full border-4 border-accent-purple shadow-[0_0_20px_rgba(155,93,229,0.5)] animate-float"
+              className="w-full h-full bg-cover bg-center rounded-full border-4 border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.5)] animate-float"
               style={{
                 backgroundImage: "url('/images/bitmoji.png')",
               }}
             />
-            <div className="absolute inset-0 rounded-full bg-purple-500 opacity-30 blur-3xl z-[-1] group-hover:opacity-50 group-hover:blur-2xl transition-all duration-300" />
+            <div className="absolute inset-0 rounded-full bg-red-500 opacity-30 blur-3xl z-[-1] group-hover:opacity-50 group-hover:blur-2xl transition-all duration-300" />
           </motion.div>
 
           {/* Right Section */}
@@ -46,7 +46,7 @@ function About() {
               initial={{ opacity: 0, x: -20, rotateX: -15 }}
               animate={{ opacity: 1, x: 0, rotateX: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-4xl font-extrabold text-accent-purple"
+              className="text-4xl font-extrabold text-red-400"
             >
               About<span className="text-white"> Me</span>
             </motion.h2>
@@ -85,7 +85,7 @@ function About() {
                 transition={{ delay: 0.7, duration: 0.6 }}
                 className="glass p-6 rounded-xl shadow-lg hover:scale-[1.02] transition-all duration-500 border border-gray-600"
               >
-                <h3 className="text-xl font-semibold text-accent-purple mb-3">🎓 Education</h3>
+                <h3 className="text-xl font-semibold text-red-400 mb-3">🎓 Education</h3>
                 <ul className="space-y-2 text-sm text-gray-200">
                   <li><strong>B.Tech - AI & DS</strong>, Kongu Engineering College (2023–2027)</li>
                   <li><strong>HSC</strong>, PKD Matriculation Hr. Sec. School (2021–2023)</li>
@@ -100,7 +100,7 @@ function About() {
                 transition={{ delay: 0.8, duration: 0.6 }}
                 className="glass p-6 rounded-xl shadow-lg hover:scale-[1.02] transition-all duration-500 border border-gray-600"
               >
-                <h3 className="text-xl font-semibold text-accent-purple mb-3">🏆 Achievements</h3>
+                <h3 className="text-xl font-semibold text-red-400 mb-3">🏆 Achievements</h3>
                 <ul className="space-y-2 text-sm text-gray-200">
                   <li><strong>Best Implementation Award</strong> – BYTS India Hackathon 2025</li>
                   <li><strong>Microsoft Certified:</strong> Azure International Certificate (2025)</li>

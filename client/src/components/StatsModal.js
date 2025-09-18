@@ -50,8 +50,8 @@ const StatsModal = ({ isOpen, onClose }) => {
             {/* GitHub Contributions */}
             <div className="flex flex-col items-center text-center">
               <div className="flex items-center gap-2 mb-4">
-                <FaGithub className="text-white text-3xl" />
-                <h3 className="text-2xl font-semibold text-white">GitHub Contributions</h3>
+                <FaGithub className="text-red-400 text-3xl" />
+                <h3 className="text-2xl font-semibold text-red-400">GitHub Contributions</h3>
               </div>
               <img
                 src="https://ghchart.rshah.org/8b5cf6/aadhithyafullfur"

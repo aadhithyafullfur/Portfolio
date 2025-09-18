@@ -228,11 +228,11 @@ const PillNav = ({
   return (
     <div className="relative z-[1000] w-full flex justify-center">
       <nav
-        className={`relative flex items-center justify-center backdrop-blur-md bg-black/10 rounded-full border border-white/5 shadow-lg px-2 py-1 ${className}`}
+        className={`relative flex items-center justify-center backdrop-blur-md bg-black/70 rounded-full border border-red-500/30 shadow-lg px-2 py-1 ${className}`}
         aria-label="Primary"
         style={{
           ...cssVars,
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(220, 38, 38, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
         }}
       >
         {isRouterLink(items?.[0]?.href) ? (
@@ -244,12 +244,12 @@ const PillNav = ({
             ref={el => {
               logoRef.current = el;
             }}
-            className="rounded-full p-0.5 inline-flex items-center justify-center overflow-hidden border border-white/10 hover:border-purple-400/30 transition-all duration-300 mr-2"
+            className="rounded-full p-0.5 inline-flex items-center justify-center overflow-hidden border border-white/10 hover:border-red-400/30 transition-all duration-300 mr-2"
             style={{
               width: 'var(--nav-h)',
               height: 'var(--nav-h)',
-              background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05))',
-              boxShadow: '0 4px 16px rgba(139, 92, 246, 0.1)'
+              background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(15, 15, 15, 0.5))',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)'
             }}
           >
             <img src={logo} alt={logoAlt} ref={logoImgRef} className="w-full h-full object-cover rounded-full" />
@@ -262,12 +262,12 @@ const PillNav = ({
             ref={el => {
               logoRef.current = el;
             }}
-            className="rounded-full p-0.5 inline-flex items-center justify-center overflow-hidden border border-white/10 hover:border-purple-400/30 transition-all duration-300 mr-2"
+            className="rounded-full p-0.5 inline-flex items-center justify-center overflow-hidden border border-white/10 hover:border-red-400/30 transition-all duration-300 mr-2"
             style={{
               width: 'var(--nav-h)',
               height: 'var(--nav-h)',
-              background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05))',
-              boxShadow: '0 4px 16px rgba(139, 92, 246, 0.1)'
+              background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(15, 15, 15, 0.5))',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)'
             }}
           >
             <img src={logo} alt={logoAlt} ref={logoImgRef} className="w-full h-full object-cover rounded-full" />
@@ -294,7 +294,7 @@ const PillNav = ({
 
               const pillStyle = {
                 background: isActive 
-                  ? 'linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(236, 72, 153, 0.8))'
+                  ? 'linear-gradient(135deg, rgba(255, 0, 0, 0.9), rgba(222, 66, 22, 0.8))'
                   : 'transparent',
                 color: isActive 
                   ? '#ffffff' 
@@ -315,7 +315,7 @@ const PillNav = ({
                   <span
                     className="hover-circle absolute left-1/2 bottom-0 rounded-full z-[1] block pointer-events-none"
                     style={{
-                      background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(236, 72, 153, 0.8))',
+                      background: 'linear-gradient(135deg, rgba(255, 17, 25, 0.9), rgba(228, 32, 10, 0.8))',
                       willChange: 'transform',
                       boxShadow: '0 8px 32px rgba(139, 92, 246, 0.6)'
                     }}
@@ -397,7 +397,7 @@ const PillNav = ({
           onClick={toggleMobileMenu}
           aria-label="Toggle menu"
           aria-expanded={isMobileMenuOpen}
-          className="md:hidden rounded-full border border-white/10 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 relative hover:border-purple-400/30 transition-all duration-300"
+          className="md:hidden rounded-full border border-white/10 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 relative hover:border-red-400/30 transition-all duration-300"
           style={{
             width: 'var(--nav-h)',
             height: 'var(--nav-h)',

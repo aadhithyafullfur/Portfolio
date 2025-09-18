@@ -45,7 +45,7 @@ const SymbolsBackground = () => {
       {symbols.map((symbol) => (
         <div
           key={symbol.id}
-          className="absolute text-purple-400 animate-fall"
+          className="absolute text-red-400 animate-fall"
           style={{
             left: symbol.left,
             animationDelay: symbol.delay,
@@ -76,7 +76,7 @@ const Bitmoji3D = ({ isHovered }) => {
       <directionalLight position={[5, 5, 5]} intensity={1} />
       <mesh ref={meshRef}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
-        <meshStandardMaterial color="#8A2BE2" />
+        <meshStandardMaterial color="#dc2626" />
       </mesh>
       <OrbitControls enableZoom={false} />
     </>
@@ -111,21 +111,24 @@ const App = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    // Initialize particles.js only for desktop (not mobile)
+    // Performance-aware initialization
     const isMobile = window.innerWidth <= 768;
+    const isLowEnd = navigator.hardwareConcurrency <= 4 || navigator.deviceMemory <= 4;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
-    // Don't initialize particles on mobile devices
-    if (isMobile) {
+    // Don't initialize particles on mobile, low-end devices, or if reduced motion is preferred
+    if (isMobile || isLowEnd || prefersReducedMotion) {
       return;
     }
     
+    // Further optimize particles for performance
     window.particlesJS('particles-js', {
       particles: {
         number: {
-          value: 100,
+          value: 70, // Drastically reduced from 100 to 15
           density: {
             enable: true,
-            value_area: 800
+            value_area: 1200 // Increased area for better distribution
           }
         },
         color: {
@@ -135,7 +138,7 @@ const App = () => {
           type: 'circle',
           stroke: {
             width: 2,
-            color: '#FF6B9D'
+            color: '#f42a2aff'
           }
         },
         opacity: {
@@ -161,7 +164,7 @@ const App = () => {
         line_linked: {
           enable: true,
           distance: 180,
-          color: '#FF6B9D',
+          color: '#dc2626',
           opacity: 0.4,
           width: 1.5
         },
@@ -378,26 +381,30 @@ const App = () => {
 
   return (
     <div className="min-h-screen text-white relative">
-      {/* Fixed dark background */}
+      {/* Professional clean background */}
       <div 
         className="fixed inset-0" 
         style={{ 
-          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.97) 0%, rgba(0, 0, 0, 0.99) 100%)',
+          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.98) 0%, rgba(10, 10, 10, 0.99) 100%)',
           backdropFilter: 'blur(10px)',
           WebkitBackdropFilter: 'blur(10px)',
           zIndex: 0 
         }} 
       />
       
+      {/* Subtle professional overlays */}
+      <div className="fixed inset-0 bg-gradient-to-br from-gray-900/5 via-black to-gray-900/5 opacity-60 pointer-events-none" style={{ zIndex: 1 }} />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-800/3 via-transparent to-transparent pointer-events-none" style={{ zIndex: 1 }} />
+      
       {/* Particles.js container */}
       <div 
         id="particles-js" 
         className="fixed inset-0" 
-        style={{ zIndex: 1 }}
+        style={{ zIndex: 2 }}
       />
 
       {/* Content container */}
-      <div className="relative" style={{ zIndex: 2 }}>
+      <div className="relative" style={{ zIndex: 10 }}>
         <Navbar />
         <main>
           <Section id="home" className="min-h-screen flex items-center justify-center py-16 sm:py-20">
@@ -419,7 +426,7 @@ const App = () => {
               repeat={Infinity}
               wrapper="h2"
               cursor
-              className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-extrabold text-center lg:text-left bg-gradient-to-r from-indigo-400 via-fuchsia-500 to-rose-500 bg-clip-text text-transparent drop-shadow-xl"
+              className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-extrabold text-center lg:text-left bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent drop-shadow-xl"
             />
             <TypeAnimation
               sequence={['A Full‑Stack Developer 💻', 2000, 'ML Enthusiast 🤖', 2000]}
@@ -428,7 +435,7 @@ const App = () => {
               repeat={Infinity}
               wrapper="h3"
               cursor
-              className="text-xl xs:text-2xl sm:text-4xl md:text-5xl font-semibold mt-4 text-center lg:text-left text-purple-300"
+              className="text-xl xs:text-2xl sm:text-4xl md:text-5xl font-semibold mt-4 text-center lg:text-left text-gray-300"
             />
             <p className="text-base sm:text-lg md:text-xl text-gray-300 mt-4 sm:mt-6 mb-4 sm:mb-6 px-2 sm:px-0">
               Aspiring AI Engineer | Full-Stack Developer | Data Analytics | Machine Learning Enthusiast
@@ -456,7 +463,7 @@ const App = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   download={download}
-                  className="group relative text-white hover:text-purple-400 transition-all duration-300 ease-out p-2 rounded-lg hover:bg-purple-900/20 hover:scale-105 active:scale-95"
+                  className="group relative text-white hover:text-red-400 transition-all duration-300 ease-out p-2 rounded-lg hover:bg-red-900/20 hover:scale-105 active:scale-95"
                   title={label}
                 >
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -481,8 +488,8 @@ const App = () => {
             <div
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className={`w-56 h-56 xs:w-64 xs:h-64 sm:w-72 sm:h-72 mx-auto rounded-full border-4 border-purple-600 shadow-xl overflow-hidden bg-black/30 backdrop-blur-md transition-transform duration-300 ${
-                isHovered ? 'scale-105 shadow-purple-600/70' : ''
+              className={`w-56 h-56 xs:w-64 xs:h-64 sm:w-72 sm:h-72 mx-auto rounded-full border-4 border-red-600 shadow-xl overflow-hidden bg-black/30 backdrop-blur-md transition-transform duration-300 ${
+                isHovered ? 'scale-105 shadow-red-600/70' : ''
               }`}
               style={{ cursor: 'pointer' }}
             >

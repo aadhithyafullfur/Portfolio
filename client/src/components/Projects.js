@@ -69,7 +69,7 @@ function Projects() {
         transition={{ duration: 1, ease: 'easeOut' }}
         className="relative z-10 mb-8 sm:mb-10"
       >
-        <h3 className="text-3xl sm:text-4xl font-bold text-purple-400 text-left">My Projects</h3>
+        <h3 className="text-3xl sm:text-4xl font-bold text-red-400 text-left">My Projects</h3>
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
@@ -85,12 +85,12 @@ function Projects() {
           >
             <div className="flex-grow">
               <div className="flex justify-between items-start mb-3">
-                <h3 className="text-lg sm:text-xl font-bold text-purple-400 leading-tight">{project.title}</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-red-400 leading-tight">{project.title}</h3>
                 <a
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-purple-400 hover:text-purple-600 transition-colors flex-shrink-0 ml-2"
+                  className="text-red-400 hover:text-red-600 transition-colors flex-shrink-0 ml-2"
                   aria-label={`GitHub link for ${project.title}`}
                 >
                   <svg
@@ -113,7 +113,7 @@ function Projects() {
                 {project.tech.map((tech) => (
                   <span
                     key={tech}
-                    className="bg-purple-600 bg-opacity-70 text-white text-xs font-semibold px-2 py-1 rounded-full"
+                    className="bg-red-600 bg-opacity-70 text-white text-xs font-semibold px-2 py-1 rounded-full"
                   >
                     {tech}
                   </span>

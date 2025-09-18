@@ -7,7 +7,8 @@ const AnimatedText = ({
   animation = 'slideUp', 
   staggerDelay = 0.05, 
   duration = 0.5, 
-  delay = 0 
+  delay = 0,
+  redTheme = true // New prop to enable red color variations
 }) => {
   // Animation variants for different effects
   const containerVariants = {

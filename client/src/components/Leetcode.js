@@ -21,8 +21,8 @@ function Leetcode() {
       {/* GitHub Contributions with black color */}
       <div className="flex flex-col items-center text-center">
         <div className="flex items-center gap-2 mb-3">
-          <FaGithub className="text-white text-2xl" />
-          <h2 className="text-2xl font-semibold text-white">GitHub Contributions</h2>
+          <FaGithub className="text-red-400 text-2xl" />
+          <h2 className="text-2xl font-semibold text-red-400">GitHub Contributions</h2>
         </div>
         <img
           src="https://ghchart.rshah.org/8b5cf6/aadhithyafullfur"

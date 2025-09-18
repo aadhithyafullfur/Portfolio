@@ -105,7 +105,7 @@ function Navbar() {
       }`}
     >
       {/* Backdrop blur effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/5 to-transparent backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-gray-900/20 to-transparent backdrop-blur-sm"></div>
       
       {/* Centered container for the nav */}
       <div className="relative flex justify-center items-center py-4 px-4">
@@ -117,10 +117,10 @@ function Navbar() {
           activeHref={activeLink}
           className="drop-shadow-lg"
           ease="power3.easeOut"
-          baseColor="rgba(15, 15, 15, 0.4)"
-          pillColor="rgba(30, 30, 30, 0.6)"
-          hoveredPillTextColor="#f8fafc"
-          pillTextColor="rgba(203, 213, 225, 0.9)"
+          baseColor="rgba(255, 255, 255, 0.9)"
+          pillColor="rgba(220, 38, 38, 0.9)"
+          hoveredPillTextColor="#ffffff"
+          pillTextColor="rgba(255, 255, 255, 0.8)"
           initialLoadAnimation={true}
           onMobileMenuClick={() => {
             // Optional: Add any additional mobile menu handling

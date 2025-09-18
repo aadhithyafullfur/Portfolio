@@ -49,7 +49,7 @@ function Certifications() {
       >
         <AnimatedText
           text="My Certifications"
-          className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-red-400 to-pink-500 tracking-wide"
+          className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-red-600 tracking-wide"
           animation="slideUp"
           staggerDelay={0.05}
         />
@@ -102,7 +102,7 @@ function Certifications() {
                     <h3 className="text-white font-bold text-lg">{cert.issuer}</h3>
                     <AnimatedText
                       text={cert.name}
-                      className="text-pink-300 text-sm font-medium"
+                      className="text-red-300 text-sm font-medium"
                       animation="slideLeft"
                       staggerDelay={0.02}
                     />
@@ -124,10 +124,10 @@ function Certifications() {
                       />
                     </div>
                     {/* Electric glow animation */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-pink-500/20 to-red-500/20 blur-md animate-pulse"></div>
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-600/20 blur-md animate-pulse"></div>
                     
                     {/* Corner electric sparks */}
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-pink-400 rounded-full opacity-70 animate-pulse"></div>
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-400 rounded-full opacity-70 animate-pulse"></div>
                     <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-red-500 rounded-full opacity-60 animate-ping" style={{ animationDelay: '0.7s' }}></div>
                   </motion.div>
                 </div>
@@ -171,7 +171,7 @@ function Certifications() {
                       href={cert.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-sm font-medium rounded-lg transition-all duration-300 cursor-pointer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 text-white text-sm font-medium rounded-lg transition-all duration-300 cursor-pointer"
                       onClick={(e) => {
                         e.preventDefault();
                         console.log('Opening certificate:', cert.link);
@@ -193,7 +193,7 @@ function Certifications() {
                 
                 {/* Subtle Electric Sparks */}
                 <div className="absolute bottom-3 left-3 w-1.5 h-1.5 rounded-full bg-red-400 opacity-60 animate-ping" style={{ animationDelay: '0.8s' }}></div>
-                <div className="absolute top-1/2 left-2 w-1 h-1 rounded-full bg-pink-300 opacity-70 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                <div className="absolute top-1/2 left-2 w-1 h-1 rounded-full bg-red-300 opacity-70 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
               </div>
             </ElectricBorder>
 
@@ -202,8 +202,8 @@ function Certifications() {
             {/* Thin Electric Spark Connections */}
             {index < certifications.length - 1 && index % 3 !== 2 && (
               <div className="absolute -right-6 top-1/2 w-12 h-px z-0 hidden xl:block">
-                <div className="w-full h-px bg-gradient-to-r from-pink-500/60 via-red-500/80 to-pink-500/60 relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-pink-500/40 via-red-500/60 to-pink-500/40 blur-sm animate-pulse"></div>
+                <div className="w-full h-px bg-gradient-to-r from-red-500/60 via-red-500/80 to-red-600/60 relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500/40 via-red-500/60 to-red-600/40 blur-sm animate-pulse"></div>
                   {/* Moving spark */}
                   <div className="absolute top-0 w-2 h-px bg-white/80 animate-ping" style={{ left: '50%', transform: 'translateX(-50%)' }}></div>
                 </div>
@@ -216,7 +216,7 @@ function Certifications() {
 
             {/* Mobile: Clean Professional Card */}
             <div className="block md:hidden">
-              <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-pink-500/50 p-5 rounded-2xl h-full min-h-[280px] flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/10">
+              <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-red-500/50 p-5 rounded-2xl h-full min-h-[280px] flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10">
                 
                 {/* Header with Company Logo and Title */}
                 <div className="flex items-center gap-4 mb-6">
@@ -229,7 +229,7 @@ function Certifications() {
                   </div>
                   <div>
                     <h3 className="text-white font-bold text-lg">{cert.issuer}</h3>
-                    <p className="text-pink-300 text-sm font-medium">{cert.name}</p>
+                    <p className="text-red-300 text-sm font-medium">{cert.name}</p>
                   </div>
                 </div>
 
@@ -292,9 +292,9 @@ function Certifications() {
             initial={{ scale: 0, rotate: 180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 1.5 + index * 0.1, duration: 0.5, type: "spring" }}
-            className="w-4 h-4 rounded-full bg-pink-500 opacity-80 relative shadow-lg shadow-pink-500/50"
+            className="w-4 h-4 rounded-full bg-red-500 opacity-80 relative shadow-lg shadow-red-500/50"
           >
-            <div className="absolute inset-0 rounded-full animate-ping opacity-60 bg-pink-500"></div>
+            <div className="absolute inset-0 rounded-full animate-ping opacity-60 bg-red-500"></div>
           </motion.div>
         ))}
       </motion.div>

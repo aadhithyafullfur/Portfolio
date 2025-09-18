@@ -6,6 +6,11 @@ const ANIMATION_CONFIG = {
   COPY_HEADROOM: 2
 };
 
+// Performance detection
+const isMobile = typeof window !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const isLowEnd = typeof window !== 'undefined' && navigator.hardwareConcurrency <= 4 && navigator.deviceMemory && navigator.deviceMemory <= 4;
+const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const toCssLength = value => (typeof value === 'number' ? `${value}px` : (value ?? undefined));
 
 const cx = (...parts) => parts.filter(Boolean).join(' ');
@@ -82,20 +87,44 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, isHovered, pauseOn
     const track = trackRef.current;
     if (!track) return;
 
-    const prefersReduced =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Use simplified animation or no animation for performance-constrained devices
+    const shouldSimplifyAnimation = prefersReducedMotion || isMobile || isLowEnd;
 
     if (seqWidth > 0) {
       offsetRef.current = ((offsetRef.current % seqWidth) + seqWidth) % seqWidth;
       track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
     }
 
-    if (prefersReduced) {
-      track.style.transform = 'translate3d(0, 0, 0)';
+    if (shouldSimplifyAnimation) {
+      // Use CSS animation instead of RAF for better performance on mobile
+      if (prefersReducedMotion) {
+        track.style.transform = 'translate3d(0, 0, 0)';
+        track.style.animation = 'none';
+      } else {
+        // Simple CSS animation for mobile devices
+        const duration = seqWidth / Math.abs(targetVelocity || 50);
+        track.style.animation = `logoScroll ${duration}s linear infinite`;
+        track.style.animationDirection = targetVelocity < 0 ? 'reverse' : 'normal';
+        
+        // Add CSS keyframes if not already present
+        if (!document.querySelector('#logo-scroll-keyframes')) {
+          const style = document.createElement('style');
+          style.id = 'logo-scroll-keyframes';
+          style.textContent = `
+            @keyframes logoScroll {
+              from { transform: translate3d(0, 0, 0); }
+              to { transform: translate3d(-${seqWidth}px, 0, 0); }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+      }
+      
       return () => {
         lastTimestampRef.current = null;
+        if (!prefersReducedMotion) {
+          track.style.animation = '';
+        }
       };
     }
 

@@ -16,12 +16,20 @@ function hexToRgba(hex, alpha = 1) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thickness = 2, className, style }) => {
+const ElectricBorder = ({ children, color = '#dc2626', speed = 1, chaos = 1, thickness = 2, className, style }) => {
   const rawId = useId().replace(/[:]/g, '');
   const filterId = `turbulent-displace-${rawId}`;
   const svgRef = useRef(null);
   const rootRef = useRef(null);
   const strokeRef = useRef(null);
+  
+  // Performance detection
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const isLowEnd = typeof navigator !== 'undefined' && (navigator.hardwareConcurrency <= 4 || navigator.deviceMemory <= 4);
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  // Disable electric effects on performance-constrained devices
+  const shouldDisableEffects = isMobile || isLowEnd || prefersReducedMotion;
 
   const updateAnim = () => {
     const svg = svgRef.current;
@@ -126,6 +134,26 @@ const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thi
     zIndex: -1,
     background: `linear-gradient(-30deg, ${hexToRgba(color, 0.8)}, transparent, ${color})`
   };
+
+  // Use simple border fallback for performance-constrained devices
+  if (shouldDisableEffects) {
+    const simpleBorderStyle = {
+      ...inheritRadius,
+      borderWidth: thickness,
+      borderStyle: 'solid',
+      borderColor: color,
+      boxShadow: `0 0 ${thickness * 2}px ${hexToRgba(color, 0.3)}`
+    };
+
+    return (
+      <div 
+        className={`relative ${className || ''}`} 
+        style={{...style, ...simpleBorderStyle}}
+      >
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div ref={rootRef} className={'relative isolate ' + (className ?? '')} style={style}>

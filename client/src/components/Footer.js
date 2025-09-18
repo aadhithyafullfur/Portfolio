@@ -13,10 +13,10 @@ function Footer() {
       <div className="container flex flex-col items-center">
         <div className="flex space-x-6 mb-4">
           <a href="https://github.com/aadhithya120" target="_blank" rel="noopener noreferrer">
-            <FaGithub className="w-6 h-6 hover:text-accent-gold transition-colors" />
+            <FaGithub className="w-6 h-6 text-white hover:text-red-400 transition-colors" />
           </a>
           <a href="https://linkedin.com/in/aadhithya120" target="_blank" rel="noopener noreferrer">
-            <FaLinkedin className="w-6 h-6 hover:text-accent-gold transition-colors" />
+            <FaLinkedin className="w-6 h-6 text-white hover:text-red-400 transition-colors" />
           </a>
         </div>
         <p className="text-sm text-text-light">© 2025 Aadhithya R. All rights reserved.</p>

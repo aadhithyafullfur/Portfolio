@@ -79,7 +79,7 @@ function Skills() {
         initial="hidden"
         animate="visible"
         transition={{ duration: 0.8 }}
-        className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-6 text-left max-w-max"
+        className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 mb-6 text-left max-w-max"
       >
         Skills & Expertise
       </motion.h2>
@@ -98,14 +98,14 @@ function Skills() {
             className={`p-4 sm:p-5 rounded-xl cursor-pointer border text-center transition-all duration-300 h-full
               ${
                 activeCategory === index
-                  ? 'border-purple-500 bg-purple-900/20'
+                  ? 'border-red-500 bg-red-900/20'
                   : 'border-gray-700 hover:bg-gray-800/30'
               }`}
             onClick={() => setActiveCategory(index === activeCategory ? null : index)}
             whileHover={{ y: -3, boxShadow: '0 5px 15px rgba(128, 90, 213, 0.3)' }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
-            <h3 className="text-lg sm:text-xl font-semibold text-purple-400 mb-2 sm:mb-3">{category.title}</h3>
+            <h3 className="text-lg sm:text-xl font-semibold text-red-400 mb-2 sm:mb-3">{category.title}</h3>
             <div className="flex flex-wrap justify-center gap-1 sm:gap-2 mb-2 sm:mb-3">
               {category.skills.map((skill, i) => (
                 <span
@@ -132,7 +132,7 @@ function Skills() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}
       >
-        <h3 className="text-2xl sm:text-3xl font-semibold text-purple-400 text-center mb-6 sm:mb-8">
+        <h3 className="text-2xl sm:text-3xl font-semibold text-red-400 text-center mb-6 sm:mb-8">
           Technology Stack
         </h3>
         
@@ -163,7 +163,7 @@ function Skills() {
             {skills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-3 border border-gray-700 hover:border-purple-500/50 transition-all duration-300"
+                className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-3 border border-gray-700 hover:border-red-500/50 transition-all duration-300"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
@@ -182,7 +182,7 @@ function Skills() {
                 </div>
                 
                 {/* Subtle hover glow */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/10 group-hover:to-pink-500/10 transition-all duration-300 pointer-events-none"></div>
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-500/0 to-red-600/0 group-hover:from-red-500/10 group-hover:to-red-600/10 transition-all duration-300 pointer-events-none"></div>
               </motion.div>
             ))}
           </div>
@@ -195,7 +195,7 @@ function Skills() {
             className="mt-8 p-4 bg-gradient-to-r from-gray-900/50 to-gray-800/50 rounded-2xl border border-gray-700 max-w-md mx-auto"
           >
             <p className="text-sm text-gray-300 text-center leading-relaxed">
-              Experienced in <span className="text-purple-400 font-semibold">{skills.length}+ technologies</span> including modern web frameworks, cloud platforms, and development tools.
+              Experienced in <span className="text-red-400 font-semibold">{skills.length}+ technologies</span> including modern web frameworks, cloud platforms, and development tools.
             </p>
           </motion.div>
         </div>

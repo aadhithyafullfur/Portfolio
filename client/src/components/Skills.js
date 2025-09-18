@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import LogoLoop from './LogoLoop';
 
 function Skills() {
   const skills = [
@@ -134,25 +135,69 @@ function Skills() {
         <h3 className="text-2xl sm:text-3xl font-semibold text-purple-400 text-center mb-6 sm:mb-8">
           Technology Stack
         </h3>
-        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
-          {skills.map((skill, index) => (
-            <motion.div
-              key={index}
-              className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl border border-gray-700 bg-gray-800 flex items-center justify-center transition-transform hover:border-purple-500"
-              whileHover={{ scale: 1.05 }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <motion.img
-                src={skill.icon}
-                alt={skill.name}
-                className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 object-contain"
-                whileHover={{ rotate: 10, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              />
-            </motion.div>
-          ))}
+        
+        {/* Desktop: Animated Logo Loop */}
+        <div className="hidden md:block max-w-6xl mx-auto">
+          <LogoLoop
+            logos={skills.map(skill => ({
+              src: skill.icon,
+              alt: skill.name,
+              title: skill.name
+            }))}
+            speed={60}
+            direction="left"
+            logoHeight={48}
+            gap={40}
+            pauseOnHover={true}
+            scaleOnHover={true}
+            fadeOut={true}
+            fadeOutColor="#000000"
+            ariaLabel="Technology skills and tools"
+            className="py-4"
+          />
+        </div>
+        
+        {/* Mobile: Professional Grid Layout */}
+        <div className="block md:hidden">
+          <div className="grid grid-cols-4 sm:grid-cols-5 gap-4 max-w-md mx-auto">
+            {skills.map((skill, index) => (
+              <motion.div
+                key={index}
+                className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-3 border border-gray-700 hover:border-purple-500/50 transition-all duration-300"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+              >
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-black/30">
+                    <img
+                      src={skill.icon}
+                      alt={skill.name}
+                      className="w-6 h-6 object-contain filter brightness-110"
+                    />
+                  </div>
+                  <span className="text-xs text-gray-300 font-medium text-center leading-tight">
+                    {skill.name}
+                  </span>
+                </div>
+                
+                {/* Subtle hover glow */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/10 group-hover:to-pink-500/10 transition-all duration-300 pointer-events-none"></div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Mobile Skills Summary */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            className="mt-8 p-4 bg-gradient-to-r from-gray-900/50 to-gray-800/50 rounded-2xl border border-gray-700 max-w-md mx-auto"
+          >
+            <p className="text-sm text-gray-300 text-center leading-relaxed">
+              Experienced in <span className="text-purple-400 font-semibold">{skills.length}+ technologies</span> including modern web frameworks, cloud platforms, and development tools.
+            </p>
+          </motion.div>
         </div>
       </motion.div>
     </div>

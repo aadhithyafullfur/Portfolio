@@ -85,20 +85,36 @@ const Bitmoji3D = ({ isHovered }) => {
 };
 
 const Section = ({ children, id, className }) => {
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
+  
+  useEffect(() => {
+    const handleResize = () => setScreenSize(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const { ref, inView } = useInView({ 
     triggerOnce: true, 
-    threshold: window.innerWidth <= 768 ? 0.05 : 0.1 
+    threshold: screenSize <= 640 ? 0.05 : screenSize <= 1024 ? 0.08 : 0.1 
   });
+
+  const getAnimationValues = () => {
+    if (screenSize <= 640) return { y: 20, duration: 0.5, delay: 0.1 };
+    if (screenSize <= 1024) return { y: 30, duration: 0.6, delay: 0.05 };
+    return { y: 50, duration: 0.8, delay: 0 };
+  };
+
+  const animationValues = getAnimationValues();
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: window.innerWidth <= 768 ? 30 : 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: window.innerWidth <= 768 ? 30 : 50 }}
+      initial={{ opacity: 0, y: animationValues.y }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: animationValues.y }}
       transition={{ 
-        duration: window.innerWidth <= 768 ? 0.6 : 0.8, 
+        duration: animationValues.duration, 
         ease: 'easeOut',
-        delay: window.innerWidth <= 768 ? 0.1 : 0 
+        delay: animationValues.delay 
       }}
       id={id}
       className={className}
@@ -408,7 +424,7 @@ const App = () => {
       <div className="relative" style={{ zIndex: 10 }}>
         <Navbar />
         <main>
-          <Section id="home" className="min-h-screen flex items-center justify-center py-16 sm:py-20">
+          <Section id="home" className="min-h-screen flex items-center justify-center py-12 sm:py-16 md:py-20 lg:py-24">
         <div className="container flex flex-col-reverse lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -509,27 +525,27 @@ const App = () => {
         </div>
       </Section>
 
-  <Section id="about" className="py-24 sm:py-32">
+  <Section id="about" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
             <About />
           </Section>
 
-          <Section id="certifications" className="py-24 sm:py-32">
+          <Section id="certifications" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
             <Certifications />
           </Section>
 
-          <Section id="skills" className="py-24 sm:py-32">
+          <Section id="skills" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
             <Skills />
           </Section>
 
-          <Section id="projects" className="py-24 sm:py-32">
+          <Section id="projects" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
             <Projects />
           </Section>
 
-          <Section id="leetcode" className="py-24 sm:py-32">
+          <Section id="leetcode" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
             <Leetcode />
           </Section>
 
-          <Section id="contact" className="py-24 sm:py-32">
+          <Section id="contact" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
             <Contact />
           </Section>
         </main>

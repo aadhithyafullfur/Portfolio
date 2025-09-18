@@ -103,9 +103,12 @@ module.exports = {
       },
       screens: {
         'xs': '475px',
-      },
-      screens: {
-        'xs': '475px',
+        'mobile-lg': '540px',
+        'tablet': '768px',
+        'laptop': '1024px',
+        'desktop': '1280px',
+        'wide': '1536px',
+        'ultrawide': '1920px',
       },
     },
   },

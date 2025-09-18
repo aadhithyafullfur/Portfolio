@@ -7,6 +7,7 @@ import Projects from './components/Projects.js';
 import Contact from './components/Contact.js';
 import Footer from './components/Footer.js';
 import Leetcode from './components/Leetcode.js';
+import GlitchText from './components/Glitchtext.js';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { TypeAnimation } from 'react-type-animation';
@@ -419,15 +420,16 @@ const App = () => {
             }}
             className="lg:w-1/2 text-center lg:text-left"
           >
-            <TypeAnimation
-              sequence={['Hi, I am Aadhithya R 👋', 2000]}
-              speed={60}
-              deletionSpeed={40}
-              repeat={Infinity}
-              wrapper="h2"
-              cursor
-              className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-extrabold text-center lg:text-left bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent drop-shadow-xl"
-            />
+            <div className="text-center lg:text-left mb-4">
+              <GlitchText
+                speed={1.5}
+                enableShadows={true}
+                enableOnHover={false}
+                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-xl"
+              >
+                Hi, I am Aadhithya R 👋
+              </GlitchText>
+            </div>
             <TypeAnimation
               sequence={['A Full‑Stack Developer 💻', 2000, 'ML Enthusiast 🤖', 2000]}
               speed={10}

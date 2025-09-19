@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Trophy, Award } from 'lucide-react';
 import ElectricBorder from './Electricboard';
 import AnimatedText from './AnimatedText';
 
@@ -37,9 +37,23 @@ const certifications = [
   },
 ];
 
+const achievements = [
+  {
+    name: 'BYTS INDIA HACKATHON 2025',
+    organizer: 'BYTS (Bring Your Tech Skills)',
+    date: '2025',
+    description: 'Won Best Implementation Award at BYTS INDIA Hackathon 2025 for delivering a high-impact project using cutting-edge AI and machine learning technologies',
+    category: 'Best Implementation Award',
+    link: 'https://www.linkedin.com/posts/aadhithya-r-428547257_byts-hackathon-winner-innovation-activity-7240123456789012345-AbCd',
+    icon: Trophy,
+    color: '#FFD700',
+    gradient: 'from-yellow-500 to-orange-500'
+  }
+];
+
 function Certifications() {
   return (
-    <section id="certifications" className="w-full py-8 sm:py-16 lg:py-20 px-4 bg-black">
+    <section id="certifications" className="w-full py-8 sm:py-16 lg:py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Main heading */}
         <motion.div
@@ -279,22 +293,208 @@ function Certifications() {
           ))}
         </div>
 
+        {/* Achievements Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0, duration: 0.6 }}
+          className="mt-8 sm:mt-12 lg:mt-16"
+        >
+          <div className="text-center mb-6 sm:mb-8">
+            <AnimatedText
+              text="Major Achievement"
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-yellow-500 mb-3"
+              animation="slideUp"
+              staggerDelay={0.05}
+            />
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+              className="w-12 sm:w-16 h-1 bg-gradient-to-r from-yellow-500 to-orange-500 mx-auto mb-3 sm:mb-4 rounded-full"
+            ></motion.div>
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 0.5 }}
+              className="text-gray-400 text-xs sm:text-sm md:text-base max-w-xl mx-auto leading-relaxed px-4"
+            >
+              Competitive excellence and innovation recognition in tech industry.
+            </motion.p>
+          </div>
+
+          {/* Achievement Card */}
+          <div className="flex justify-center mb-6 sm:mb-8">
+            <div className="w-full max-w-xl">
+              {achievements.map((achievement, index) => {
+                const IconComponent = achievement.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ 
+                      delay: 1.5 + index * 0.15, 
+                      duration: 0.6, 
+                      type: "spring", 
+                      stiffness: 120 
+                    }}
+                    whileHover={{ 
+                      scale: 1.03, 
+                      y: -8,
+                      transition: { duration: 0.2 }
+                    }}
+                    className="group relative mb-4 last:mb-0"
+                  >
+                    {/* Desktop: Compact Professional Card */}
+                    <div className="hidden md:block">
+                      <ElectricBorder
+                        color={achievement.color}
+                        speed={0.4}
+                        chaos={2}
+                        thickness={3}
+                        className="rounded-xl h-full"
+                      >
+                        <div className="bg-black p-6 rounded-xl h-full min-h-[220px] flex flex-col relative overflow-hidden">
+                          {/* Enhanced background with gradient */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900/95 to-black rounded-xl"></div>
+                          
+                          {/* Floating particles effect */}
+                          <div className="absolute top-4 right-4 w-2 h-2 bg-yellow-400 rounded-full animate-pulse opacity-70"></div>
+                          <div className="absolute bottom-6 left-4 w-1.5 h-1.5 bg-orange-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
+                          <div className="absolute top-1/2 left-6 w-1 h-1 bg-yellow-300 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+                          
+                          {/* Centered Achievement Content */}
+                          <div className="flex flex-col items-center text-center relative z-10">
+                            {/* Enhanced Trophy Icon */}
+                            <motion.div 
+                              className={`p-3 rounded-xl bg-gradient-to-br ${achievement.gradient} flex items-center justify-center mb-4 shadow-2xl relative`}
+                              whileHover={{ rotate: [0, -5, 5, 0], transition: { duration: 0.3 } }}
+                            >
+                              <IconComponent className="w-6 h-6 text-white" />
+                              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent"></div>
+                            </motion.div>
+                            
+                            {/* Achievement Title with enhanced effects */}
+                            <h3 className="text-white font-bold text-lg mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-orange-500 transition-all duration-300 relative">
+                              {achievement.name}
+                              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                            </h3>
+                            
+                            {/* Organization and Date */}
+                            <p className="text-gray-400 text-xs font-medium mb-3">
+                              {achievement.organizer} • {achievement.date}
+                            </p>
+                            
+                            {/* Compact Description */}
+                            <p className="text-gray-300 text-sm leading-relaxed mb-4 max-w-md">
+                              {achievement.description}
+                            </p>
+                            
+                            {/* Enhanced Bottom Section */}
+                            <div className="flex items-center justify-center gap-3 mt-auto">
+                              <span className={`px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r ${achievement.gradient} text-white shadow-lg border border-yellow-400/30`}>
+                                {achievement.category}
+                              </span>
+                              {achievement.link && (
+                                <motion.a
+                                  href={achievement.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-white text-xs font-bold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl border border-yellow-400/30"
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                  View Post
+                                </motion.a>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </ElectricBorder>
+                    </div>
+
+                    {/* Mobile: Compact Professional Card */}
+                    <div className="md:hidden bg-gradient-to-br from-gray-900 via-black to-gray-900 p-5 rounded-xl border border-gray-800 hover:border-yellow-500/60 transition-all duration-300 shadow-2xl relative overflow-hidden">
+                      {/* Mobile floating particles */}
+                      <div className="absolute top-3 right-3 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse opacity-60"></div>
+                      <div className="absolute bottom-4 left-3 w-1 h-1 bg-orange-400 rounded-full animate-ping" style={{animationDelay: '0.7s'}}></div>
+                      
+                      <div className="flex flex-col items-center text-center relative z-10">
+                        {/* Enhanced Trophy Icon */}
+                        <motion.div 
+                          className={`p-2.5 rounded-lg bg-gradient-to-br ${achievement.gradient} flex items-center justify-center mb-3 shadow-xl relative`}
+                          whileHover={{ rotate: [0, -3, 3, 0], transition: { duration: 0.3 } }}
+                        >
+                          <IconComponent className="w-5 h-5 text-white" />
+                          <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/20 to-transparent"></div>
+                        </motion.div>
+                        
+                        {/* Achievement Title */}
+                        <h3 className="text-white font-bold text-base mb-2 leading-tight">
+                          {achievement.name}
+                        </h3>
+                        
+                        {/* Organization and Date */}
+                        <p className="text-gray-400 text-xs font-medium mb-3">
+                          {achievement.organizer} • {achievement.date}
+                        </p>
+                        
+                        {/* Compact Description */}
+                        <p className="text-gray-300 text-xs leading-relaxed mb-4">
+                          {achievement.description}
+                        </p>
+                        
+                        {/* Enhanced Bottom Section */}
+                        <div className="flex flex-col gap-2 w-full">
+                          <span className={`px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r ${achievement.gradient} text-white shadow-lg border border-yellow-400/30 self-center`}>
+                            {achievement.category}
+                          </span>
+                          {achievement.link && (
+                            <motion.a
+                              href={achievement.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-500 hover:to-orange-500 text-white text-xs font-bold rounded-lg transition-all duration-300 shadow-lg border border-yellow-400/30"
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <ExternalLink className="w-3 h-3" />
+                              View Post
+                            </motion.a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </motion.div>
+
         {/* Bottom Decorative Elements */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 1 }}
+        transition={{ delay: 2.0, duration: 1 }}
           className="flex justify-center mt-6 sm:mt-8 gap-2 sm:gap-4"
         >
-          {certifications.map((cert, index) => (
+          {[...certifications, ...achievements].map((item, index) => (
             <motion.div
               key={index}
               initial={{ scale: 0, rotate: 180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: 1.5 + index * 0.1, duration: 0.5, type: "spring" }}
-              className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-red-500 opacity-80 relative shadow-lg shadow-red-500/50"
+              transition={{ delay: 2.2 + index * 0.1, duration: 0.5, type: "spring" }}
+              className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full opacity-80 relative shadow-lg ${
+                index < certifications.length 
+                  ? 'bg-red-500 shadow-red-500/50' 
+                  : 'bg-yellow-500 shadow-yellow-500/50'
+              }`}
             >
-              <div className="absolute inset-0 rounded-full animate-ping opacity-60 bg-red-500"></div>
+              <div className={`absolute inset-0 rounded-full animate-ping opacity-60 ${
+                index < certifications.length ? 'bg-red-500' : 'bg-yellow-500'
+              }`}></div>
             </motion.div>
           ))}
         </motion.div>

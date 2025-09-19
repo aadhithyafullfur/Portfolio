@@ -19,7 +19,7 @@ function About() {
       <motion.div
         initial={{ opacity: 0, x: 50, rotateX: -30 }}
         animate={controls}
-        className="glass p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl max-w-7xl mx-auto mt-12 sm:mt-16 shadow-2xl backdrop-blur-md"
+        className="p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl max-w-7xl mx-auto mt-12 sm:mt-16"
         style={{ perspective: '1000px' }}
       >
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12">

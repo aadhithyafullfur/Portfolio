@@ -14,25 +14,27 @@ function Contact() {
   const [status, setStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Animation variants
+  // Animation variants - optimized for performance
   const containerVariants = {
-    hidden: { opacity: 0, y: window.innerWidth <= 768 ? 30 : 50 },
+    hidden: { opacity: 0, y: 40, transform: 'translate3d(0, 40px, 0)' },
     visible: { 
       opacity: 1, 
       y: 0,
+      transform: 'translate3d(0, 0, 0)',
       transition: { 
-        duration: window.innerWidth <= 768 ? 0.6 : 0.8,
-        staggerChildren: 0.3
+        duration: 0.7,
+        staggerChildren: 0.2
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: window.innerWidth <= 768 ? 20 : 30 },
+    hidden: { opacity: 0, y: 20, transform: 'translate3d(0, 20px, 0)' },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: window.innerWidth <= 768 ? 0.5 : 0.6 }
+      transform: 'translate3d(0, 0, 0)',
+      transition: { duration: 0.5 }
     }
   };
 
@@ -91,7 +93,7 @@ function Contact() {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: window.innerWidth <= 768 ? 0.2 : 0.3 }}
+        viewport={{ once: true, amount: 0.25 }}
         className="container mx-auto px-4 sm:px-6 lg:px-8"
       >
         <motion.div

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import PixelCard from './PixelCard';
 
@@ -43,17 +43,19 @@ const projects = [
 ];
 
 const projectVariants = {
-  hidden: { opacity: 0, y: window.innerWidth <= 768 ? 15 : 20 },
+  hidden: { opacity: 0, y: 20, transform: 'translate3d(0, 20px, 0)' },
   visible: { 
     opacity: 1, 
     y: 0,
+    transform: 'translate3d(0, 0, 0)',
     transition: {
-      duration: window.innerWidth <= 768 ? 0.5 : 0.6,
+      duration: 0.5,
       ease: 'easeOut'
     }
   },
   hover: { 
-    scale: window.innerWidth <= 768 ? 1.02 : 1.03,
+    scale: 1.02,
+    transform: 'scale3d(1.02, 1.02, 1)',
     transition: {
       duration: 0.2,
       ease: 'easeOut'
@@ -61,13 +63,56 @@ const projectVariants = {
   },
 };
 
-function Projects() {
+const Projects = React.memo(() => {
+  const colorSchemes = useMemo(() => [
+    {
+      // QuikCart - Bright Red
+      variant: 'default',
+      colors: '#fecaca,#f87171,#dc2626',
+      titleColor: 'text-red-400',
+      linkColor: 'text-red-400 hover:text-red-300',
+      tagBg: 'bg-red-600/80',
+      tagBorder: 'border-red-400/30',
+      cardBorder: 'border-gray-700/50 hover:border-red-500/60'
+    },
+    {
+      // Traffic Prediction - Deep Red
+      variant: 'default',
+      colors: '#fee2e2,#fca5a5,#ef4444',
+      titleColor: 'text-red-500',
+      linkColor: 'text-red-500 hover:text-red-400',
+      tagBg: 'bg-red-700/80',
+      tagBorder: 'border-red-500/30',
+      cardBorder: 'border-gray-700/50 hover:border-red-600/60'
+    },
+    {
+      // FarmConnect - Rose Red
+      variant: 'default',
+      colors: '#ffe4e6,#fb7185,#e11d48',
+      titleColor: 'text-rose-400',
+      linkColor: 'text-rose-400 hover:text-rose-300',
+      tagBg: 'bg-rose-600/80',
+      tagBorder: 'border-rose-400/30',
+      cardBorder: 'border-gray-700/50 hover:border-rose-500/60'
+    },
+    {
+      // Brain Tumor - Crimson Red
+      variant: 'default',
+      colors: '#fecdd3,#f43f5e,#be123c',
+      titleColor: 'text-red-400',
+      linkColor: 'text-red-400 hover:text-red-300',
+      tagBg: 'bg-red-600/80',
+      tagBorder: 'border-red-400/30',
+      cardBorder: 'border-gray-700/50 hover:border-red-500/60'
+    }
+  ], []);
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <motion.div
-        initial={{ opacity: 2, filter: 'blur(8px)' }}
+        initial={{ opacity: 0, filter: 'blur(4px)' }}
         animate={{ opacity: 1, filter: 'blur(0px)' }}
-        transition={{ duration: 1, ease: 'easeOut' }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
         className="relative z-10 mb-8 sm:mb-10"
       >
         <h3 className="text-3xl sm:text-4xl font-bold text-red-400 text-left">My Projects</h3>
@@ -75,49 +120,7 @@ function Projects() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
         {projects.map((project, index) => {
-          // Red color schemes with subtle variations for each project
-          const colorSchemes = [
-            {
-              // QuikCart - Bright Red
-              variant: 'default',
-              colors: '#fecaca,#f87171,#dc2626',
-              titleColor: 'text-red-400',
-              linkColor: 'text-red-400 hover:text-red-300',
-              tagBg: 'bg-red-600/80',
-              tagBorder: 'border-red-400/30',
-              cardBorder: 'border-gray-700/50 hover:border-red-500/60'
-            },
-            {
-              // Traffic Prediction - Deep Red
-              variant: 'default',
-              colors: '#fee2e2,#fca5a5,#ef4444',
-              titleColor: 'text-red-500',
-              linkColor: 'text-red-500 hover:text-red-400',
-              tagBg: 'bg-red-700/80',
-              tagBorder: 'border-red-500/30',
-              cardBorder: 'border-gray-700/50 hover:border-red-600/60'
-            },
-            {
-              // FarmConnect - Rose Red
-              variant: 'default',
-              colors: '#ffe4e6,#fb7185,#e11d48',
-              titleColor: 'text-rose-400',
-              linkColor: 'text-rose-400 hover:text-rose-300',
-              tagBg: 'bg-rose-600/80',
-              tagBorder: 'border-rose-400/30',
-              cardBorder: 'border-gray-700/50 hover:border-rose-500/60'
-            },
-            {
-              // Brain Tumor - Crimson Red
-              variant: 'default',
-              colors: '#fecdd3,#f43f5e,#be123c',
-              titleColor: 'text-red-400',
-              linkColor: 'text-red-400 hover:text-red-300',
-              tagBg: 'bg-red-600/80',
-              tagBorder: 'border-red-400/30',
-              cardBorder: 'border-gray-700/50 hover:border-red-500/60'
-            }
-          ];
+
 
           const scheme = colorSchemes[index] || colorSchemes[0];
           
@@ -128,15 +131,15 @@ function Projects() {
               initial="hidden"
               animate="visible"
               whileHover="hover"
-              transition={{ delay: index * 0.15, duration: 0.6 }}
+              transition={{ delay: index * 0.1, duration: 0.4 }}
               className="flex justify-center"
             >
               <PixelCard 
                 variant={scheme.variant}
                 colors={scheme.colors}
-                gap={4}
-                speed={30}
-                className={`w-full max-w-sm h-[470px] bg-gradient-to-br from-black/90 via-gray-900/80 to-black/90 backdrop-blur-lg ${scheme.cardBorder} transition-all duration-500 hover:shadow-2xl hover:shadow-red-500/20`}
+                gap={10}
+                speed={12}
+                className={`w-full max-w-sm h-[470px] bg-gradient-to-br from-black/90 via-gray-900/80 to-black/90 ${scheme.cardBorder} transition-transform duration-200 hover:shadow-lg hover:shadow-red-500/15 will-change-transform`}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/20 to-black/40 rounded-[25px]"></div>
                 
@@ -154,7 +157,7 @@ function Projects() {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`${scheme.linkColor} transition-all duration-300 flex-shrink-0 pointer-events-auto p-2 rounded-lg bg-black/30 backdrop-blur-sm border border-white/10 hover:border-red-400/50`}
+                        className={`${scheme.linkColor} transition-colors duration-200 flex-shrink-0 pointer-events-auto p-2 rounded-lg bg-black/30 border border-white/10 hover:border-red-400/50 will-change-transform`}
                         aria-label={`GitHub link for ${project.title}`}
                         whileHover={{ scale: 1.1, rotate: 5 }}
                         whileTap={{ scale: 0.95 }}
@@ -189,10 +192,10 @@ function Projects() {
                       {project.tech.map((tech, techIndex) => (
                         <motion.span
                           key={tech}
-                          initial={{ opacity: 0, scale: 0.8 }}
+                          initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: index * 0.15 + techIndex * 0.05, duration: 0.3 }}
-                          className={`${scheme.tagBg} backdrop-blur-sm text-white text-xs font-bold px-3 py-2 rounded-full ${scheme.tagBorder} shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105`}
+                          transition={{ delay: index * 0.1 + techIndex * 0.03, duration: 0.2 }}
+                          className={`${scheme.tagBg} text-white text-xs font-bold px-3 py-2 rounded-full ${scheme.tagBorder} shadow-md hover:shadow-lg transition-transform duration-200 hover:scale-105 will-change-transform`}
                         >
                           {tech}
                         </motion.span>
@@ -217,6 +220,7 @@ function Projects() {
       </div>
     </div>
   );
-}
+});
 
+Projects.displayName = 'Projects';
 export default Projects;

@@ -44,7 +44,7 @@ const achievements = [
     date: '2025',
     description: 'Won Best Implementation Award at BYTS INDIA Hackathon 2025 for delivering a high-impact project using cutting-edge AI and machine learning technologies',
     category: 'Best Implementation Award',
-    link: 'https://www.linkedin.com/posts/aadhithya-r-428547257_byts-hackathon-winner-innovation-activity-7240123456789012345-AbCd',
+    link: 'https://lnkd.in/p/dNViZXft',
     icon: Trophy,
     color: '#FFD700',
     gradient: 'from-yellow-500 to-orange-500'
@@ -90,24 +90,23 @@ function Certifications() {
           {certifications.map((cert, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ 
-                delay: index * 0.15, 
-                duration: 0.7, 
-                type: "spring", 
-                stiffness: 100 
+                delay: index * 0.08, 
+                duration: 0.4, 
+                ease: "easeOut"
               }}
-              whileHover={{ y: -5 }}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
               className="group relative cursor-pointer"
             >
               {/* Desktop/Tablet: Enhanced Electric Border Effect */}
               <div className="hidden md:block">
                 <ElectricBorder
                   color="#FF0066"
-                  speed={0.5}
-                  chaos={2}
-                  thickness={3}
+                  speed={0.3}
+                  chaos={1}
+                  thickness={2}
                   className="rounded-2xl h-full"
                   style={{ borderRadius: '1rem' }}
                 >
@@ -130,7 +129,7 @@ function Certifications() {
                           text={cert.name}
                           className="text-red-300 text-xs lg:text-sm font-medium"
                           animation="slideLeft"
-                          staggerDelay={0.02}
+                          staggerDelay={0.01}
                         />
                       </div>
                     </div>
@@ -138,8 +137,8 @@ function Certifications() {
                     {/* Certificate Badge */}
                     <div className="flex justify-center mb-4 lg:mb-6 relative z-10">
                       <motion.div
-                        whileHover={{ scale: 1.05, rotateY: 5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
+                        whileHover={{ scale: 1.03 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
                         className="relative"
                       >
                         <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-2xl bg-black flex items-center justify-center relative z-10">
@@ -150,11 +149,11 @@ function Certifications() {
                           />
                         </div>
                     {/* Electric glow animation */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-600/20 blur-md animate-pulse"></div>
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-500/15 to-red-600/15"></div>
                     
                     {/* Corner electric sparks */}
                     <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-400 rounded-full opacity-70 animate-pulse"></div>
-                    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-red-500 rounded-full opacity-60 animate-ping" style={{ animationDelay: '0.7s' }}></div>
+                    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-red-500 rounded-full opacity-60"></div>
                   </motion.div>
                 </div>
 
@@ -208,8 +207,8 @@ function Certifications() {
 
                 
                 {/* Subtle Electric Sparks */}
-                <div className="absolute bottom-3 left-3 w-1.5 h-1.5 rounded-full bg-red-400 opacity-60 animate-ping" style={{ animationDelay: '0.8s' }}></div>
-                <div className="absolute top-1/2 left-2 w-1 h-1 rounded-full bg-red-300 opacity-70 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                <div className="absolute bottom-3 left-3 w-1.5 h-1.5 rounded-full bg-red-400 opacity-40"></div>
+                <div className="absolute top-1/2 left-2 w-1 h-1 rounded-full bg-red-300 opacity-50"></div>
               </div>
             </ElectricBorder>
 

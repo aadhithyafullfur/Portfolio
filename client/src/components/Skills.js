@@ -44,28 +44,30 @@ function Skills() {
 
   const [activeCategory, setActiveCategory] = useState(null);
 
-  // Animation variants for container and items
+  // Animation variants for container and items - optimized for performance
   const containerVariants = {
-    hidden: { opacity: 0, x: window.innerWidth <= 768 ? 30 : 50 },
+    hidden: { opacity: 0, x: 40, transform: 'translate3d(40px, 0, 0)' },
     visible: { 
       opacity: 1, 
       x: 0,
+      transform: 'translate3d(0, 0, 0)',
       transition: {
-        staggerChildren: window.innerWidth <= 768 ? 0.1 : 0.15,
+        staggerChildren: 0.1,
         when: "beforeChildren",
-        duration: window.innerWidth <= 768 ? 0.6 : 0.8,
+        duration: 0.6,
         ease: 'easeOut'
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: window.innerWidth <= 768 ? 15 : 20 },
+    hidden: { opacity: 0, y: 15, transform: 'translate3d(0, 15px, 0)' },
     visible: { 
       opacity: 1, 
       y: 0,
+      transform: 'translate3d(0, 0, 0)',
       transition: {
-        duration: window.innerWidth <= 768 ? 0.4 : 0.5,
+        duration: 0.4,
         ease: 'easeOut'
       }
     }

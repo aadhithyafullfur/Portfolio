@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 
 class Pixel {
   constructor(canvas, context, x, y, color, speed, delay) {
@@ -8,18 +8,19 @@ class Pixel {
     this.x = x;
     this.y = y;
     this.color = color;
-    this.speed = this.getRandomValue(0.1, 0.9) * speed;
+    this.speed = this.getRandomValue(0.1, 0.6) * speed; // Reduced max speed
     this.size = 0;
-    this.sizeStep = Math.random() * 0.4;
-    this.minSize = 0.5;
-    this.maxSizeInteger = 2;
+    this.sizeStep = Math.random() * 0.2 + 0.1; // More consistent sizing
+    this.minSize = 0.2;
+    this.maxSizeInteger = 1;
     this.maxSize = this.getRandomValue(this.minSize, this.maxSizeInteger);
-    this.delay = delay;
+    this.delay = Math.min(delay, 100); // Cap delay for performance
     this.counter = 0;
-    this.counterStep = Math.random() * 4 + (this.width + this.height) * 0.01;
+    this.counterStep = Math.random() * 2 + 1; // Reduced counter step
     this.isIdle = false;
     this.isReverse = false;
     this.isShimmer = false;
+    this.lastUpdate = 0; // Add throttling
   }
 
   getRandomValue(min, max) {
@@ -27,9 +28,17 @@ class Pixel {
   }
 
   draw() {
+    // Skip if size is too small to be visible
+    if (this.size < 0.1) return;
+    
     const centerOffset = this.maxSizeInteger * 0.5 - this.size * 0.5;
     this.ctx.fillStyle = this.color;
-    this.ctx.fillRect(this.x + centerOffset, this.y + centerOffset, this.size, this.size);
+    this.ctx.fillRect(
+      Math.round(this.x + centerOffset), 
+      Math.round(this.y + centerOffset), 
+      Math.ceil(this.size), 
+      Math.ceil(this.size)
+    );
   }
 
   appear() {
@@ -93,8 +102,8 @@ function getEffectiveSpeed(value, reducedMotion) {
 const VARIANTS = {
   default: {
     activeColor: null,
-    gap: 5,
-    speed: 35,
+    gap: 12, // Increased gap to reduce pixel count
+    speed: 15, // Reduced speed
     colors: '#f8fafc,#f1f5f9,#cbd5e1',
     noFocus: false
   },
@@ -121,7 +130,7 @@ const VARIANTS = {
   }
 };
 
-export default function PixelCard({ variant = 'default', gap, speed, colors, noFocus, className = '', children }) {
+const PixelCard = React.memo(function PixelCard({ variant = 'default', gap, speed, colors, noFocus, className = '', children }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const pixelsRef = useRef([]);
@@ -129,47 +138,61 @@ export default function PixelCard({ variant = 'default', gap, speed, colors, noF
   const timePreviousRef = useRef(performance.now());
   const reducedMotion = useRef(window.matchMedia('(prefers-reduced-motion: reduce)').matches).current;
 
-  const variantCfg = VARIANTS[variant] || VARIANTS.default;
-  const finalGap = gap ?? variantCfg.gap;
-  const finalSpeed = speed ?? variantCfg.speed;
-  const finalColors = colors ?? variantCfg.colors;
-  const finalNoFocus = noFocus ?? variantCfg.noFocus;
+  const config = useMemo(() => {
+    const variantCfg = VARIANTS[variant] || VARIANTS.default;
+    return {
+      gap: gap ?? variantCfg.gap,
+      speed: speed ?? variantCfg.speed,
+      colors: colors ?? variantCfg.colors,
+      noFocus: noFocus ?? variantCfg.noFocus
+    };
+  }, [variant, gap, speed, colors, noFocus]);
 
-  const initPixels = () => {
+  const initPixels = useCallback(() => {
     if (!containerRef.current || !canvasRef.current) return;
 
     const rect = containerRef.current.getBoundingClientRect();
     const width = Math.floor(rect.width);
     const height = Math.floor(rect.height);
-    const ctx = canvasRef.current.getContext('2d');
+    const ctx = canvasRef.current.getContext('2d', { 
+      willReadFrequently: true,
+      alpha: false // Better performance when alpha not needed
+    });
 
     canvasRef.current.width = width;
     canvasRef.current.height = height;
     canvasRef.current.style.width = `${width}px`;
     canvasRef.current.style.height = `${height}px`;
 
-    const colorsArray = finalColors.split(',');
+    const colorsArray = config.colors.split(',');
     const pxs = [];
-    for (let x = 0; x < width; x += parseInt(finalGap, 10)) {
-      for (let y = 0; y < height; y += parseInt(finalGap, 10)) {
+    const gapSize = parseInt(config.gap, 10);
+    
+    // Further reduce pixel density for optimal performance
+    const maxPixels = 100; // Limit total pixels
+    let pixelCount = 0;
+    
+    for (let x = 0; x < width && pixelCount < maxPixels; x += gapSize) {
+      for (let y = 0; y < height && pixelCount < maxPixels; y += gapSize) {
         const color = colorsArray[Math.floor(Math.random() * colorsArray.length)];
 
         const dx = x - width / 2;
         const dy = y - height / 2;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        const delay = reducedMotion ? 0 : distance;
+        const delay = reducedMotion ? 0 : Math.min(distance * 0.5, 80); // Reduced delay calculation
 
-        pxs.push(new Pixel(canvasRef.current, ctx, x, y, color, getEffectiveSpeed(finalSpeed, reducedMotion), delay));
+        pxs.push(new Pixel(canvasRef.current, ctx, x, y, color, getEffectiveSpeed(config.speed, reducedMotion), delay));
+        pixelCount++;
       }
     }
     pixelsRef.current = pxs;
-  };
+  }, [config, reducedMotion]);
 
   const doAnimate = fnName => {
     animationRef.current = requestAnimationFrame(() => doAnimate(fnName));
     const timeNow = performance.now();
     const timePassed = timeNow - timePreviousRef.current;
-    const timeInterval = 1000 / 60;
+    const timeInterval = 1000 / 20; // Further reduced to 20fps for better performance
 
     if (timePassed < timeInterval) return;
     timePreviousRef.current = timeNow - (timePassed % timeInterval);
@@ -177,16 +200,21 @@ export default function PixelCard({ variant = 'default', gap, speed, colors, noF
     const ctx = canvasRef.current?.getContext('2d');
     if (!ctx || !canvasRef.current) return;
 
+    // Use willReadFrequently for better performance
     ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
     let allIdle = true;
-    for (let i = 0; i < pixelsRef.current.length; i++) {
+    const pixelCount = pixelsRef.current.length;
+    
+    // Batch pixel updates for better performance
+    for (let i = 0; i < pixelCount; i++) {
       const pixel = pixelsRef.current[i];
       pixel[fnName]();
       if (!pixel.isIdle) {
         allIdle = false;
       }
     }
+    
     if (allIdle) {
       cancelAnimationFrame(animationRef.current);
     }
@@ -220,8 +248,7 @@ export default function PixelCard({ variant = 'default', gap, speed, colors, noF
       observer.disconnect();
       cancelAnimationFrame(animationRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finalGap, finalSpeed, finalColors, finalNoFocus]);
+  }, [initPixels]);
 
   return (
     <div
@@ -229,12 +256,14 @@ export default function PixelCard({ variant = 'default', gap, speed, colors, noF
       className={`h-[400px] w-[300px] relative overflow-hidden grid place-items-center aspect-[4/5] border border-[#27272a] rounded-[25px] isolate transition-colors duration-200 ease-[cubic-bezier(0.5,1,0.89,1)] select-none ${className}`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onFocus={finalNoFocus ? undefined : onFocus}
-      onBlur={finalNoFocus ? undefined : onBlur}
-      tabIndex={finalNoFocus ? -1 : 0}
+      onFocus={config.noFocus ? undefined : onFocus}
+      onBlur={config.noFocus ? undefined : onBlur}
+      tabIndex={config.noFocus ? -1 : 0}
     >
       <canvas className="w-full h-full block" ref={canvasRef} />
       {children}
     </div>
   );
-}
+});
+
+export default PixelCard;

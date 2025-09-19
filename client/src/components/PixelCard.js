@@ -1,26 +1,29 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 
 class Pixel {
-  constructor(canvas, context, x, y, color, speed, delay) {
+  constructor(canvas, context, x, y, color, speed, delay, variant = 'default') {
     this.width = canvas.width;
     this.height = canvas.height;
     this.ctx = context;
     this.x = x;
     this.y = y;
     this.color = color;
-    this.speed = this.getRandomValue(0.1, 0.6) * speed; // Reduced max speed
+    this.variant = variant;
+    this.speed = this.getRandomValue(0.1, 0.8) * speed;
     this.size = 0;
-    this.sizeStep = Math.random() * 0.2 + 0.1; // More consistent sizing
-    this.minSize = 0.2;
-    this.maxSizeInteger = 1;
+    this.sizeStep = Math.random() * 0.25 + 0.1;
+    this.minSize = variant === 'glow' ? 0.3 : 0.2;
+    this.maxSizeInteger = variant === 'enhanced' ? 1.5 : 1.2;
     this.maxSize = this.getRandomValue(this.minSize, this.maxSizeInteger);
-    this.delay = Math.min(delay, 100); // Cap delay for performance
+    this.delay = Math.min(delay, 120);
     this.counter = 0;
-    this.counterStep = Math.random() * 2 + 1; // Reduced counter step
+    this.counterStep = Math.random() * 3 + 1;
     this.isIdle = false;
     this.isReverse = false;
     this.isShimmer = false;
-    this.lastUpdate = 0; // Add throttling
+    this.lastUpdate = 0;
+    this.glowIntensity = 0;
+    this.pulsePhase = Math.random() * Math.PI * 2;
   }
 
   getRandomValue(min, max) {
@@ -28,17 +31,32 @@ class Pixel {
   }
 
   draw() {
-    // Skip if size is too small to be visible
     if (this.size < 0.1) return;
     
     const centerOffset = this.maxSizeInteger * 0.5 - this.size * 0.5;
-    this.ctx.fillStyle = this.color;
-    this.ctx.fillRect(
-      Math.round(this.x + centerOffset), 
-      Math.round(this.y + centerOffset), 
-      Math.ceil(this.size), 
-      Math.ceil(this.size)
-    );
+    const x = Math.round(this.x + centerOffset);
+    const y = Math.round(this.y + centerOffset);
+    const size = Math.ceil(this.size);
+    
+    // Enhanced rendering based on variant
+    if (this.variant === 'glow') {
+      // Add glow effect
+      this.ctx.shadowColor = this.color;
+      this.ctx.shadowBlur = this.glowIntensity * 8;
+      this.ctx.fillStyle = this.color;
+      this.ctx.fillRect(x, y, size, size);
+      this.ctx.shadowBlur = 0;
+    } else if (this.variant === 'enhanced') {
+      // Add pulse effect
+      const pulse = Math.sin(this.pulsePhase) * 0.3 + 0.7;
+      this.ctx.globalAlpha = pulse;
+      this.ctx.fillStyle = this.color;
+      this.ctx.fillRect(x, y, size, size);
+      this.ctx.globalAlpha = 1;
+    } else {
+      this.ctx.fillStyle = this.color;
+      this.ctx.fillRect(x, y, size, size);
+    }
   }
 
   appear() {
@@ -50,6 +68,15 @@ class Pixel {
     if (this.size >= this.maxSize) {
       this.isShimmer = true;
     }
+    
+    // Update effects based on variant
+    if (this.variant === 'glow') {
+      this.glowIntensity = Math.min(this.glowIntensity + 0.02, 1);
+    }
+    if (this.variant === 'enhanced') {
+      this.pulsePhase += 0.1;
+    }
+    
     if (this.isShimmer) {
       this.shimmer();
     } else {
@@ -102,9 +129,23 @@ function getEffectiveSpeed(value, reducedMotion) {
 const VARIANTS = {
   default: {
     activeColor: null,
-    gap: 12, // Increased gap to reduce pixel count
-    speed: 15, // Reduced speed
+    gap: 10,
+    speed: 18,
     colors: '#f8fafc,#f1f5f9,#cbd5e1',
+    noFocus: false
+  },
+  enhanced: {
+    activeColor: '#ff6b6b',
+    gap: 8,
+    speed: 22,
+    colors: '#fecaca,#f87171,#dc2626,#b91c1c',
+    noFocus: false
+  },
+  glow: {
+    activeColor: '#60a5fa',
+    gap: 6,
+    speed: 25,
+    colors: '#dbeafe,#93c5fd,#3b82f6,#1d4ed8',
     noFocus: false
   },
   blue: {
@@ -144,7 +185,8 @@ const PixelCard = React.memo(function PixelCard({ variant = 'default', gap, spee
       gap: gap ?? variantCfg.gap,
       speed: speed ?? variantCfg.speed,
       colors: colors ?? variantCfg.colors,
-      noFocus: noFocus ?? variantCfg.noFocus
+      noFocus: noFocus ?? variantCfg.noFocus,
+      variant: variant
     };
   }, [variant, gap, speed, colors, noFocus]);
 
@@ -181,7 +223,7 @@ const PixelCard = React.memo(function PixelCard({ variant = 'default', gap, spee
         const distance = Math.sqrt(dx * dx + dy * dy);
         const delay = reducedMotion ? 0 : Math.min(distance * 0.5, 80); // Reduced delay calculation
 
-        pxs.push(new Pixel(canvasRef.current, ctx, x, y, color, getEffectiveSpeed(config.speed, reducedMotion), delay));
+        pxs.push(new Pixel(canvasRef.current, ctx, x, y, color, getEffectiveSpeed(config.speed, reducedMotion), delay, variant));
         pixelCount++;
       }
     }

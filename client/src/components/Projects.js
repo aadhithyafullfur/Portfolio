@@ -66,44 +66,48 @@ const projectVariants = {
 const Projects = React.memo(() => {
   const colorSchemes = useMemo(() => [
     {
-      // QuikCart - Bright Red
-      variant: 'default',
-      colors: '#fecaca,#f87171,#dc2626',
+      // QuikCart - Enhanced Interactive Red
+      variant: 'enhanced',
+      colors: '#fecaca,#f87171,#dc2626,#b91c1c',
       titleColor: 'text-red-400',
       linkColor: 'text-red-400 hover:text-red-300',
-      tagBg: 'bg-red-600/80',
-      tagBorder: 'border-red-400/30',
-      cardBorder: 'border-gray-700/50 hover:border-red-500/60'
+      tagBg: 'bg-red-600/85',
+      tagBorder: 'border-red-400/40',
+      cardBorder: 'border-gray-700/50 hover:border-red-500/70',
+      glowColor: 'hover:shadow-red-500/25'
     },
     {
-      // Traffic Prediction - Deep Red
-      variant: 'default',
-      colors: '#fee2e2,#fca5a5,#ef4444',
+      // Traffic Prediction - Glow Blue-Red
+      variant: 'glow',
+      colors: '#fecdd3,#f43f5e,#be123c,#991b1b',
       titleColor: 'text-red-500',
       linkColor: 'text-red-500 hover:text-red-400',
-      tagBg: 'bg-red-700/80',
-      tagBorder: 'border-red-500/30',
-      cardBorder: 'border-gray-700/50 hover:border-red-600/60'
+      tagBg: 'bg-red-700/85',
+      tagBorder: 'border-red-500/40',
+      cardBorder: 'border-gray-700/50 hover:border-red-600/70',
+      glowColor: 'hover:shadow-red-600/30'
     },
     {
-      // FarmConnect - Rose Red
-      variant: 'default',
-      colors: '#ffe4e6,#fb7185,#e11d48',
+      // FarmConnect - Enhanced Rose
+      variant: 'enhanced',
+      colors: '#ffe4e6,#fb7185,#e11d48,#be185d',
       titleColor: 'text-rose-400',
       linkColor: 'text-rose-400 hover:text-rose-300',
-      tagBg: 'bg-rose-600/80',
-      tagBorder: 'border-rose-400/30',
-      cardBorder: 'border-gray-700/50 hover:border-rose-500/60'
+      tagBg: 'bg-rose-600/85',
+      tagBorder: 'border-rose-400/40',
+      cardBorder: 'border-gray-700/50 hover:border-rose-500/70',
+      glowColor: 'hover:shadow-rose-500/25'
     },
     {
-      // Brain Tumor - Crimson Red
-      variant: 'default',
-      colors: '#fecdd3,#f43f5e,#be123c',
+      // Brain Tumor - Advanced Glow
+      variant: 'glow',
+      colors: '#fee2e2,#fca5a5,#ef4444,#dc2626',
       titleColor: 'text-red-400',
       linkColor: 'text-red-400 hover:text-red-300',
-      tagBg: 'bg-red-600/80',
-      tagBorder: 'border-red-400/30',
-      cardBorder: 'border-gray-700/50 hover:border-red-500/60'
+      tagBg: 'bg-red-600/85',
+      tagBorder: 'border-red-400/40',
+      cardBorder: 'border-gray-700/50 hover:border-red-500/70',
+      glowColor: 'hover:shadow-red-500/30'
     }
   ], []);
 
@@ -137,11 +141,12 @@ const Projects = React.memo(() => {
               <PixelCard 
                 variant={scheme.variant}
                 colors={scheme.colors}
-                gap={10}
-                speed={12}
-                className={`w-full max-w-sm h-[470px] bg-gradient-to-br from-black/90 via-gray-900/80 to-black/90 ${scheme.cardBorder} transition-transform duration-200 hover:shadow-lg hover:shadow-red-500/15 will-change-transform`}
+                gap={scheme.variant === 'glow' ? 6 : scheme.variant === 'enhanced' ? 8 : 10}
+                speed={scheme.variant === 'glow' ? 25 : scheme.variant === 'enhanced' ? 22 : 18}
+                className={`w-full max-w-sm h-[470px] bg-gradient-to-br from-black/90 via-gray-900/85 to-black/95 ${scheme.cardBorder} transition-all duration-300 hover:shadow-xl ${scheme.glowColor} hover:scale-[1.02] will-change-transform backdrop-blur-sm`}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/20 to-black/40 rounded-[25px]"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/25 to-black/50 rounded-[25px]"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent rounded-[25px]"></div>
                 
                 <div className="absolute inset-6 flex flex-col justify-between z-10 pointer-events-none">
                   {/* Project Header with Enhanced Styling */}
@@ -157,10 +162,10 @@ const Projects = React.memo(() => {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`${scheme.linkColor} transition-colors duration-200 flex-shrink-0 pointer-events-auto p-2 rounded-lg bg-black/30 border border-white/10 hover:border-red-400/50 will-change-transform`}
+                        className={`${scheme.linkColor} transition-all duration-300 flex-shrink-0 pointer-events-auto p-2.5 rounded-xl bg-black/40 backdrop-blur-sm border border-white/15 hover:border-red-400/60 hover:bg-red-500/10 will-change-transform shadow-lg`}
                         aria-label={`GitHub link for ${project.title}`}
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        whileTap={{ scale: 0.95 }}
+                        whileHover={{ scale: 1.15, rotate: 8, y: -2 }}
+                        whileTap={{ scale: 0.9 }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -176,11 +181,11 @@ const Projects = React.memo(() => {
                     </div>
 
                     {/* Enhanced Content with Better Typography */}
-                    <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 mb-4 border border-white/5">
-                      <p className="text-sm mb-3 text-gray-100 leading-relaxed font-medium">
+                    <div className="bg-black/30 backdrop-blur-md rounded-xl p-4 mb-4 border border-white/10 shadow-inner">
+                      <p className="text-sm mb-3 text-gray-50 leading-relaxed font-medium tracking-wide">
                         {project.description}
                       </p>
-                      <p className="text-xs italic text-gray-300 leading-relaxed">
+                      <p className="text-xs italic text-gray-300 leading-relaxed opacity-90">
                         {project.explanation}
                       </p>
                     </div>
@@ -192,10 +197,11 @@ const Projects = React.memo(() => {
                       {project.tech.map((tech, techIndex) => (
                         <motion.span
                           key={tech}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: index * 0.1 + techIndex * 0.03, duration: 0.2 }}
-                          className={`${scheme.tagBg} text-white text-xs font-bold px-3 py-2 rounded-full ${scheme.tagBorder} shadow-md hover:shadow-lg transition-transform duration-200 hover:scale-105 will-change-transform`}
+                          initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 + techIndex * 0.04, duration: 0.3, ease: "easeOut" }}
+                          whileHover={{ scale: 1.1, y: -2 }}
+                          className={`${scheme.tagBg} backdrop-blur-sm text-white text-xs font-bold px-3 py-2 rounded-full ${scheme.tagBorder} shadow-lg hover:shadow-xl transition-all duration-250 cursor-default border will-change-transform`}
                         >
                           {tech}
                         </motion.span>
@@ -210,9 +216,45 @@ const Projects = React.memo(() => {
                   </div>
                 </div>
 
-                {/* Floating Accent Elements */}
-                <div className={`absolute top-4 right-4 w-3 h-3 bg-red-400/60 rounded-full animate-pulse`}></div>
-                <div className={`absolute bottom-4 left-4 w-2 h-2 bg-red-400/40 rounded-full animate-ping`} style={{animationDelay: '1s'}}></div>
+                {/* Enhanced Floating Accent Elements */}
+                <motion.div 
+                  className={`absolute top-4 right-4 w-3 h-3 bg-red-400/70 rounded-full`}
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.7, 1, 0.7]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                ></motion.div>
+                <motion.div 
+                  className={`absolute bottom-4 left-4 w-2 h-2 bg-red-400/50 rounded-full`}
+                  animate={{ 
+                    scale: [1, 1.5, 1],
+                    opacity: [0.5, 1, 0.5]
+                  }}
+                  transition={{ 
+                    duration: 1.5,
+                    repeat: Infinity,
+                    delay: 0.7,
+                    ease: "easeInOut"
+                  }}
+                ></motion.div>
+                <motion.div 
+                  className={`absolute top-1/2 left-3 w-1.5 h-1.5 bg-red-300/60 rounded-full`}
+                  animate={{ 
+                    x: [0, 5, 0],
+                    opacity: [0.6, 1, 0.6]
+                  }}
+                  transition={{ 
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: 1.2,
+                    ease: "easeInOut"
+                  }}
+                ></motion.div>
               </PixelCard>
             </motion.div>
           );

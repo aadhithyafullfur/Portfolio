@@ -111,9 +111,9 @@ function Certifications() {
                   className="rounded-2xl h-full"
                   style={{ borderRadius: '1rem' }}
                 >
-                  <div className="bg-black p-4 lg:p-6 rounded-2xl h-full min-h-[300px] lg:min-h-[350px] flex flex-col relative overflow-hidden">                
-                {/* Clean background for better electric border visibility */}
-                <div className="absolute inset-0 bg-black/95 rounded-2xl"></div>
+                  <div className="p-4 lg:p-6 rounded-2xl h-full min-h-[300px] lg:min-h-[350px] flex flex-col relative overflow-hidden">                
+                {/* No background for better electric border visibility */}
+                <div className="absolute inset-0 rounded-2xl"></div>
                 
                     {/* Header with Company Logo and Title */}
                     <div className="flex items-center gap-3 lg:gap-4 mb-4 lg:mb-6 relative z-10">
@@ -142,7 +142,7 @@ function Certifications() {
                         transition={{ type: "spring", stiffness: 300 }}
                         className="relative"
                       >
-                        <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-2xl bg-black flex items-center justify-center relative z-10">
+                        <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-2xl flex items-center justify-center relative z-10">
                           <img 
                             src={cert.certImage} 
                             alt={`${cert.name} certificate badge`}
@@ -232,7 +232,7 @@ function Certifications() {
 
               {/* Mobile & Small Tablet: Clean Professional Card */}
               <div className="block md:hidden">
-                <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-700 hover:border-red-500/50 p-4 sm:p-5 rounded-2xl h-full min-h-[260px] sm:min-h-[280px] flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10">
+                <div className="border border-gray-700 hover:border-red-500/50 p-4 sm:p-5 rounded-2xl h-full min-h-[260px] sm:min-h-[280px] flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 bg-transparent">
                   
                   {/* Header with Company Logo and Title */}
                   <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">

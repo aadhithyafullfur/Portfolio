@@ -1,6 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useMemo, useCallback } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import PixelCard from './PixelCard';
+import { getAnimationSettings, getReducedMotion } from '../utils/performance';
 
 const projects = [
   {
@@ -61,26 +62,31 @@ const projects = [
   },
 ];
 
-const projectVariants = {
-  hidden: { opacity: 0, y: window.innerWidth <= 768 ? 15 : 20 },
+const getProjectVariants = (isReducedMotion) => ({
+  hidden: { 
+    opacity: 0, 
+    y: isReducedMotion ? 0 : (window.innerWidth <= 768 ? 15 : 20) 
+  },
   visible: { 
     opacity: 1, 
     y: 0,
     transition: {
-      duration: window.innerWidth <= 768 ? 0.5 : 0.6,
+      duration: isReducedMotion ? 0.3 : (window.innerWidth <= 768 ? 0.5 : 0.6),
       ease: 'easeOut'
     }
   },
   hover: { 
-    scale: window.innerWidth <= 768 ? 1.02 : 1.03,
+    scale: isReducedMotion ? 1 : (window.innerWidth <= 768 ? 1.02 : 1.03),
     transition: {
-      duration: 0.2,
+      duration: isReducedMotion ? 0.1 : 0.2,
       ease: 'easeOut'
     }
   },
-};
+});
 
 function Projects() {
+  const shouldReduceMotion = useReducedMotion() || getReducedMotion();
+  const projectVariants = useMemo(() => getProjectVariants(shouldReduceMotion), [shouldReduceMotion]);
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <style jsx>{`

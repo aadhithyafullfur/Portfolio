@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
+import { getOptimizedParticleCount, getReducedMotion, getOptimizedFrameRate } from '../utils/performance';
 
 class Pixel {
   constructor(canvas, context, x, y, color, speed, delay) {
@@ -127,7 +128,10 @@ export default function PixelCard({ variant = 'default', gap, speed, colors, noF
   const pixelsRef = useRef([]);
   const animationRef = useRef(null);
   const timePreviousRef = useRef(performance.now());
-  const reducedMotion = useRef(window.matchMedia('(prefers-reduced-motion: reduce)').matches).current;
+  
+  const shouldReduceMotion = useMemo(() => getReducedMotion(), []);
+  const optimizedParticleCount = useMemo(() => getOptimizedParticleCount(50), []);
+  const frameRate = useMemo(() => getOptimizedFrameRate(), []);
 
   const variantCfg = VARIANTS[variant] || VARIANTS.default;
   const finalGap = gap ?? variantCfg.gap;
@@ -141,7 +145,10 @@ export default function PixelCard({ variant = 'default', gap, speed, colors, noF
     const rect = containerRef.current.getBoundingClientRect();
     const width = Math.floor(rect.width);
     const height = Math.floor(rect.height);
-    const ctx = canvasRef.current.getContext('2d');
+    const ctx = canvasRef.current.getContext('2d', { alpha: true });
+    
+    // Enable performance optimizations
+    ctx.imageSmoothingEnabled = false; // Disable antialiasing for better performance
 
     canvasRef.current.width = width;
     canvasRef.current.height = height;
@@ -150,17 +157,24 @@ export default function PixelCard({ variant = 'default', gap, speed, colors, noF
 
     const colorsArray = finalColors.split(',');
     const pxs = [];
-    for (let x = 0; x < width; x += parseInt(finalGap, 10)) {
-      for (let y = 0; y < height; y += parseInt(finalGap, 10)) {
+    const gapSize = shouldReduceMotion ? parseInt(finalGap, 10) * 1.5 : parseInt(finalGap, 10);
+    const particleLimit = optimizedParticleCount;
+    let particleCount = 0;
+    
+    for (let x = 0; x < width; x += gapSize) {
+      for (let y = 0; y < height; y += gapSize) {
+        if (particleCount >= particleLimit) break;
+        
         const color = colorsArray[Math.floor(Math.random() * colorsArray.length)];
-
         const dx = x - width / 2;
         const dy = y - height / 2;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        const delay = reducedMotion ? 0 : distance;
+        const delay = shouldReduceMotion ? 0 : distance;
 
-        pxs.push(new Pixel(canvasRef.current, ctx, x, y, color, getEffectiveSpeed(finalSpeed, reducedMotion), delay));
+        pxs.push(new Pixel(canvasRef.current, ctx, x, y, color, getEffectiveSpeed(finalSpeed, shouldReduceMotion), delay));
+        particleCount++;
       }
+      if (particleCount >= particleLimit) break;
     }
     pixelsRef.current = pxs;
   };
@@ -169,7 +183,7 @@ export default function PixelCard({ variant = 'default', gap, speed, colors, noF
     animationRef.current = requestAnimationFrame(() => doAnimate(fnName));
     const timeNow = performance.now();
     const timePassed = timeNow - timePreviousRef.current;
-    const timeInterval = 1000 / 60;
+    const timeInterval = 1000 / frameRate; // Use optimized frame rate
 
     if (timePassed < timeInterval) return;
     timePreviousRef.current = timeNow - (timePassed % timeInterval);

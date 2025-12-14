@@ -1,0 +1,39 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="400" height="300" fill="url(#bgGradient)"/>
+  
+  <!-- Farm elements -->
+  <g transform="translate(200, 150)">
+    <!-- Tractor wheel -->
+    <circle cx="-50" cy="20" r="25" fill="none" stroke="url(#purpleGradient)" stroke-width="3"/>
+    <circle cx="-50" cy="20" r="15" fill="none" stroke="url(#purpleGradient)" stroke-width="2"/>
+    
+    <!-- Tractor body -->
+    <rect x="-80" y="-10" width="40" height="25" rx="3" fill="url(#purpleGradient)" opacity="0.6"/>
+    
+    <!-- Small wheel -->
+    <circle cx="10" cy="25" r="12" fill="none" stroke="url(#purpleGradient)" stroke-width="2"/>
+    
+    <!-- Wheat/Crop -->
+    <g transform="translate(50, -15)">
+      <line x1="-5" y1="20" x2="-5" y2="-10" stroke="url(#purpleGradient)" stroke-width="2"/>
+      <line x1="-10" y1="0" x2="-5" y2="-10" stroke="url(#purpleGradient)" stroke-width="2"/>
+      <line x1="0" y1="5" x2="-5" y2="-10" stroke="url(#purpleGradient)" stroke-width="2"/>
+    </g>
+  </g>
+  
+  <!-- Text -->
+  <text x="200" y="270" font-size="18" font-weight="bold" text-anchor="middle" fill="#e0e7ff">
+    FarmConnect Platform
+  </text>
+</svg>

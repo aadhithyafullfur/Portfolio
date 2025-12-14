@@ -1,63 +1,43 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useRef, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import PixelCard from './PixelCard';
 import { getAnimationSettings, getReducedMotion } from '../utils/performance';
+import { gsap } from 'gsap';
 
 const projects = [
   {
     title: 'QuikCart – E-Commerce Platform',
     description:
-      'Enterprise-grade full-stack e-commerce solution for tech gadgets with advanced security, intelligent AI recommendations, and seamless user experience.',
-    explanation:
-      'Architected using MERN stack with microservices approach, featuring JWT authentication, RESTful APIs, and integrated AI chatbot for customer support.',
-    detailedDescription: 'QuikCart represents a comprehensive e-commerce ecosystem built to handle high-traffic scenarios with advanced security protocols. The platform features a sophisticated AI-powered recommendation engine that analyzes user behavior patterns to suggest relevant products, increasing conversion rates by 35%. Implemented secure JWT-based authentication with role-based access control for customers and administrators. The system integrates multiple payment gateways including Stripe and PayPal, supporting international transactions with automated currency conversion. The responsive design ensures optimal performance across all devices, with server-side rendering for enhanced SEO. Built with scalability in mind, the platform can handle concurrent users with Redis caching and MongoDB indexing for optimized database queries.',
-    features: ['JWT Authentication', 'AI Recommendation Engine', 'Multi-Payment Gateway', 'Admin Dashboard', 'Inventory Management', 'Order Tracking'],
-    tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Redis', 'JWT', 'Stripe API', 'AI/ML'],
+      'Full-stack e-commerce platform with React.js frontend and Node.js/Express backend. Features JWT authentication for secure user sessions, MongoDB for scalable data storage, Redux for efficient state management, and Stripe integration for payment processing. Implements real-time inventory management system and comprehensive analytics dashboard for tracking user behavior and sales metrics.',
+    image: '/images/quikcart.svg',
+    tech: ['React.js', 'Node.js', 'MongoDB', 'Redux', 'Stripe'],
     status: 'Completed',
-    duration: '3 months',
-    achievements: ['35% increase in conversion rate', 'Handles 1000+ concurrent users', 'Zero security vulnerabilities'],
     link: 'https://github.com/aadhithyafullfur/QUIK-CART',
   },
   {
-    title: 'Traffic Prediction System – ML Web App',
+    title: 'Traffic Prediction System',
     description:
-      'Advanced machine learning platform delivering 92% accurate traffic predictions using real-time data analytics and weather intelligence.',
-    explanation:
-      'Enterprise ML solution built with React and Flask, featuring MLPRegressor algorithms, real-time API integration, and interactive data visualization.',
-    detailedDescription: 'This sophisticated traffic prediction system leverages advanced machine learning algorithms to provide accurate traffic forecasting with 92% precision. The platform processes real-time weather data from multiple APIs, historical traffic patterns, and holiday schedules to generate comprehensive predictions. Implemented using scikit-learn\'s MLPRegressor with feature engineering techniques including polynomial features and standardization. The system includes an interactive dashboard with Chart.js visualizations, allowing users to explore traffic patterns across different time periods and weather conditions. Real-time data processing ensures predictions are updated every 15 minutes, making it invaluable for urban planning and traffic management authorities.',
-    features: ['Real-time ML Predictions', 'Weather API Integration', 'Interactive Analytics', 'Historical Data Analysis', 'Automated Reporting', 'API Endpoints'],
-    tech: ['React.js', 'Flask', 'scikit-learn', 'Pandas', 'NumPy', 'Chart.js', 'Weather API', 'PostgreSQL'],
+      'Machine learning application for urban traffic forecasting using scikit-learn algorithms. React.js frontend with Chart.js for interactive data visualization of traffic patterns. Flask backend processes historical traffic data and integrates weather API for improved prediction accuracy. Achieves 92% prediction accuracy with real-time monitoring dashboards for traffic management and congestion analysis.',
+    image: '/images/traffic-prediction.svg',
+    tech: ['React.js', 'Flask', 'scikit-learn', 'Chart.js', 'PostgreSQL'],
     status: 'Completed',
-    duration: '2 months',
-    achievements: ['92% prediction accuracy', 'Real-time data processing', 'Deployed for city traffic management'],
     link: 'https://github.com/aadhithyafullfur/TRAFFIC-PREDICTING-SYSTEM',
   },
   {
-    title: 'FarmConnect – Farmer-to-Market Platform',
+    title: 'FarmConnect – Agricultural Marketplace',
     description:
-      'Revolutionary agricultural platform bridging farmers and markets through intelligent logistics, real-time pricing, and mobile accessibility.',
-    explanation:
-      'Full-stack agricultural solution with MERN stack and React Native, featuring GPS integration, price analytics, and supply chain optimization.',
-    detailedDescription: 'FarmConnect transforms agricultural commerce by directly connecting farmers with markets, eliminating middlemen and maximizing profits. The platform features advanced GPS-based logistics management, enabling farmers to track their produce from farm to market with real-time location updates. Integrated price tracking algorithms analyze market trends and provide dynamic pricing recommendations based on demand, seasonality, and quality metrics. The mobile application built with React Native ensures farmers can access the platform anywhere, with offline functionality for areas with limited connectivity. The system includes inventory management, quality assessment tools, and automated contract generation for seamless transactions between farmers and buyers.',
-    features: ['GPS Logistics Tracking', 'Dynamic Pricing Engine', 'Mobile & Web Platform', 'Inventory Management', 'Contract Automation', 'Market Analytics'],
-    tech: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'React Native', 'GPS API', 'Socket.io', 'AWS S3'],
-    status: 'In Development',
-    duration: '4 months',
-    achievements: ['Connected 500+ farmers', '25% increase in farmer profits', 'Cross-platform compatibility'],
+      'Agricultural marketplace platform built with MERN stack (MongoDB, Express, React, Node) and React Native for mobile accessibility. Features GPS API integration for real-time logistics tracking, Socket.io for instant notifications, and AWS S3 for secure image storage. Enables direct farmer-to-buyer connections with dynamic pricing engine and automated contract management systems.',
+    image: '/images/farmconnect.svg',
+    tech: ['MERN', 'React Native', 'GPS API', 'Socket.io', 'AWS S3'],
+    status: 'Completed',
     link: 'https://github.com/aadhithyafullfur/FarmConnect',
   },
   {
-    title: 'Brain Tumor Detection – AI Diagnostic Tool',
+    title: 'Brain Tumor Detection AI',
     description:
-      'Cutting-edge medical AI system providing 96% accurate brain tumor detection with comprehensive diagnostic reporting for healthcare professionals.',
-    explanation:
-      'Advanced CNN-based diagnostic platform using TensorFlow and Keras, integrated with Flask backend for medical image analysis and reporting.',
-    detailedDescription: 'This state-of-the-art medical diagnostic system employs deep learning technologies to assist healthcare professionals in accurate brain tumor detection. Built using Convolutional Neural Networks (CNN) with TensorFlow and Keras, the system achieves 96% accuracy in tumor classification across multiple tumor types including meningioma, glioma, and pituitary tumors. The platform processes MRI scans through advanced image preprocessing techniques including noise reduction, contrast enhancement, and standardization. Healthcare professionals can upload DICOM files, receive detailed diagnostic reports with confidence scores, and access comprehensive visualization tools. The system includes patient management features, historical case tracking, and integration capabilities with existing hospital information systems.',
-    features: ['CNN Classification', 'DICOM Processing', 'Diagnostic Reports', 'Patient Management', 'Medical Visualization', 'Hospital Integration'],
-    tech: ['Python', 'TensorFlow', 'Keras', 'OpenCV', 'Flask', 'React.js', 'PostgreSQL', 'DICOM'],
+      'Medical imaging AI system using TensorFlow and Keras with CNN architecture achieving 96% detection accuracy. Python backend with OpenCV for advanced image processing and DICOM file handling. Flask REST API serves the model, React.js frontend provides user interface. HIPAA-compliant with detailed diagnostic reporting for radiologists and hospital system integration capabilities.',
+    image: '/images/brain-tumor.svg',
+    tech: ['Python', 'TensorFlow', 'Keras', 'OpenCV', 'Flask', 'React.js'],
     status: 'Completed',
-    duration: '3 months',
-    achievements: ['96% diagnostic accuracy', 'HIPAA compliant', 'Validated by medical professionals'],
     link: 'https://github.com/aadhithyafullfur/Brain-Tumor-detector',
   },
 ];
@@ -84,183 +64,411 @@ const getProjectVariants = (isReducedMotion) => ({
   },
 });
 
+const createParticleElement = (x, y, color = '132, 100, 255') => {
+  const el = document.createElement('div');
+  el.className = 'particle';
+  el.style.cssText = `
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(${color}, 1);
+    box-shadow: 0 0 6px rgba(${color}, 0.6);
+    pointer-events: none;
+    z-index: 100;
+    left: ${x}px;
+    top: ${y}px;
+  `;
+  return el;
+};
+
+const ProjectCard = ({ project, index }) => {
+  const cardRef = useRef(null);
+  const particlesRef = useRef([]);
+  const timeoutsRef = useRef([]);
+  const isHoveredRef = useRef(false);
+  const memoizedParticles = useRef([]);
+  const particlesInitialized = useRef(false);
+
+  const initializeParticles = useCallback(() => {
+    if (particlesInitialized.current || !cardRef.current) return;
+
+    const { width, height } = cardRef.current.getBoundingClientRect();
+    memoizedParticles.current = Array.from({ length: 12 }, () =>
+      createParticleElement(Math.random() * width, Math.random() * height, '132, 100, 255')
+    );
+    particlesInitialized.current = true;
+  }, []);
+
+  const clearAllParticles = useCallback(() => {
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+
+    particlesRef.current.forEach(particle => {
+      gsap.to(particle, {
+        scale: 0,
+        opacity: 0,
+        duration: 0.3,
+        ease: 'back.in(1.7)',
+        onComplete: () => {
+          particle.parentNode?.removeChild(particle);
+        }
+      });
+    });
+    particlesRef.current = [];
+  }, []);
+
+  const animateParticles = useCallback(() => {
+    if (!cardRef.current || !isHoveredRef.current) return;
+
+    if (!particlesInitialized.current) {
+      initializeParticles();
+    }
+
+    memoizedParticles.current.forEach((particle, i) => {
+      const timeoutId = setTimeout(() => {
+        if (!isHoveredRef.current || !cardRef.current) return;
+
+        const clone = particle.cloneNode(true);
+        cardRef.current.appendChild(clone);
+        particlesRef.current.push(clone);
+
+        gsap.fromTo(clone, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' });
+
+        gsap.to(clone, {
+          x: (Math.random() - 0.5) * 100,
+          y: (Math.random() - 0.5) * 100,
+          rotation: Math.random() * 360,
+          duration: 2 + Math.random() * 2,
+          ease: 'none',
+          repeat: -1,
+          yoyo: true
+        });
+
+        gsap.to(clone, {
+          opacity: 0.3,
+          duration: 1.5,
+          ease: 'power2.inOut',
+          repeat: -1,
+          yoyo: true
+        });
+      }, i * 100);
+
+      timeoutsRef.current.push(timeoutId);
+    });
+  }, [initializeParticles]);
+
+  useEffect(() => {
+    if (!cardRef.current) return;
+
+    const element = cardRef.current;
+
+    const handleMouseEnter = () => {
+      isHoveredRef.current = true;
+      animateParticles();
+    };
+
+    const handleMouseLeave = () => {
+      isHoveredRef.current = false;
+      clearAllParticles();
+    };
+
+    const handleClick = e => {
+      const rect = element.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const maxDistance = Math.max(
+        Math.hypot(x, y),
+        Math.hypot(x - rect.width, y),
+        Math.hypot(x, y - rect.height),
+        Math.hypot(x - rect.width, y - rect.height)
+      );
+
+      const ripple = document.createElement('div');
+      ripple.style.cssText = `
+        position: absolute;
+        width: ${maxDistance * 2}px;
+        height: ${maxDistance * 2}px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(132, 100, 255, 0.4) 0%, rgba(132, 100, 255, 0.2) 30%, transparent 70%);
+        left: ${x - maxDistance}px;
+        top: ${y - maxDistance}px;
+        pointer-events: none;
+        z-index: 1000;
+      `;
+
+      element.appendChild(ripple);
+
+      gsap.fromTo(
+        ripple,
+        {
+          scale: 0,
+          opacity: 1
+        },
+        {
+          scale: 1,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          onComplete: () => ripple.remove()
+        }
+      );
+    };
+
+    element.addEventListener('mouseenter', handleMouseEnter);
+    element.addEventListener('mouseleave', handleMouseLeave);
+    element.addEventListener('click', handleClick);
+
+    return () => {
+      isHoveredRef.current = false;
+      element.removeEventListener('mouseenter', handleMouseEnter);
+      element.removeEventListener('mouseleave', handleMouseLeave);
+      element.removeEventListener('click', handleClick);
+      clearAllParticles();
+    };
+  }, [animateParticles, clearAllParticles]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.12, duration: 0.6 }}
+      className="group h-full"
+    >
+      <div
+        ref={cardRef}
+        className="flex flex-col h-full bg-gradient-to-br from-white/5 to-white/[0.02] rounded-2xl border border-white/15 overflow-hidden hover:border-purple-500/50 transition-all duration-400 hover:bg-gradient-to-br hover:from-white/8 hover:to-white/[0.03] group/card backdrop-blur-xl p-7 sm:p-8 relative hover:shadow-[0_8px_25px_rgba(132,100,255,0.2)] cursor-pointer"
+        style={{ position: 'relative', overflow: 'hidden' }}
+      >
+        
+        {/* Header with Title and Status */}
+        <div className="flex items-start justify-between gap-4 mb-5 relative z-10">
+          <div className="flex-grow">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors leading-tight">
+              {project.title}
+            </h3>
+            {/* Status Badge */}
+            <span className={`inline-flex text-xs font-semibold px-3 py-1.5 rounded-lg border ${
+              project.status === 'Completed'
+                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+            }`}>
+              {project.status}
+            </span>
+          </div>
+          
+          {/* GitHub Icon */}
+          <motion.a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-shrink-0 p-2.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-purple-400/50 relative z-20"
+            whileHover={{ scale: 1.1 }}
+            title="View on GitHub"
+          >
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.086 1.84 1.236 1.84 1.236 1.07 1.835 2.807 1.305 3.492.997.107-.776.42-1.305.763-1.605-2.665-.3-5.466-1.335-5.466-5.93 0-1.31.47-2.38 1.236-3.22-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 013.003-.404 11.5 11.5 0 013.003.404c2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.234 1.91 1.234 3.22 0 4.61-2.807 5.628-5.48 5.922.43.37.823 1.102.823 2.222 0 1.604-.015 2.896-.015 3.286 0 .32.218.694.825.576C20.565 21.795 24 17.297 24 12c0-6.627-5.373-12-12-12z" />
+            </svg>
+          </motion.a>
+        </div>
+
+        {/* Description */}
+        <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow group-hover:text-gray-300 transition-colors relative z-10">
+          {project.description}
+        </p>
+
+        {/* Tech Stack */}
+        <div className="mb-6 relative z-10">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Technologies</p>
+          <div className="flex flex-wrap gap-2">
+            {project.tech.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1.5 text-xs font-semibold bg-white/8 hover:bg-white/15 text-gray-200 border border-white/20 hover:border-purple-400/50 rounded-md backdrop-blur-sm transition-all duration-300 whitespace-nowrap"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* View Project Button */}
+        <motion.a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600/50 to-purple-500/50 hover:from-purple-600 hover:to-purple-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 border border-purple-400/30 hover:border-purple-400/60 backdrop-blur-sm w-full text-sm relative z-10"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <span>View Project</span>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </motion.a>
+      </div>
+    </motion.div>
+  );
+};
+
 function Projects() {
   const shouldReduceMotion = useReducedMotion() || getReducedMotion();
   const projectVariants = useMemo(() => getProjectVariants(shouldReduceMotion), [shouldReduceMotion]);
+  const gridRef = useRef(null);
+  const spotlightRef = useRef(null);
+
+  useEffect(() => {
+    // Create global spotlight
+    if (!gridRef.current) return;
+
+    const spotlight = document.createElement('div');
+    spotlight.className = 'global-spotlight';
+    spotlight.style.cssText = `
+      position: fixed;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle,
+        rgba(132, 100, 255, 0.15) 0%,
+        rgba(132, 100, 255, 0.08) 15%,
+        rgba(132, 100, 255, 0.04) 25%,
+        rgba(132, 100, 255, 0.02) 40%,
+        rgba(132, 100, 255, 0.01) 65%,
+        transparent 70%
+      );
+      z-index: 200;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+    `;
+    document.body.appendChild(spotlight);
+    spotlightRef.current = spotlight;
+
+    const handleMouseMove = e => {
+      if (!spotlightRef.current || !gridRef.current) return;
+
+      const section = gridRef.current.closest('.projects-section');
+      const rect = section?.getBoundingClientRect();
+      const mouseInside =
+        rect && e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+
+      const cards = gridRef.current.querySelectorAll('.project-card');
+
+      if (!mouseInside) {
+        gsap.to(spotlightRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+        return;
+      }
+
+      gsap.to(spotlightRef.current, {
+        left: e.clientX,
+        top: e.clientY,
+        opacity: 0.6,
+        duration: 0.1,
+        ease: 'power2.out'
+      });
+
+      // Update card glow based on proximity
+      const spotlightRadius = 300;
+      const proximity = spotlightRadius * 0.5;
+      const fadeDistance = spotlightRadius * 0.75;
+
+      cards.forEach(card => {
+        const cardRect = card.getBoundingClientRect();
+        const centerX = cardRect.left + cardRect.width / 2;
+        const centerY = cardRect.top + cardRect.height / 2;
+        const distance =
+          Math.hypot(e.clientX - centerX, e.clientY - centerY) - Math.max(cardRect.width, cardRect.height) / 2;
+        const effectiveDistance = Math.max(0, distance);
+
+        let glowIntensity = 0;
+        if (effectiveDistance <= proximity) {
+          glowIntensity = 1;
+        } else if (effectiveDistance <= fadeDistance) {
+          glowIntensity = (fadeDistance - effectiveDistance) / (fadeDistance - proximity);
+        }
+
+        card.style.setProperty('--glow-intensity', glowIntensity.toString());
+      });
+    };
+
+    const handleMouseLeave = () => {
+      if (spotlightRef.current) {
+        gsap.to(spotlightRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+      }
+      gridRef.current?.querySelectorAll('.project-card').forEach(card => {
+        card.style.setProperty('--glow-intensity', '0');
+      });
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      spotlightRef.current?.parentNode?.removeChild(spotlightRef.current);
+    };
+  }, []);
+
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <style jsx>{`
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
+    <div className="w-full py-6 sm:py-8 md:py-12 lg:py-16 px-3 xs:px-4 sm:px-6 lg:px-8 projects-section">
+      <style>{`
+        .project-card {
+          --glow-x: 50%;
+          --glow-y: 50%;
+          --glow-intensity: 0;
+          --glow-radius: 200px;
+          --glow-color: 132, 100, 255;
         }
-        .line-clamp-3 {
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        .line-clamp-4 {
-          display: -webkit-box;
-          -webkit-line-clamp: 4;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
+        
+        .project-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          rounded-2xl;
+          background: radial-gradient(circle at var(--glow-x) var(--glow-y),
+            rgba(var(--glow-color), calc(var(--glow-intensity) * 0.3)) 0%,
+            rgba(var(--glow-color), calc(var(--glow-intensity) * 0.1)) 40%,
+            transparent 70%);
+          border-radius: 1rem;
+          pointer-events: none;
+          opacity: var(--glow-intensity);
+          transition: opacity 0.2s ease;
+          z-index: -1;
         }
       `}</style>
-      <motion.div
-        initial={{ opacity: 2, filter: 'blur(8px)' }}
-        animate={{ opacity: 1, filter: 'blur(0px)' }}
-        transition={{ duration: 1, ease: 'easeOut' }}
-        className="relative z-10 mb-8 sm:mb-10"
-      >
-        <h3 className="text-3xl sm:text-4xl font-bold text-red-400 text-left">My Projects</h3>
-      </motion.div>
+      <div className="max-w-7xl mx-auto">
+        {/* Section Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-10 sm:mb-14 md:mb-16 lg:mb-20 text-center px-2"
+        >
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-3 md:mb-4 leading-tight">
+            Featured Projects
+          </h2>
+          <p className="text-xs xs:text-sm sm:text-base text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            Innovative projects showcasing full-stack development and machine learning expertise
+          </p>
+        </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-8 max-w-8xl mx-auto">
-        {projects.map((project, index) => {
-          const variant = 'red';
-          
-          return (
-            <motion.div
-              key={project.title}
-              variants={projectVariants}
-              initial="hidden"
-              animate="visible"
-              transition={{ delay: index * 0.2, duration: 0.6 }}
-              className="relative group"
-            >
-              <PixelCard
-                variant={variant}
-                className="h-[600px] w-full max-w-[380px] mx-auto bg-gradient-to-br from-red-950/20 via-black to-red-950/10 border-red-500/40 hover:border-red-400/70 transition-all duration-300 shadow-2xl"
-              >
-                <div className="absolute inset-4 flex flex-col text-white z-10 pointer-events-none">
-                  {/* Header Section */}
-                  <div className="mb-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="flex-1 pr-2">
-                        <h3 className="text-sm sm:text-base font-bold text-red-400 leading-tight mb-2">
-                          {project.title}
-                        </h3>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className={`text-xs px-2 py-0.5 rounded-full font-semibold border shadow-sm ${
-                            project.status === 'Completed' 
-                              ? 'bg-red-600/30 text-red-200 border-red-500/40' 
-                              : 'bg-amber-600/30 text-amber-200 border-amber-500/40'
-                          }`}>
-                            {project.status}
-                          </span>
-                          <span className="text-xs text-red-200/80 font-medium bg-red-900/20 px-2 py-0.5 rounded border border-red-700/30">
-                            {project.duration}
-                          </span>
-                        </div>
-                      </div>
-                      <motion.a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-red-400 hover:text-red-300 transition-colors flex-shrink-0 pointer-events-auto z-20 bg-red-900/20 p-2 rounded-lg border border-red-700/30"
-                        aria-label={`GitHub repository for ${project.title}`}
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.086 1.84 1.236 1.84 1.236 1.07 1.835 2.807 1.305 3.492.997.107-.776.42-1.305.763-1.605-2.665-.3-5.466-1.335-5.466-5.93 0-1.31.47-2.38 1.236-3.22-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 013.003-.404 11.5 11.5 0 013.003.404c2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.234 1.91 1.234 3.22 0 4.61-2.807 5.628-5.48 5.922.43.37.823 1.102.823 2.222 0 1.604-.015 2.896-.015 3.286 0 .32.218.694.825.576C20.565 21.795 24 17.297 24 12c0-6.627-5.373-12-12-12z" />
-                        </svg>
-                      </motion.a>
-                    </div>
-                  </div>
-
-                  {/* Project Description */}
-                  <div className="flex-grow space-y-3">
-                    <div className="bg-red-950/30 rounded-lg p-3 border border-red-800/30">
-                      <p className="text-xs text-gray-200 leading-relaxed mb-2">
-                        {project.description}
-                      </p>
-                      <p className="text-xs text-red-200/70 leading-relaxed">
-                        {project.explanation}
-                      </p>
-                    </div>
-
-                    {/* Detailed Description */}
-                    <div className="bg-gradient-to-r from-red-950/20 to-transparent rounded-lg p-3 border-l-2 border-red-500/50">
-                      <h4 className="text-xs font-semibold text-red-300 mb-2">Project Details:</h4>
-                      <p className="text-xs text-gray-300 leading-relaxed line-clamp-4">
-                        {project.detailedDescription}
-                      </p>
-                    </div>
-
-                    {/* Achievements */}
-                    {project.achievements && (
-                      <div className="bg-red-900/20 rounded-lg p-3 border border-red-700/30">
-                        <h4 className="text-xs font-semibold text-red-300 mb-2">Key Achievements:</h4>
-                        <div className="space-y-1">
-                          {project.achievements.map((achievement, idx) => (
-                            <div key={idx} className="flex items-center text-xs text-red-200/90">
-                              <span className="text-red-400 mr-2">▪</span>
-                              {achievement}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Key Features */}
-                    <div className="bg-red-950/20 rounded-lg p-3 border border-red-800/30">
-                      <h4 className="text-xs font-semibold text-red-300 mb-2">Core Features:</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {project.features.slice(0, 4).map((feature, idx) => (
-                          <span
-                            key={idx}
-                            className="text-xs bg-red-800/40 text-red-200 px-2 py-0.5 rounded border border-red-600/40 font-medium"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                        {project.features.length > 4 && (
-                          <span className="text-xs text-red-300/70 px-1 font-medium">
-                            +{project.features.length - 4} more
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Tech Stack */}
-                  <div className="mt-auto">
-                    <p className="text-xs font-medium text-red-300 mb-2">Tech Stack:</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.tech.slice(0, 5).map((tech) => (
-                        <span
-                          key={tech}
-                          className="bg-gradient-to-r from-red-600/70 to-red-700/70 text-red-100 text-xs font-semibold px-2.5 py-1 rounded-lg backdrop-blur-sm border border-red-400/40 shadow-md hover:from-red-500/70 hover:to-red-600/70 transition-colors"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.tech.length > 5 && (
-                        <span className="text-xs text-red-300/70 font-medium px-2 py-1 bg-red-900/20 rounded border border-red-700/30">
-                          +{project.tech.length - 5}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-red-950/40 via-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[25px]" />
-                <div className="absolute inset-0 bg-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[25px]" />
-              </PixelCard>
-            </motion.div>
-          );
-        })}
+        {/* 2x2 Grid Layout with MagicBento ParticleCard Style */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8" ref={gridRef}>
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
+          ))}
+        </div>
       </div>
     </div>
   );

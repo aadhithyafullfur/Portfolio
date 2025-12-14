@@ -1,555 +1,308 @@
-import React, { Suspense, useState, useRef, useEffect, useCallback } from 'react';
+import React, { Suspense, useState, useRef, useEffect, useCallback, lazy } from 'react';
 import Navbar from './components/Navbar.js';
-import About from './components/About.js';
-import Certifications from './components/Certifications.js';
-import Skills from './components/Skills.js';
-import Projects from './components/Projects.js';
-import Contact from './components/Contact.js';
-import Footer from './components/Footer.js';
-import Leetcode from './components/Leetcode.js';
-import GlitchText from './components/Glitchtext.js';
+import SplitText from './components/SplitText.js';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { TypeAnimation } from 'react-type-animation';
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaDownload } from 'react-icons/fa';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import Lottie from 'lottie-react';
-import loaderData from './assets/loader.json';
-// Particles.js is loaded from public/js/particles.js
 
-const SymbolsBackground = () => {
-  const [symbols, setSymbols] = useState([]);
-
-  useEffect(() => {
-    const generatedSymbols = [];
-    const symbolChars = ['< />', '{ }', '</>', '=>', '++', '&&'];
-    
-    // Reduce symbols on mobile for better performance
-    const symbolCount = window.innerWidth > 768 ? 30 : 10;
-
-    for (let i = 0; i < symbolCount; i++) {
-      generatedSymbols.push({
-        id: i,
-        text: symbolChars[Math.floor(Math.random() * symbolChars.length)],
-        left: `${Math.random() * 100}vw`,
-        delay: `${Math.random() * 15}s`,
-        fontSize: `${Math.random() * (window.innerWidth > 768 ? 16 : 12) + (window.innerWidth > 768 ? 16 : 14)}px`,
-      });
-    }
-
-    setSymbols(generatedSymbols);
-  }, []);
-
-  return (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" id="symbols">
-      {symbols.map((symbol) => (
-        <div
-          key={symbol.id}
-          className="absolute text-red-400 animate-fall"
-          style={{
-            left: symbol.left,
-            animationDelay: symbol.delay,
-            fontSize: symbol.fontSize,
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {symbol.text}
-        </div>
-      ))}
-    </div>
-  );
-};
+// Lazy loaded components
+const About = lazy(() => import('./components/About.js'));
+const Certifications = lazy(() => import('./components/Certifications.js'));
+const Skills = lazy(() => import('./components/Skills.js'));
+const Projects = lazy(() => import('./components/Projects.js'));
+const Contact = lazy(() => import('./components/Contact.js'));
+const Footer = lazy(() => import('./components/Footer.js'));
+const Leetcode = lazy(() => import('./components/Leetcode.js'));
 
 const Bitmoji3D = ({ isHovered }) => {
   const meshRef = useRef();
 
-  useFrame(() => {
-    if (meshRef.current && isHovered) {
+  useFrame(({ clock }) => {
+    if (!meshRef.current) return;
+    if (isHovered) {
       meshRef.current.rotation.x += 0.01;
       meshRef.current.rotation.y += 0.01;
+    } else {
+      meshRef.current.rotation.y = clock.getElapsedTime() * 0.2;
     }
   });
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} intensity={1} />
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[5, 5, 5]} intensity={0.6} />
       <mesh ref={meshRef}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
-        <meshStandardMaterial color="#dc2626" />
+        <meshStandardMaterial color="#A855F7" />
       </mesh>
-      <OrbitControls enableZoom={false} />
     </>
   );
 };
 
 const Section = ({ children, id, className }) => {
-  const [screenSize, setScreenSize] = useState(window.innerWidth);
-  
-  useEffect(() => {
-    const handleResize = () => setScreenSize(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const { ref, inView } = useInView({ 
-    triggerOnce: true, 
-    threshold: screenSize <= 640 ? 0.05 : screenSize <= 1024 ? 0.08 : 0.1 
-  });
-
-  const getAnimationValues = () => {
-    if (screenSize <= 640) return { y: 20, duration: 0.5, delay: 0.1 };
-    if (screenSize <= 1024) return { y: 30, duration: 0.6, delay: 0.05 };
-    return { y: 50, duration: 0.8, delay: 0 };
-  };
-
-  const animationValues = getAnimationValues();
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: animationValues.y }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: animationValues.y }}
-      transition={{ 
-        duration: animationValues.duration, 
-        ease: 'easeOut',
-        delay: animationValues.delay 
-      }}
       id={id}
       className={className}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
     >
-      <div className="relative z-10">{children}</div>
+      {children}
     </motion.div>
   );
 };
+
+const SectionFallback = () => (
+  <div className="py-24 text-center text-purple-400">Loading section...</div>
+);
 
 const App = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    // Performance-aware initialization
-    const isMobile = window.innerWidth <= 768;
-    const isLowEnd = navigator.hardwareConcurrency <= 4 || navigator.deviceMemory <= 4;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    // Don't initialize particles on mobile, low-end devices, or if reduced motion is preferred
-    if (isMobile || isLowEnd || prefersReducedMotion) {
-      return;
-    }
-    
-    // Further optimize particles for performance
-    window.particlesJS('particles-js', {
-      particles: {
-        number: {
-          value: 70, // Drastically reduced from 100 to 15
-          density: {
-            enable: true,
-            value_area: 1200 // Increased area for better distribution
-          }
-        },
-        color: {
-          value: ['#FF6B9D', '#C44569', '#F8B500', '#00D2FF', '#3742FA']
-        },
-        shape: {
-          type: 'circle',
-          stroke: {
-            width: 2,
-            color: '#f42a2aff'
-          }
-        },
-        opacity: {
-          value: isMobile ? 0.9 : 0.7,
-          random: true,
-          anim: {
-            enable: true,
-            speed: 2,
-            opacity_min: isMobile ? 0.5 : 0.3,
-            sync: false
-          }
-        },
-        size: {
-          value: 2.5,
-          random: true,
-          anim: {
-            enable: true,
-            speed: 2,
-            size_min: 1,
-            sync: false
-          }
-        },
-        line_linked: {
-          enable: true,
-          distance: 180,
-          color: '#dc2626',
-          opacity: 0.4,
-          width: 1.5
-        },
-        move: {
-          enable: true,
-          speed: 1,
-          direction: 'none',
-          random: true,
-          straight: false,
-          out_mode: 'bounce',
-          bounce: true,
-          attract: {
-            enable: true,
-            rotateX: 1500,
-            rotateY: 3000
-          }
-        }
-      },
-      interactivity: {
-        detect_on: 'window',
-        events: {
-          onhover: {
-            enable: true,
-            mode: 'grab'
+    // Initialize particles.js
+    if (window.particlesJS) {
+      window.particlesJS('particles-js', {
+        particles: {
+          number: {
+            value: 40,
+            density: {
+              enable: true,
+              value_area: 1500
+            }
           },
-          onclick: {
-            enable: true,
-            mode: 'bubble'
+          color: {
+            value: '#A855F7'
           },
-          ontouchstart: {
-            enable: true,
-            mode: 'bubble'
+          shape: {
+            type: 'circle',
+            stroke: {
+              width: 0,
+              color: '#A855F7ff'
+            }
           },
-          ontouchmove: {
-            enable: true,
-            mode: 'grab'
+          opacity: {
+            value: 0.5,
+            random: false,
+            anim: {
+              enable: true,
+              speed: 1,
+              opacity_min: 0.2,
+              sync: false
+            }
           },
-          ontouchend: {
-            enable: true,
-            mode: 'repulse'
+          size: {
+            value: 2,
+            random: true,
+            anim: {
+              enable: false,
+              speed: 0,
+              size_min: 0,
+              sync: false
+            }
           },
-          resize: true
-        },
-        modes: {
-          grab: {
+          line_linked: {
+            enable: true,
             distance: 150,
-            line_linked: {
-              opacity: 1
+            color: '#A855F7',
+            opacity: 0.3,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 0.5,
+            direction: 'none',
+            random: true,
+            straight: false,
+            out_mode: 'bounce',
+            bounce: true,
+            attract: {
+              enable: true,
+              rotateX: 1500,
+              rotateY: 3000
             }
-          },
-          bubble: {
-            distance: 130,
-            size: 8,
-            duration: 1,
-            opacity: 0.9,
-            speed: 5
-          },
-          repulse: {
-            distance: 80,
-            duration: 1
-          },
-          push: {
-            particles_nb: 2
-          },
-          remove: {
-            particles_nb: 2
           }
-        }
-      },
-      retina_detect: true
-    });
-
-    // Enhanced cursor interaction with gravity-like effect
-    const canvas = document.querySelector('#particles-js canvas');
-    if (canvas) {
-      let mouseX = 0;
-      let mouseY = 0;
-      let isInteracting = false;
-      
-      const handleMouseMove = (e) => {
-        const rect = canvas.getBoundingClientRect();
-        mouseX = e.clientX - rect.left;
-        mouseY = e.clientY - rect.top;
-        isInteracting = true;
-        
-        // Apply stronger attraction effect
-        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
-          const pJS = window.pJSDom[0].pJS;
-          pJS.interactivity.mouse.pos_x = mouseX;
-          pJS.interactivity.mouse.pos_y = mouseY;
-          
-          // Enhance particle attraction to mouse
-          pJS.particles.array.forEach(particle => {
-            const dx = mouseX - particle.x;
-            const dy = mouseY - particle.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < 150) {
-              const force = (150 - distance) / 150;
-              particle.vx += dx * force * 0.003;
-              particle.vy += dy * force * 0.003;
-              
-              // Add some randomness for natural movement
-              particle.vx += (Math.random() - 0.5) * 0.1;
-              particle.vy += (Math.random() - 0.5) * 0.1;
+        },
+        interactivity: {
+          detect_on: 'window',
+          events: {
+            onhover: {
+              enable: true,
+              mode: 'grab'
+            },
+            onclick: {
+              enable: true,
+              mode: 'bubble'
+            },
+            ontouchstart: {
+              enable: true,
+              mode: 'bubble'
+            },
+            ontouchmove: {
+              enable: true,
+              mode: 'grab'
+            },
+            ontouchend: {
+              enable: true,
+              mode: 'repulse'
+            },
+            resize: true
+          },
+          modes: {
+            grab: {
+              distance: 150,
+              line_linked: {
+                opacity: 1
+              }
+            },
+            bubble: {
+              distance: 130,
+              size: 8,
+              duration: 1,
+              opacity: 0.9,
+              speed: 5
+            },
+            repulse: {
+              distance: 80,
+              duration: 1
+            },
+            push: {
+              particles_nb: 2
+            },
+            remove: {
+              particles_nb: 2
             }
-          });
-        }
-      };
-      
-      const handleTouchStart = (e) => {
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        mouseX = touch.clientX - rect.left;
-        mouseY = touch.clientY - rect.top;
-        isInteracting = true;
-        
-        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
-          const pJS = window.pJSDom[0].pJS;
-          pJS.interactivity.mouse.pos_x = mouseX;
-          pJS.interactivity.mouse.pos_y = mouseY;
-          
-          // Strong initial attraction on touch
-          pJS.particles.array.forEach(particle => {
-            const dx = mouseX - particle.x;
-            const dy = mouseY - particle.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < 120) {
-              const force = (120 - distance) / 120;
-              particle.vx += dx * force * 0.005;
-              particle.vy += dy * force * 0.005;
-            }
-          });
-        }
-      };
-      
-      const handleTouchMove = (e) => {
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        const touch = e.touches[0];
-        mouseX = touch.clientX - rect.left;
-        mouseY = touch.clientY - rect.top;
-        isInteracting = true;
-        
-        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
-          const pJS = window.pJSDom[0].pJS;
-          pJS.interactivity.mouse.pos_x = mouseX;
-          pJS.interactivity.mouse.pos_y = mouseY;
-          
-          // Enhanced touch interaction with stronger force
-          pJS.particles.array.forEach(particle => {
-            const dx = mouseX - particle.x;
-            const dy = mouseY - particle.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < 100) {
-              const force = (100 - distance) / 100;
-              particle.vx += dx * force * 0.004;
-              particle.vy += dy * force * 0.004;
-              
-              // Add movement trail effect
-              particle.vx += (Math.random() - 0.5) * 0.2;
-              particle.vy += (Math.random() - 0.5) * 0.2;
-            }
-          });
-        }
-      };
-      
-      const handleTouchEnd = (e) => {
-        e.preventDefault();
-        isInteracting = false;
-        
-        // Add dispersal effect when touch ends
-        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
-          const pJS = window.pJSDom[0].pJS;
-          
-          pJS.particles.array.forEach(particle => {
-            const dx = mouseX - particle.x;
-            const dy = mouseY - particle.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < 80) {
-              // Repulse particles when touch ends
-              particle.vx -= dx * 0.002;
-              particle.vy -= dy * 0.002;
-            }
-          });
-        }
-      };
-      
-      const handleMouseLeave = () => {
-        isInteracting = false;
-      };
-      
-      // Add all event listeners
-      canvas.addEventListener('mousemove', handleMouseMove);
-      canvas.addEventListener('mouseleave', handleMouseLeave);
-      canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
-      canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
-      canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
-      
-      // Cleanup event listeners
-      return () => {
-        canvas.removeEventListener('mousemove', handleMouseMove);
-        canvas.removeEventListener('mouseleave', handleMouseLeave);
-        canvas.removeEventListener('touchstart', handleTouchStart);
-        canvas.removeEventListener('touchmove', handleTouchMove);
-        canvas.removeEventListener('touchend', handleTouchEnd);
-      };
+          }
+        },
+        retina_detect: true
+      });
     }
   }, []);
 
   return (
-    <div className="min-h-screen text-white relative">
-      {/* Professional clean background */}
-      <div 
-        className="fixed inset-0" 
-        style={{ 
-          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.98) 0%, rgba(10, 10, 10, 0.99) 100%)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          zIndex: 0 
-        }} 
-      />
-      
-      {/* Subtle professional overlays */}
-      <div className="fixed inset-0 bg-gradient-to-br from-gray-900/5 via-black to-gray-900/5 opacity-60 pointer-events-none" style={{ zIndex: 1 }} />
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-800/3 via-transparent to-transparent pointer-events-none" style={{ zIndex: 1 }} />
-      
-      {/* Particles.js container */}
-      <div 
-        id="particles-js" 
-        className="fixed inset-0" 
-        style={{ zIndex: 2 }}
-      />
-
-      {/* Content container */}
-      <div className="relative" style={{ zIndex: 10 }}>
+    <div className="min-h-screen text-white bg-black relative">
+      <div id="particles-js" className="fixed inset-0 z-0"></div>
+      <div className="relative z-10">
         <Navbar />
-        <main>
-          <Section id="home" className="min-h-screen flex items-center justify-center py-12 sm:py-16 md:py-20 lg:py-24">
-        <div className="container flex flex-col-reverse lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ 
-              duration: window.innerWidth <= 768 ? 0.8 : 1.2, 
-              ease: 'easeOut',
-              delay: 0.1 
-            }}
-            className="lg:w-1/2 text-center lg:text-left"
-          >
-            <div className="text-center lg:text-left mb-4">
-              <GlitchText
-                speed={1.5}
-                enableShadows={true}
-                enableOnHover={false}
-                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-xl"
-              >
-                Hi, I am Aadhithya R 👋
-              </GlitchText>
-            </div>
-            <TypeAnimation
-              sequence={['A Full‑Stack Developer 💻', 2000, 'ML Enthusiast 🤖', 2000]}
-              speed={10}
-              deletionSpeed={50}
-              repeat={Infinity}
-              wrapper="h3"
-              cursor
-              className="text-xl xs:text-2xl sm:text-4xl md:text-5xl font-semibold mt-4 text-center lg:text-left text-gray-300"
-            />
-            <p className="text-base sm:text-lg md:text-xl text-gray-300 mt-4 sm:mt-6 mb-4 sm:mb-6 px-2 sm:px-0">
-              Aspiring AI Engineer | Full-Stack Developer | Data Analytics | Machine Learning Enthusiast
-            </p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                delay: window.innerWidth <= 768 ? 0.3 : 0.5, 
-                duration: window.innerWidth <= 768 ? 0.6 : 0.8,
-                ease: 'easeOut'
-              }}
-              className="flex flex-wrap justify-center lg:justify-start space-x-4 sm:space-x-6"
-            >
-              {[
-                { href: 'https://github.com/aadhithyafullfur', icon: FaGithub, label: 'GitHub' },
-                { href: 'https://www.linkedin.com/in/aadhithya-r-077a7a320/', icon: FaLinkedin, label: 'LinkedIn' },
-                { href: 'https://www.instagram.com/aadhi_.x18/', icon: FaInstagram, label: 'Instagram' },
-                { href: 'mailto:aadhithya@example.com', icon: FaEnvelope, label: 'Email' },
-                { href: 'Aadhithya R resume .pdf', icon: FaDownload, label: 'Resume', download: true },
-              ].map(({ href, icon: Icon, label, download }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  download={download}
-                  className="group relative text-white hover:text-red-400 transition-all duration-300 ease-out p-2 rounded-lg hover:bg-red-900/20 hover:scale-105 active:scale-95"
-                  title={label}
-                >
-                  <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
-                  <span className="absolute bottom-[-2rem] sm:bottom-[-1.5rem] left-1/2 transform -translate-x-1/2 scale-0 group-hover:scale-100 transition-transform text-xs bg-black bg-opacity-70 text-white px-2 py-1 rounded-md whitespace-nowrap">
-                    {label}
-                  </span>
-                </a>
-              ))}
-            </motion.div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ 
-              duration: window.innerWidth <= 768 ? 0.8 : 1.2, 
-              ease: 'easeOut',
-              delay: 0.2 
-            }}
-            className="lg:w-1/2 mb-8 sm:mb-12 lg:mb-0"
-          >
-            <div
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              className={`w-56 h-56 xs:w-64 xs:h-64 sm:w-72 sm:h-72 mx-auto rounded-full border-4 border-red-600 shadow-xl overflow-hidden bg-black/30 backdrop-blur-md transition-transform duration-300 ${
-                isHovered ? 'scale-105 shadow-red-600/70' : ''
-              }`}
-              style={{ cursor: 'pointer' }}
+        <main>
+        {/* HOME SECTION */}
+        <Section
+          id="home"
+          className="min-h-screen flex items-center justify-center py-20"
+        >
+          {/* ✅ MOBILE OPTIMIZED HERO SECTION */}
+          <div className="container flex flex-col-reverse lg:flex-row items-center justify-between gap-6 sm:gap-8 md:gap-12 lg:gap-20 px-3 xs:px-4 sm:px-6 lg:px-8">
+            
+            {/* LEFT TEXT */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              className="lg:w-1/2 text-center lg:text-left w-full"
             >
-              <Suspense fallback={
-                <div className="w-full h-full flex items-center justify-center">
-                  <Lottie animationData={loaderData} className="w-24 h-24 sm:w-32 sm:h-32" />
-                </div>
-              }>
+              <SplitText
+                text="Hi, I am Aadhithya R"
+                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold leading-tight"
+                tag="h2"
+                splitType="chars"
+                delay={80}
+              />
+
+              <TypeAnimation
+                sequence={[
+                  'A Full-Stack Developer 💻',
+                  2000,
+                  'ML Enthusiast 🤖',
+                  2000,
+                ]}
+                speed={50}
+                repeat={Infinity}
+                wrapper="h3"
+                className="text-base xs:text-lg sm:text-2xl md:text-3xl mt-3 sm:mt-4 text-purple-400"
+              />
+
+              <p className="mt-4 sm:mt-6 text-sm xs:text-base text-gray-300 leading-relaxed">
+                Passionate about building scalable web applications and AI-powered solutions.
+              </p>
+
+              <div className="flex justify-center lg:justify-start gap-4 sm:gap-6 mt-5 sm:mt-6 flex-wrap">
+                <a href="https://github.com/aadhithyafullfur" className="hover:text-purple-400 transition-colors"><FaGithub size={18} className="sm:w-6 sm:h-6" /></a>
+                <a href="https://www.linkedin.com/in/aadhithya-r-077a7a320/" className="hover:text-purple-400 transition-colors"><FaLinkedin size={18} className="sm:w-6 sm:h-6" /></a>
+                <a href="https://www.instagram.com/aadhi_.x18/" className="hover:text-purple-400 transition-colors"><FaInstagram size={18} className="sm:w-6 sm:h-6" /></a>
+                <a href="mailto:aadhithya@example.com" className="hover:text-purple-400 transition-colors"><FaEnvelope size={18} className="sm:w-6 sm:h-6" /></a>
+                <a href="Aadhithya R resume .pdf" download className="hover:text-purple-400 transition-colors"><FaDownload size={18} className="sm:w-6 sm:h-6" /></a>
+              </div>
+            </motion.div>
+
+            {/* RIGHT 3D BITMOJI */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+              className="lg:w-1/2 flex justify-center w-full mt-6 sm:mt-8 lg:mt-0"
+            >
+              <div
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className="w-48 h-48 xs:w-56 xs:h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-full border-4 border-purple-600 shadow-xl overflow-hidden hover:shadow-2xl hover:border-purple-500 transition-all duration-300"
+              >
                 <Canvas>
                   <Bitmoji3D isHovered={isHovered} />
                 </Canvas>
-              </Suspense>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
+              </div>
+            </motion.div>
 
-  <Section id="about" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
+          </div>
+        </Section>
+
+        {/* OTHER SECTIONS */}
+        <Section id="about" className="py-24">
+          <Suspense fallback={<SectionFallback />}>
             <About />
-          </Section>
+          </Suspense>
+        </Section>
 
-          <Section id="certifications" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
+        <Section id="certifications" className="py-24">
+          <Suspense fallback={<SectionFallback />}>
             <Certifications />
-          </Section>
+          </Suspense>
+        </Section>
 
-          <Section id="skills" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
+        <Section id="skills" className="py-24">
+          <Suspense fallback={<SectionFallback />}>
             <Skills />
-          </Section>
+          </Suspense>
+        </Section>
 
-          <Section id="projects" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
+        <Section id="projects" className="py-24">
+          <Suspense fallback={<SectionFallback />}>
             <Projects />
-          </Section>
+          </Suspense>
+        </Section>
 
-          <Section id="leetcode" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
+        <Section id="leetcode" className="py-24">
+          <Suspense fallback={<SectionFallback />}>
             <Leetcode />
-          </Section>
+          </Suspense>
+        </Section>
 
-          <Section id="contact" className="py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
+        <Section id="contact" className="py-24">
+          <Suspense fallback={<SectionFallback />}>
             <Contact />
-          </Section>
-        </main>
+          </Suspense>
+        </Section>
+      </main>
+
+      <Suspense fallback={null}>
         <Footer />
+      </Suspense>
       </div>
     </div>
   );

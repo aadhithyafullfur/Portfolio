@@ -53,18 +53,18 @@ const achievements = [
 
 function Certifications() {
   return (
-    <section id="certifications" className="w-full py-8 sm:py-16 lg:py-20 px-4 bg-black">
+    <section id="certifications" className="w-full py-6 sm:py-8 md:py-12 lg:py-16 px-3 xs:px-4 sm:px-6 bg-black">
       <div className="max-w-7xl mx-auto">
         {/* Main heading */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center mb-8 sm:mb-12 lg:mb-16"
+          className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16"
         >
           <AnimatedText
             text="Professional Certifications"
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-red-500 mb-4"
+            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-purple-500 mb-2 sm:mb-3 md:mb-4 leading-tight"
             animation="slideUp"
             staggerDelay={0.05}
           />
@@ -72,13 +72,13 @@ function Certifications() {
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
-            className="w-16 sm:w-20 md:w-24 h-1 bg-gradient-to-r from-red-500 to-red-700 mx-auto mb-4 sm:mb-6 rounded-full"
+            className="w-12 sm:w-16 md:w-20 h-1 bg-gradient-to-r from-red-500 to-red-700 mx-auto mb-3 sm:mb-4 md:mb-6 rounded-full"
           ></motion.div>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.6 }}
-            className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-4"
+            className="text-gray-400 text-xs xs:text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2"
           >
             Industry-recognized certifications that validate my expertise in cloud computing, 
             artificial intelligence, and software engineering.
@@ -86,7 +86,7 @@ function Certifications() {
         </motion.div>
 
         {/* Responsive Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8 mb-8 sm:mb-10 md:mb-12 relative">
           {certifications.map((cert, index) => (
             <motion.div
               key={index}
@@ -128,7 +128,7 @@ function Certifications() {
                         <h3 className="text-white font-bold text-base lg:text-lg">{cert.issuer}</h3>
                         <AnimatedText
                           text={cert.name}
-                          className="text-red-300 text-xs lg:text-sm font-medium"
+                          className="text-purple-300 text-xs lg:text-sm font-medium"
                           animation="slideLeft"
                           staggerDelay={0.02}
                         />
@@ -153,8 +153,8 @@ function Certifications() {
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-600/20 blur-md animate-pulse"></div>
                     
                     {/* Corner electric sparks */}
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-400 rounded-full opacity-70 animate-pulse"></div>
-                    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-red-500 rounded-full opacity-60 animate-ping" style={{ animationDelay: '0.7s' }}></div>
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-purple-400 rounded-full opacity-70 animate-pulse"></div>
+                    <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-purple-500 rounded-full opacity-60 animate-ping" style={{ animationDelay: '0.7s' }}></div>
                   </motion.div>
                 </div>
 
@@ -197,7 +197,7 @@ function Certifications() {
                           href={cert.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-3 py-2 lg:px-4 lg:py-2 bg-red-600 hover:bg-red-500 text-white text-xs lg:text-sm font-medium rounded-lg transition-all duration-300 cursor-pointer"
+                          className="inline-flex items-center gap-2 px-3 py-2 lg:px-4 lg:py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs lg:text-sm font-medium rounded-lg transition-all duration-300 cursor-pointer"
                         >
                           <ExternalLink className="w-3 h-3 lg:w-4 lg:h-4" />
                           View Credential
@@ -208,8 +208,8 @@ function Certifications() {
 
                 
                 {/* Subtle Electric Sparks */}
-                <div className="absolute bottom-3 left-3 w-1.5 h-1.5 rounded-full bg-red-400 opacity-60 animate-ping" style={{ animationDelay: '0.8s' }}></div>
-                <div className="absolute top-1/2 left-2 w-1 h-1 rounded-full bg-red-300 opacity-70 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                <div className="absolute bottom-3 left-3 w-1.5 h-1.5 rounded-full bg-purple-400 opacity-60 animate-ping" style={{ animationDelay: '0.8s' }}></div>
+                <div className="absolute top-1/2 left-2 w-1 h-1 rounded-full bg-purple-300 opacity-70 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
               </div>
             </ElectricBorder>
 
@@ -227,12 +227,12 @@ function Certifications() {
             )}
             
             {/* Minimal Electric Glow for Border Visibility */}
-            <div className="absolute inset-0 rounded-2xl opacity-20 blur-lg -z-10 transition-all duration-500 group-hover:opacity-40 bg-red-500/20"></div>
+            <div className="absolute inset-0 rounded-2xl opacity-20 blur-lg -z-10 transition-all duration-500 group-hover:opacity-40 bg-purple-500/20"></div>
             </div>
 
               {/* Mobile & Small Tablet: Clean Professional Card */}
               <div className="block md:hidden">
-                <div className="border border-gray-700 hover:border-red-500/50 p-4 sm:p-5 rounded-2xl h-full min-h-[260px] sm:min-h-[280px] flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-red-500/10 bg-transparent">
+                <div className="border border-gray-700 hover:border-purple-500/50 p-4 sm:p-5 rounded-2xl h-full min-h-[260px] sm:min-h-[280px] flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10 bg-transparent">
                   
                   {/* Header with Company Logo and Title */}
                   <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
@@ -245,7 +245,7 @@ function Certifications() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-white font-bold text-base sm:text-lg">{cert.issuer}</h3>
-                      <p className="text-red-300 text-xs sm:text-sm font-medium leading-tight">{cert.name}</p>
+                      <p className="text-purple-300 text-xs sm:text-sm font-medium leading-tight">{cert.name}</p>
                     </div>
                   </div>
 
@@ -281,7 +281,7 @@ function Certifications() {
                       href={cert.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-red-600 hover:bg-red-500 text-white text-xs sm:text-sm font-medium rounded-lg transition-all duration-300"
+                      className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs sm:text-sm font-medium rounded-lg transition-all duration-300"
                     >
                       <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                       View
@@ -488,12 +488,12 @@ function Certifications() {
               transition={{ delay: 2.2 + index * 0.1, duration: 0.5, type: "spring" }}
               className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full opacity-80 relative shadow-lg ${
                 index < certifications.length 
-                  ? 'bg-red-500 shadow-red-500/50' 
+                  ? 'bg-purple-500 shadow-purple-500/50' 
                   : 'bg-yellow-500 shadow-yellow-500/50'
               }`}
             >
               <div className={`absolute inset-0 rounded-full animate-ping opacity-60 ${
-                index < certifications.length ? 'bg-red-500' : 'bg-yellow-500'
+                index < certifications.length ? 'bg-purple-500' : 'bg-yellow-500'
               }`}></div>
             </motion.div>
           ))}

@@ -72,134 +72,113 @@ function Skills() {
   };
 
   return (
-    <div className="container mx-auto px-4">
-      {/* Title */}
-      <motion.h2
-        variants={itemVariants}
-        initial="hidden"
-        animate="visible"
-        transition={{ duration: 0.8 }}
-        className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 mb-6 text-left max-w-max"
-      >
-        Skills & Expertise
-      </motion.h2>
-
-      {/* Skill Categories in responsive grid */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12 max-w-7xl mx-auto"
-      >
-        {skillCategories.map((category, index) => (
-          <motion.div
-            key={index}
-            variants={itemVariants}
-            className={`p-4 sm:p-5 rounded-xl cursor-pointer border text-center transition-all duration-300 h-full
-              ${
-                activeCategory === index
-                  ? 'border-red-500 bg-red-900/20'
-                  : 'border-gray-700 hover:bg-gray-800/30'
-              }`}
-            onClick={() => setActiveCategory(index === activeCategory ? null : index)}
-            whileHover={{ y: -3, boxShadow: '0 5px 15px rgba(128, 90, 213, 0.3)' }}
-            transition={{ type: 'spring', stiffness: 300 }}
-          >
-            <h3 className="text-lg sm:text-xl font-semibold text-red-400 mb-2 sm:mb-3">{category.title}</h3>
-            <div className="flex flex-wrap justify-center gap-1 sm:gap-2 mb-2 sm:mb-3">
-              {category.skills.map((skill, i) => (
-                <span
-                  key={i}
-                  className="px-2 sm:px-3 py-1 bg-gray-700 rounded-full text-xs sm:text-sm text-gray-200"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{category.description}</p>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Description below */}
-      <p className="text-sm sm:text-lg text-gray-300 max-w-4xl mx-auto mb-12 sm:mb-16 text-center px-4 leading-relaxed">
-        I specialize in full-stack development and machine learning, crafting responsive web apps and predictive models with modern languages and tools.
-      </p>
-
-      {/* Technology Stack */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
-      >
-        <h3 className="text-2xl sm:text-3xl font-semibold text-red-400 text-center mb-6 sm:mb-8">
-          Technology Stack
-        </h3>
-        
-        {/* Desktop: Animated Logo Loop */}
-        <div className="hidden md:block max-w-6xl mx-auto">
-          <LogoLoop
-            logos={skills.map(skill => ({
-              src: skill.icon,
-              alt: skill.name,
-              title: skill.name
-            }))}
-            speed={60}
-            direction="left"
-            logoHeight={48}
-            gap={40}
-            pauseOnHover={true}
-            scaleOnHover={true}
-            fadeOut={true}
-            fadeOutColor="#000000"
-            ariaLabel="Technology skills and tools"
-            className="py-4"
-          />
+    <div className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Section Title */}
+        <div className="mb-8 sm:mb-12 md:mb-16 text-center px-2">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-3 leading-tight">
+            Skills & <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600">Expertise</span>
+          </h2>
+          <p className="text-xs xs:text-sm sm:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            Proficient in full-stack development, cloud solutions, and modern web technologies.
+          </p>
         </div>
-        
-        {/* Mobile: Professional Grid Layout */}
-        <div className="block md:hidden">
-          <div className="grid grid-cols-4 sm:grid-cols-5 gap-4 max-w-md mx-auto">
-            {skills.map((skill, index) => (
-              <motion.div
-                key={index}
-                className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-3 border border-gray-700 hover:border-red-500/50 transition-all duration-300"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-              >
-                <div className="flex flex-col items-center space-y-2">
-                  <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-black/30">
+
+        {/* Skill Categories in Single Row */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mb-12 sm:mb-16 md:mb-20"
+        >
+          {skillCategories.map((category, index) => (
+            <motion.div
+              key={index}
+              variants={itemVariants}
+              className="group relative bg-black/40 rounded-lg border border-white/10 p-5 hover:border-white/20 transition-all duration-300 backdrop-blur-xl hover:bg-black/50 h-full flex flex-col"
+              whileHover={{ y: -2 }}
+            >
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-purple-500/0 to-purple-600/0 group-hover:from-purple-500/5 group-hover:to-purple-600/5 transition-all duration-300 pointer-events-none"></div>
+              
+              <h3 className="text-base sm:text-lg font-semibold text-white mb-3 relative z-10">{category.title}</h3>
+              <p className="text-gray-400 text-xs sm:text-sm mb-4 relative z-10 flex-grow">{category.description}</p>
+              
+              <div className="flex flex-wrap gap-1.5 relative z-10">
+                {category.skills.map((skill, i) => (
+                  <span
+                    key={i}
+                    className="px-2.5 py-1 bg-white/10 hover:bg-white/15 text-white text-xs font-medium border border-white/20 rounded-sm transition-all duration-300 backdrop-blur-sm whitespace-nowrap"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Technology Stack Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mt-16 sm:mt-20"
+        >
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 text-center">
+            Technology Stack
+          </h3>
+          <p className="text-gray-400 text-sm sm:text-base mb-8 text-center">
+            Tools and frameworks I work with
+          </p>
+          
+          {/* Desktop: Animated Logo Loop */}
+          <div className="hidden md:block max-w-6xl mx-auto">
+            <LogoLoop
+              logos={skills.map(skill => ({
+                src: skill.icon,
+                alt: skill.name,
+                title: skill.name
+              }))}
+              speed={60}
+              direction="left"
+              logoHeight={48}
+              gap={40}
+              pauseOnHover={true}
+              scaleOnHover={true}
+              fadeOut={true}
+              fadeOutColor="#000000"
+              ariaLabel="Technology skills and tools"
+              className="py-4"
+            />
+          </div>
+          
+          {/* Mobile: Professional Single Row Scroll */}
+          <div className="block md:hidden">
+            <div className="overflow-x-auto">
+              <div className="flex gap-3 pb-4 min-w-min px-2">
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={index}
+                    className="group relative bg-black/40 rounded-lg border border-white/10 p-3 hover:border-white/20 transition-all duration-300 backdrop-blur-sm hover:bg-black/50 flex flex-col items-center justify-center flex-shrink-0"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.05, duration: 0.4 }}
+                  >
                     <img
                       src={skill.icon}
                       alt={skill.name}
-                      className="w-6 h-6 object-contain filter brightness-110"
+                      className="w-8 h-8 object-contain mb-2 opacity-80 group-hover:opacity-100 transition-opacity"
                     />
-                  </div>
-                  <span className="text-xs text-gray-300 font-medium text-center leading-tight">
-                    {skill.name}
-                  </span>
-                </div>
-                
-                {/* Subtle hover glow */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-500/0 to-red-600/0 group-hover:from-red-500/10 group-hover:to-red-600/10 transition-all duration-300 pointer-events-none"></div>
-              </motion.div>
-            ))}
+                    <span className="text-xs text-gray-300 font-medium text-center leading-tight whitespace-nowrap">
+                      {skill.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
-          
-          {/* Mobile Skills Summary */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-8 p-4 bg-gradient-to-r from-gray-900/50 to-gray-800/50 rounded-2xl border border-gray-700 max-w-md mx-auto"
-          >
-            <p className="text-sm text-gray-300 text-center leading-relaxed">
-              Experienced in <span className="text-red-400 font-semibold">{skills.length}+ technologies</span> including modern web frameworks, cloud platforms, and development tools.
-            </p>
-          </motion.div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 }

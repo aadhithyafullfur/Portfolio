@@ -1,0 +1,34 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="400" height="300" fill="url(#bgGradient)"/>
+  
+  <!-- Traffic/Chart visualization -->
+  <g transform="translate(200, 150)">
+    <!-- Grid lines -->
+    <line x1="-70" y1="-40" x2="70" y2="-40" stroke="url(#purpleGradient)" stroke-width="1" opacity="0.3"/>
+    <line x1="-70" y1="-20" x2="70" y2="-20" stroke="url(#purpleGradient)" stroke-width="1" opacity="0.3"/>
+    <line x1="-70" y1="0" x2="70" y2="0" stroke="url(#purpleGradient)" stroke-width="1" opacity="0.3"/>
+    <line x1="-70" y1="20" x2="70" y2="20" stroke="url(#purpleGradient)" stroke-width="1" opacity="0.3"/>
+    
+    <!-- Bars (traffic data) -->
+    <rect x="-50" y="0" width="20" height="-25" fill="url(#purpleGradient)" rx="3"/>
+    <rect x="-20" y="0" width="20" height="-40" fill="url(#purpleGradient)" rx="3" opacity="0.8"/>
+    <rect x="10" y="0" width="20" height="-35" fill="url(#purpleGradient)" rx="3" opacity="0.6"/>
+    <rect x="40" y="0" width="20" height="-20" fill="url(#purpleGradient)" rx="3" opacity="0.4"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="200" y="270" font-size="18" font-weight="bold" text-anchor="middle" fill="#e0e7ff">
+    Traffic Prediction ML
+  </text>
+</svg>

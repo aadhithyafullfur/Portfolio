@@ -19,20 +19,20 @@ function About() {
       <motion.div
         initial={{ opacity: 0, x: 50, rotateX: -30 }}
         animate={controls}
-        className="glass p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl max-w-7xl mx-auto mt-12 sm:mt-16 shadow-2xl backdrop-blur-md"
+        className="glass p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl max-w-7xl mx-auto mt-8 sm:mt-12 md:mt-16 shadow-2xl backdrop-blur-md"
         style={{ perspective: '1000px' }}
       >
-        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 sm:gap-8 lg:gap-12">
           {/* Professional Avatar Section */}
           <motion.div
-            className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 group mx-auto lg:mx-0 flex-shrink-0"
+            className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 group mx-auto lg:mx-0 flex-shrink-0"
             initial={{ opacity: 0, x: -20, rotateY: -15 }}
             animate={{ opacity: 1, x: 0, rotateY: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
             whileHover={{ scale: 1.02, rotate: 0.5 }}
           >
             <div
-              className="w-full h-full bg-cover bg-center rounded-full border-3 border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.4)] animate-float bg-gradient-to-br from-gray-900 to-black"
+              className="w-full h-full bg-cover bg-center rounded-full border-3 border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.4)] animate-float bg-gradient-to-br from-gray-900 to-black"
               style={{
                 backgroundImage: "url('/images/bitmoji.png')",
                 backgroundSize: 'cover',
@@ -41,15 +41,15 @@ function About() {
               }}
             />
             {/* Subtle Glow Effect */}
-            <div className="absolute inset-0 rounded-full bg-red-500/15 blur-lg z-[-1] group-hover:bg-red-500/25 transition-all duration-300" />
+            <div className="absolute inset-0 rounded-full bg-purple-500/15 blur-lg z-[-1] group-hover:bg-purple-500/25 transition-all duration-300" />
           </motion.div>
 
           {/* Right Section */}
-          <div className="flex-1 space-y-8 text-text-main">
+          <div className="flex-1 space-y-6 sm:space-y-8 text-text-main px-2">
             {/* Animated Heading */}
             <ScrollFloat
-              containerClassName="text-center lg:text-left mb-4"
-              textClassName="text-4xl sm:text-5xl font-extrabold text-red-400"
+              containerClassName="text-center lg:text-left mb-3 sm:mb-4"
+              textClassName="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-extrabold text-purple-400 leading-tight"
               animationDuration={1.2}
               stagger={0.05}
               scrollStart="top bottom-=20%"
@@ -63,12 +63,12 @@ function About() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="space-y-4 sm:space-y-5"
+              className="space-y-3 sm:space-y-4"
             >
-              <div className="bg-gradient-to-r from-red-500/10 to-transparent p-4 sm:p-5 rounded-xl border-l-4 border-red-500">
+              <div className="bg-gradient-to-r from-purple-500/10 to-transparent p-3 sm:p-4 md:p-5 rounded-xl border-l-4 border-purple-500">
                 <ScrollFloat
                   containerClassName=""
-                  textClassName="text-base sm:text-lg font-medium text-gray-200"
+                  textClassName="text-sm sm:text-base md:text-lg font-medium text-gray-200 leading-relaxed"
                   animationDuration={0.8}
                   stagger={0.02}
                   scrollStart="top bottom-=15%"
@@ -77,10 +77,10 @@ function About() {
                 </ScrollFloat>
               </div>
               
-              <div className="bg-gradient-to-r from-gray-800/30 to-transparent p-4 sm:p-5 rounded-xl border border-gray-700/30">
+              <div className="bg-gradient-to-r from-gray-800/30 to-transparent p-3 sm:p-4 md:p-5 rounded-xl border border-gray-700/30">
                 <ScrollFloat
-                  containerClassName="mb-3"
-                  textClassName="text-gray-300 leading-relaxed text-sm sm:text-base"
+                  containerClassName="mb-2 sm:mb-3"
+                  textClassName="text-gray-300 leading-relaxed text-xs sm:text-sm md:text-base"
                   animationDuration={1.0}
                   stagger={0.015}
                   scrollStart="top bottom-=10%"
@@ -89,7 +89,7 @@ function About() {
                 </ScrollFloat>
                 <ScrollFloat
                   containerClassName=""
-                  textClassName="text-gray-300 leading-relaxed text-sm sm:text-base"
+                  textClassName="text-gray-300 leading-relaxed text-xs sm:text-sm md:text-base"
                   animationDuration={0.8}
                   stagger={0.012}
                   scrollStart="top bottom-=5%"
@@ -99,9 +99,9 @@ function About() {
               </div>
               
               <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-                <span className="px-3 py-1.5 bg-red-600/20 text-red-300 rounded-full text-xs sm:text-sm font-medium border border-red-500/30">Full-Stack Developer</span>
-                <span className="px-3 py-1.5 bg-red-600/20 text-red-300 rounded-full text-xs sm:text-sm font-medium border border-red-500/30">Data Analyst</span>
-                <span className="px-3 py-1.5 bg-red-600/20 text-red-300 rounded-full text-xs sm:text-sm font-medium border border-red-500/30">ML Engineer</span>
+                <span className="px-3 py-1.5 bg-purple-600/20 text-purple-300 rounded-full text-xs sm:text-sm font-medium border border-purple-500/30">Full-Stack Developer</span>
+                <span className="px-3 py-1.5 bg-purple-600/20 text-purple-300 rounded-full text-xs sm:text-sm font-medium border border-purple-500/30">Data Analyst</span>
+                <span className="px-3 py-1.5 bg-purple-600/20 text-purple-300 rounded-full text-xs sm:text-sm font-medium border border-purple-500/30">ML Engineer</span>
                 <span className="px-3 py-1.5 bg-blue-600/20 text-blue-300 rounded-full text-xs sm:text-sm font-medium border border-blue-500/30">AI Specialist</span>
                 <span className="px-3 py-1.5 bg-purple-600/20 text-purple-300 rounded-full text-xs sm:text-sm font-medium border border-purple-500/30">Artist</span>
                 <span className="px-3 py-1.5 bg-green-600/20 text-green-300 rounded-full text-xs sm:text-sm font-medium border border-green-500/30">Athlete</span>
@@ -115,13 +115,13 @@ function About() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7, duration: 0.6 }}
-                className="glass p-5 sm:p-6 rounded-xl shadow-lg border border-red-500/20 bg-gradient-to-r from-red-500/5 to-transparent"
+                className="glass p-5 sm:p-6 rounded-xl shadow-lg border border-purple-500/20 bg-gradient-to-r from-purple-500/5 to-transparent"
               >
                 <div className="flex items-center mb-4 sm:mb-5">
                   <div className="w-1 h-6 sm:h-8 bg-gradient-to-b from-red-500 to-red-600 rounded-full mr-3 sm:mr-4"></div>
                   <ScrollFloat
                     containerClassName="flex-1"
-                    textClassName="text-xl sm:text-2xl font-bold text-red-400"
+                    textClassName="text-xl sm:text-2xl font-bold text-purple-400"
                     animationDuration={0.8}
                     stagger={0.03}
                     scrollStart="top bottom-=10%"
@@ -131,7 +131,7 @@ function About() {
                 </div>
                 
                 <div className="space-y-3">
-                  <div className="border-l-4 border-red-500/60 pl-4 bg-gradient-to-r from-red-500/8 to-transparent p-4 rounded-r-xl">
+                  <div className="border-l-4 border-purple-500/60 pl-4 bg-gradient-to-r from-purple-500/8 to-transparent p-4 rounded-r-xl">
                     <ScrollFloat
                       containerClassName="mb-1"
                       textClassName="text-white font-bold text-base sm:text-lg"
@@ -143,7 +143,7 @@ function About() {
                     </ScrollFloat>
                     <ScrollFloat
                       containerClassName="mb-1"
-                      textClassName="text-red-300 font-semibold text-sm sm:text-base"
+                      textClassName="text-purple-300 font-semibold text-sm sm:text-base"
                       animationDuration={0.5}
                       stagger={0.015}
                       scrollStart="top bottom"
@@ -232,10 +232,10 @@ function About() {
                 </div>
 
                 {/* Skills & Interests Section */}
-                <div className="mt-6 pt-5 border-t border-red-500/20">
+                <div className="mt-6 pt-5 border-t border-purple-500/20">
                   <ScrollFloat
                     containerClassName="mb-4"
-                    textClassName="text-lg sm:text-xl font-bold text-red-400 flex items-center"
+                    textClassName="text-lg sm:text-xl font-bold text-purple-400 flex items-center"
                     animationDuration={0.6}
                     stagger={0.02}
                     scrollStart="top bottom-=5%"
@@ -245,7 +245,7 @@ function About() {
                   
                   <div className="grid sm:grid-cols-2 gap-4">
                     {/* Technical Skills */}
-                    <div className="bg-gradient-to-r from-red-500/8 to-transparent p-4 rounded-xl border border-red-500/20">
+                    <div className="bg-gradient-to-r from-purple-500/8 to-transparent p-4 rounded-xl border border-purple-500/20">
                       <ScrollFloat
                         containerClassName="mb-2"
                         textClassName="text-white font-semibold text-sm sm:text-base"

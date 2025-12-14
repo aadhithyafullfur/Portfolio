@@ -117,11 +117,11 @@ function Navbar() {
           activeHref={activeLink}
           className="drop-shadow-lg"
           ease="power3.easeOut"
-          baseColor="rgba(255, 255, 255, 0.9)"
-          pillColor="rgba(220, 38, 38, 0.9)"
+          baseColor="rgba(20, 20, 20, 0.95)"
+          pillColor="rgba(168, 85, 247, 0.9)"
           hoveredPillTextColor="#ffffff"
-          pillTextColor="rgba(255, 255, 255, 0.8)"
-          initialLoadAnimation={true}
+          pillTextColor="rgba(255, 255, 255, 0.95)"
+          initialLoadAnimation={false}
           onMobileMenuClick={() => {
             // Optional: Add any additional mobile menu handling
           }}

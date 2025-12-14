@@ -2,11 +2,11 @@ const GlitchText = ({ children, speed = 0.5, enableShadows = true, enableOnHover
   const inlineStyles = {
     '--after-duration': `${speed * 4}s`,
     '--before-duration': `${speed * 3}s`,
-    '--after-shadow': enableShadows ? '-2px 0 #dc2626' : 'none',
-    '--before-shadow': enableShadows ? '2px 0 #dc2626' : 'none'
+    '--after-shadow': enableShadows ? '-2px 0 #A855F7' : 'none',
+    '--before-shadow': enableShadows ? '2px 0 #A855F7' : 'none'
   };
 
-  const baseClasses = 'text-red-400 text-[clamp(1.5rem,6vw,4rem)] font-bold relative select-none cursor-pointer';
+  const baseClasses = 'text-purple-400 text-[clamp(1.5rem,6vw,4rem)] font-bold relative select-none cursor-pointer';
 
   const pseudoClasses = !enableOnHover
     ? 'after:content-[attr(data-text)] after:absolute after:top-0 after:left-[10px] after:text-white after:bg-[#060010] after:overflow-hidden after:[clip-path:inset(0_0_0_0)] after:[text-shadow:var(--after-shadow)] after:animate-glitch-after ' +

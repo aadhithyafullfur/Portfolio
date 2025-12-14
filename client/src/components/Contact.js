@@ -5,7 +5,9 @@ import {
   FaPhone,
   FaEnvelope,
   FaMapMarkerAlt,
-  FaPaperPlane,
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
 } from 'react-icons/fa';
 
 function Contact() {
@@ -86,61 +88,100 @@ function Contact() {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-20">
+    <section id="contact" className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 lg:px-8">
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: window.innerWidth <= 768 ? 0.2 : 0.3 }}
-        className="container mx-auto px-4 sm:px-6 lg:px-8"
+        className="max-w-6xl mx-auto"
       >
+        {/* Section Title */}
         <motion.div
           variants={itemVariants}
-          className="text-center mb-12"
+          className="mb-8 sm:mb-12 md:mb-16 text-center px-2"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-red-400 mb-4">
-            Get In Touch
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-3 leading-tight">
+            Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600">Touch</span>
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? I'd love to hear from you!
+          <p className="text-xs xs:text-sm sm:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            Have a project or opportunity? I'd love to hear from you. Let's connect and create something amazing together.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           {/* Contact Info */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col justify-center"
-          >
-            <div className="flex flex-col items-center text-center lg:text-left">
-              <motion.div
-                className="relative w-72 h-72 mb-6 group"
-                whileHover={{ scale: 1.06, rotate: 1 }}
-                transition={{ duration: 0.4 }}
-              >
-                <img
-                  src="/images/bitmoji2.jpg"
-                  alt="Bitmoji"
-                  className="w-full h-full object-cover rounded-full border-4 border-red-500 shadow-[0_0_30px_rgba(220,38,38,0.6)] animate-float"
-                />
-                <div className="absolute inset-0 rounded-full bg-red-500 opacity-30 blur-3xl z-[-1] group-hover:opacity-50 group-hover:blur-2xl transition-all duration-300" />
-              </motion.div>
+          <motion.div variants={itemVariants} className="space-y-5 sm:space-y-6">
+            {/* Bitmoji Image */}
+            <motion.div
+              className="relative mx-auto lg:mx-0 w-48 h-48 xs:w-56 xs:h-56 sm:w-64 sm:h-64 group"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.4 }}
+            >
+              <img
+                src="/images/bitmoji2.jpg"
+                alt="Profile"
+                className="w-full h-full object-cover rounded-2xl border-2 border-white/20 shadow-xl"
+              />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            </motion.div>
 
-              <h2 className="text-3xl font-bold text-red-400 mb-4">Let's Connect</h2>
+            <div className="bg-black/40 rounded-xl border border-white/10 p-4 sm:p-6 md:p-8 backdrop-blur-xl hover:border-white/20 transition-all duration-300">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-6">Contact Information</h3>
+              
+              <div className="space-y-4 sm:space-y-5">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                    <FaPhone className="text-purple-400 w-4 h-4 sm:w-5 sm:h-5" />
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-xs sm:text-sm font-medium">Phone</p>
+                    <p className="text-white text-sm sm:text-base font-semibold">+91 9629628246</p>
+                  </div>
+                </div>
 
-              <div className="glass p-6 rounded-xl w-full max-w-md">
-                <div className="flex items-center mb-4">
-                  <FaPhone className="text-red-400 w-5 h-5 mr-3" />
-                  <p className="text-gray-200 text-md">+91 9629628246</p>
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                    <FaEnvelope className="text-purple-400 w-4 h-4 sm:w-5 sm:h-5" />
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-xs sm:text-sm font-medium">Email</p>
+                    <p className="text-white text-sm sm:text-base font-semibold">aadhithyaa120@gmail.com</p>
+                  </div>
                 </div>
-                <div className="flex items-center mb-4">
-                  <FaEnvelope className="text-red-400 w-5 h-5 mr-3" />
-                  <p className="text-gray-200 text-md">aadhithyaa120@gmail.com</p>
+
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                    <FaMapMarkerAlt className="text-purple-400 w-4 h-4 sm:w-5 sm:h-5" />
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-xs sm:text-sm font-medium">Location</p>
+                    <p className="text-white text-sm sm:text-base font-semibold">Erode, India</p>
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <FaMapMarkerAlt className="text-red-400 w-5 h-5 mr-3" />
-                  <p className="text-gray-200 text-md">Erode, India</p>
-                </div>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="bg-black/40 rounded-xl border border-white/10 p-4 sm:p-6 md:p-8 backdrop-blur-xl">
+              <p className="text-gray-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4">Follow Me</p>
+              <div className="flex gap-2 sm:gap-3">
+                {[
+                  { icon: FaGithub, label: 'GitHub', url: 'https://github.com/aadhithyafullfur' },
+                  { icon: FaLinkedin, label: 'LinkedIn', url: 'https://linkedin.com/in/aadhithyaa' },
+                  { icon: FaInstagram, label: 'Instagram', url: 'https://instagram.com' },
+                ].map(({ icon: Icon, label, url }) => (
+                  <a
+                    key={label}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+                    title={label}
+                  >
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </a>
+                ))}
               </div>
             </div>
           </motion.div>
@@ -148,17 +189,14 @@ function Contact() {
           {/* Contact Form */}
           <motion.div
             variants={itemVariants}
-            className="glass p-8 rounded-xl"
+            className="bg-black/40 rounded-xl border border-white/10 p-4 sm:p-6 md:p-8 backdrop-blur-xl hover:border-white/20 transition-all duration-300"
           >
-            <div className="flex flex-col items-center mb-6">
-              <FaPaperPlane className="text-red-400 text-4xl mb-2 animate-bounce" />
-              <h2 className="text-3xl font-bold text-red-400">Send a Message</h2>
-            </div>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-6">Send Message</h3>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Your Name
+                <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-300 mb-1.5 sm:mb-2">
+                  Name
                 </label>
                 <input
                   type="text"
@@ -166,16 +204,16 @@ function Contact() {
                   name="name"
                   value={form.name}
                   onChange={handleChange}
-                  className="w-full p-3 bg-black/50 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-red-500"
-                  placeholder="Enter your name"
+                  className="w-full px-3 sm:px-4 py-2.5 text-sm bg-white/5 text-white border border-white/10 rounded-lg focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all"
+                  placeholder="Your name"
                   required
                 />
-                {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
+                {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Email Address
+                <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-300 mb-1.5 sm:mb-2">
+                  Email
                 </label>
                 <input
                   type="email"
@@ -183,43 +221,43 @@ function Contact() {
                   name="email"
                   value={form.email}
                   onChange={handleChange}
-                  className="w-full p-3 bg-black/50 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-red-500"
-                  placeholder="Enter your email"
+                  className="w-full px-3 sm:px-4 py-2.5 text-sm bg-white/5 text-white border border-white/10 rounded-lg focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all"
+                  placeholder="your@email.com"
                   required
                 />
-                {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+                {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Your Message
+                <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-gray-300 mb-1.5 sm:mb-2">
+                  Message
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   value={form.message}
                   onChange={handleChange}
-                  rows="5"
-                  className="w-full p-3 bg-black/50 text-white border border-gray-700 rounded-lg focus:ring-2 focus:ring-red-500"
-                  placeholder="Enter your message"
+                  rows="3"
+                  className="w-full px-3 sm:px-4 py-2.5 text-sm bg-white/5 text-white border border-white/10 rounded-lg focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all resize-none"
+                  placeholder="Your message here..."
                   required
                 />
-                {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
+                {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message}</p>}
               </div>
 
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-bold py-3 rounded-lg transition-all duration-300 shadow-md ${
-                  isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-lg hover:scale-105'
-                }`}
+                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Sending...' : 'Send Message'}
               </button>
 
               {status && (
-                <p className={`text-center text-sm mt-4 ${
-                  status.includes('successfully') ? 'text-green-400' : 'text-red-400'
+                <p className={`text-sm text-center p-2 rounded-lg ${
+                  status.includes('successfully') 
+                    ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
+                    : 'bg-red-500/20 text-red-300 border border-red-500/30'
                 }`}>
                   {status}
                 </p>

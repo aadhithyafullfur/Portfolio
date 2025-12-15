@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import LogoLoop from './LogoLoop';
 
 function Skills() {
-  const skills = [
+  const skills = useMemo(() => [
     { icon: '/logos/c.png', name: 'C' },
     { icon: '/logos/python.png', name: 'Python' },
     { icon: '/logos/java.png', name: 'Java' },
@@ -17,9 +17,9 @@ function Skills() {
     { icon: '/logos/git.png', name: 'Git' },
     { icon: '/logos/azure.png', name: 'Azure' },
     { icon: '/logos/canva.png', name: 'Canva' },
-  ];
+  ], []);
 
-  const skillCategories = [
+  const skillCategories = useMemo(() => [
     {
       title: "Frontend Development",
       skills: ["React", "JavaScript", "HTML5", "CSS3"],
@@ -40,9 +40,18 @@ function Skills() {
       skills: ["Git", "Canva"],
       description: "Version control, collaboration tools, and design applications"
     }
-  ];
+  ], []);
 
   const [activeCategory, setActiveCategory] = useState(null);
+
+  const logoArray = useMemo(() => 
+    skills.map(skill => ({
+      src: skill.icon,
+      alt: skill.name,
+      title: skill.name
+    })),
+    [skills]
+  );
 
   // Animation variants for container and items
   const containerVariants = {
@@ -72,11 +81,11 @@ function Skills() {
   };
 
   return (
-    <div className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 lg:px-8">
+    <div className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
-        <div className="mb-8 sm:mb-12 md:mb-16 text-center px-2">
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-3 leading-tight">
+        <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-14 text-center px-2">
+          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-2 md:mb-3 leading-tight">
             Skills & <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600">Expertise</span>
           </h2>
           <p className="text-xs xs:text-sm sm:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
@@ -89,19 +98,19 @@ function Skills() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mb-12 sm:mb-16 md:mb-20"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-5 mb-10 sm:mb-12 md:mb-16 lg:mb-20"
         >
           {skillCategories.map((category, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group relative bg-black/40 rounded-lg border border-white/10 p-5 hover:border-white/20 transition-all duration-300 backdrop-blur-xl hover:bg-black/50 h-full flex flex-col"
+              className="group relative bg-black/40 rounded-lg border border-white/10 p-3 sm:p-4 md:p-5 hover:border-white/20 transition-all duration-300 backdrop-blur-xl hover:bg-black/50 h-full flex flex-col"
               whileHover={{ y: -2 }}
             >
               <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-purple-500/0 to-purple-600/0 group-hover:from-purple-500/5 group-hover:to-purple-600/5 transition-all duration-300 pointer-events-none"></div>
               
-              <h3 className="text-base sm:text-lg font-semibold text-white mb-3 relative z-10">{category.title}</h3>
-              <p className="text-gray-400 text-xs sm:text-sm mb-4 relative z-10 flex-grow">{category.description}</p>
+              <h3 className="text-sm xs:text-base sm:text-base md:text-lg font-semibold text-white mb-2 sm:mb-3 relative z-10">{category.title}</h3>
+              <p className="text-gray-400 text-xs sm:text-xs md:text-sm mb-3 sm:mb-4 relative z-10 flex-grow">{category.description}</p>
               
               <div className="flex flex-wrap gap-1.5 relative z-10">
                 {category.skills.map((skill, i) => (
@@ -134,11 +143,7 @@ function Skills() {
           {/* Desktop: Animated Logo Loop */}
           <div className="hidden md:block max-w-6xl mx-auto">
             <LogoLoop
-              logos={skills.map(skill => ({
-                src: skill.icon,
-                alt: skill.name,
-                title: skill.name
-              }))}
+              logos={logoArray}
               speed={60}
               direction="left"
               logoHeight={48}

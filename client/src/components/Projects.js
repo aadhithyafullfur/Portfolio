@@ -453,9 +453,9 @@ function Projects() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-10 sm:mb-14 md:mb-16 lg:mb-20 text-center px-2"
+          className="mb-8 sm:mb-10 md:mb-12 lg:mb-16 text-center px-2"
         >
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-3 md:mb-4 leading-tight">
+          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-2 md:mb-3 leading-tight">
             Featured Projects
           </h2>
           <p className="text-xs xs:text-sm sm:text-base text-gray-400 max-w-3xl mx-auto leading-relaxed">
@@ -464,7 +464,7 @@ function Projects() {
         </motion.div>
 
         {/* 2x2 Grid Layout with MagicBento ParticleCard Style */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8" ref={gridRef}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-6" ref={gridRef}>
           {projects.map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
           ))}

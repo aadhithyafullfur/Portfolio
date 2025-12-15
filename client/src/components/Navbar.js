@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Events } from 'react-scroll';
 import PillNav from './Pill Nav';
 
@@ -16,8 +16,32 @@ function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
+  // Handle smooth scrolling to sections
+  const handleNavClick = (href) => {
+    const sectionId = href.replace('#', '');
+    const element = document.getElementById(sectionId);
+    
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+      setActiveLink(href);
+    }
+  };
+
+  // Convert nav items to include onClick handlers - memoized to prevent infinite re-renders
+  const pillNavItems = React.useMemo(
+    () => navItems.map(item => ({
+      ...item,
+      onClick: () => handleNavClick(item.href)
+    })),
+    []
+  );
+
   useEffect(() => {
     let ticking = false;
+    let lastScrollYValue = 0;
     
     const handleScroll = () => {
       if (!ticking) {
@@ -28,14 +52,15 @@ function Navbar() {
           if (currentScrollY < 50) {
             // At very top of page - always show
             setIsVisible(true);
-          } else if (currentScrollY > lastScrollY && currentScrollY > 200) {
+          } else if (currentScrollY > lastScrollYValue && currentScrollY > 200) {
             // Scrolling down significantly - hide navbar
             setIsVisible(false);
-          } else if (currentScrollY < lastScrollY - 10) {
+          } else if (currentScrollY < lastScrollYValue - 10) {
             // Scrolling up with some threshold - show navbar
             setIsVisible(true);
           }
           
+          lastScrollYValue = currentScrollY;
           setLastScrollY(currentScrollY);
           
           // Scroll spy logic for pill nav
@@ -77,26 +102,6 @@ function Navbar() {
       Events.scrollEvent.remove('end');
     };
   }, []); // Empty dependency array ensures this runs only once
-
-  // Handle smooth scrolling to sections
-  const handleNavClick = (href) => {
-    const sectionId = href.replace('#', '');
-    const element = document.getElementById(sectionId);
-    
-    if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-      setActiveLink(href);
-    }
-  };
-
-  // Convert nav items to include onClick handlers
-  const pillNavItems = navItems.map(item => ({
-    ...item,
-    onClick: () => handleNavClick(item.href)
-  }));
 
   return (
     <div 

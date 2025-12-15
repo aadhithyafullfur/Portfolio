@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, memo } from 'react';
 
 function hexToRgba(hex, alpha = 1) {
   if (!hex) return `rgba(0,0,0,${alpha})`;
@@ -213,4 +213,4 @@ const ElectricBorder = ({ children, color = '#A855F7', speed = 1, chaos = 1, thi
   );
 };
 
-export default ElectricBorder;
+export default memo(ElectricBorder);

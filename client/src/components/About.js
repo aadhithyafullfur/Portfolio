@@ -19,13 +19,13 @@ function About() {
       <motion.div
         initial={{ opacity: 0, x: 50, rotateX: -30 }}
         animate={controls}
-        className="glass p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl max-w-7xl mx-auto mt-8 sm:mt-12 md:mt-16 shadow-2xl backdrop-blur-md"
+        className="glass p-3 xs:p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl max-w-7xl mx-auto mt-6 sm:mt-10 md:mt-12 lg:mt-16 shadow-2xl backdrop-blur-md"
         style={{ perspective: '1000px' }}
       >
-        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 sm:gap-8 lg:gap-12">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 sm:gap-6 md:gap-8 lg:gap-12">
           {/* Professional Avatar Section */}
           <motion.div
-            className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 group mx-auto lg:mx-0 flex-shrink-0"
+            className="relative w-36 h-36 xs:w-44 xs:h-44 sm:w-52 sm:h-52 md:w-60 md:h-60 lg:w-64 lg:h-64 group mx-auto lg:mx-0 flex-shrink-0"
             initial={{ opacity: 0, x: -20, rotateY: -15 }}
             animate={{ opacity: 1, x: 0, rotateY: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
@@ -45,7 +45,7 @@ function About() {
           </motion.div>
 
           {/* Right Section */}
-          <div className="flex-1 space-y-6 sm:space-y-8 text-text-main px-2">
+          <div className="flex-1 space-y-4 sm:space-y-6 md:space-y-8 text-text-main px-2 sm:px-0">
             {/* Animated Heading */}
             <ScrollFloat
               containerClassName="text-center lg:text-left mb-3 sm:mb-4"

@@ -1,219 +1,316 @@
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-  @import './styles/responsive-optimizations.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+@import './styles/responsive-optimizations.css';
+@import './styles/mobile-responsive.css';
 
+html {
+  scroll-behavior: smooth;
+  /* Enhanced smooth scrolling for mobile */
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
   html {
     scroll-behavior: smooth;
-    /* Enhanced smooth scrolling for mobile */
+    /* Optimize scroll performance on mobile */
     -webkit-overflow-scrolling: touch;
+    scroll-padding-top: 80px;
   }
+}
 
-  @media (max-width: 768px) {
-    html {
-      scroll-behavior: smooth;
-      /* Optimize scroll performance on mobile */
-      -webkit-overflow-scrolling: touch;
-      scroll-padding-top: 80px;
-    }
-  }
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #e0e0e0;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
 
-  body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #e0e0e0;
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  * {
-    box-sizing: border-box;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 800;
+  line-height: 1.2;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 800;
-    line-height: 1.2;
-  }
+button, a {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+/* Smooth mobile interactions */
+@media (max-width: 768px) {
   button, a {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease-out;
   }
+  
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
 
-  /* Smooth mobile interactions */
-  @media (max-width: 768px) {
-    button, a {
-      transition: all 0.2s ease-out;
-    }
-    
-    * {
-      transition-property: transform, opacity, background-color;
-      transition-duration: 0.3s;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-  }
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+}
 
-  .glass {
-    border: 1px solid rgba(138, 43, 226, 0.1);
-    backdrop-filter: blur(10px);
-  }
+/* Prevent text selection on buttons */
+button, a {
+  user-select: none;
+}
 
-  #symbols {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: transparent;
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
   }
+  
+  body {
+    font-size: 14px;
+  }
+}
 
-  .symbol {
-    position: absolute;
-    color: rgba(138, 43, 226, 0.2);
-    font-family: 'Inter', sans-serif;
-    font-size: 24px;
-    animation: float 20s infinite linear;
+@media (min-width: 641px) and (max-width: 1024px) {
+  html {
+    font-size: 15px;
   }
+}
 
-  @keyframes float {
-    0% {
-      transform: translateY(100vh) rotate(0deg);
-      opacity: 0.3;
-    }
-    100% {
-      transform: translateY(-100vh) rotate(360deg);
-      opacity: 0.1;
-    }
+/* Optimize animations for mobile */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  .skill-item {
-    clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
-    border-radius: 0 0 10px 10px;
-  }
-  .transform-gpu {
-    transform-style: preserve-3d;
-  }
+}
 
-  .perspective-500 {
-    perspective: 500px;
+/* Utility classes for responsive design */
+.mobile-hidden {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobile-hidden {
+    display: block;
   }
-  .no-scrollbar::-webkit-scrollbar {
+}
+
+.mobile-visible {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .mobile-visible {
     display: none;
   }
-  .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  .symbol {
-    position: absolute;
-    color: rgba(255, 255, 255, 0.07);
-    animation: floatDown 15s linear infinite;
+}
+
+/* Focus styles for accessibility */
+button:focus, a:focus {
+  outline: 2px solid #A855F7;
+  outline-offset: 2px;
+}
+
+/* Improve readability with better spacing on mobile */
+@media (max-width: 768px) {
+  p {
+    line-height: 1.8;
   }
   
-  @keyframes floatDown {
-    0% {
-      transform: translateY(-100vh);
-    }
-    100% {
-      transform: translateY(100vh);
-    }
+  li {
+    line-height: 1.8;
   }
+}
 
-  @keyframes mobileSlideUp {
-    0% {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
+/* Touch-friendly links and buttons */
+a, button, [role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Prevent zoom on input focus */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
   }
+}
 
-  /* Mobile-specific improvements */
-  @media (max-width: 768px) {
-    body {
-      font-size: 14px;
-      /* Enable hardware acceleration for smoother animations */
-      -webkit-transform: translate3d(0,0,0);
-      transform: translate3d(0,0,0);
-    }
-    
-    .symbol {
-      font-size: 14px !important;
-      /* Optimize animation performance */
-      will-change: transform;
-      backface-visibility: hidden;
-    }
-
-    /* Improve touch targets */
-    button, a {
-      min-height: 44px;
-      min-width: 44px;
-      /* Smooth touch feedback */
-      -webkit-tap-highlight-color: rgba(138, 43, 226, 0.1);
-    }
-
-    /* Better spacing for mobile */
-    .container {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-    
-    /* Enhanced mobile transitions */
-    .transition-smooth {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .hover-lift:hover {
-      transform: translateY(-2px);
-    }
-    
-    /* Mobile-specific smooth animations */
-    .mobile-fade-in {
-      animation: mobileSlideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+/* Smooth scrolling for anchor links */
+@supports (scroll-behavior: smooth) {
+  a[href^="#"] {
+    scroll-behavior: smooth;
   }
+}
 
-  @media (max-width: 480px) {
-    .symbol {
-      font-size: 12px !important;
-    }
+/* Loading animation */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
   }
-
-  /* Improve performance on mobile */
-  @media (max-width: 768px) {
-    * {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
+  50% {
+    opacity: 0.5;
   }
+}
 
-  /* Reduce motion for users who prefer it */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-    
-    html {
-      scroll-behavior: auto;
-    }
-  }
-
-  /* Mobile touch optimization (keep exact same design) */
-  @media (max-width: 768px) {
-    /* Improve mobile performance without changing visuals */
-    * {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-    
-    /* Ensure touch targets are accessible */
-    button, a {
-      min-height: 44px;
-    }
+/* Responsive typography */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
   }
   
+  h2 {
+    font-size: 1.25rem;
+  }
+  
+  h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 769px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Grid responsive helpers */
+.grid-responsive {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-responsive {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Flex responsive helpers */
+.flex-responsive {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .flex-responsive {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+/* Container queries fallback */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Aspect ratio helper */
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+/* Custom scrollbar for modern browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.6);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.9);
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+}

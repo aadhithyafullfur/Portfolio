@@ -88,7 +88,7 @@ function Contact() {
   };
 
   return (
-    <section id="contact" className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -99,9 +99,9 @@ function Contact() {
         {/* Section Title */}
         <motion.div
           variants={itemVariants}
-          className="mb-8 sm:mb-12 md:mb-16 text-center px-2"
+          className="mb-8 sm:mb-10 md:mb-12 lg:mb-14 text-center px-2"
         >
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-3 leading-tight">
+          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-2 md:mb-3 leading-tight">
             Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600">Touch</span>
           </h2>
           <p className="text-xs xs:text-sm sm:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
@@ -109,12 +109,12 @@ function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
           {/* Contact Info */}
-          <motion.div variants={itemVariants} className="space-y-5 sm:space-y-6">
+          <motion.div variants={itemVariants} className="space-y-4 sm:space-y-5 md:space-y-6">
             {/* Bitmoji Image */}
             <motion.div
-              className="relative mx-auto lg:mx-0 w-48 h-48 xs:w-56 xs:h-56 sm:w-64 sm:h-64 group"
+              className="relative mx-auto lg:mx-0 w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 group"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.4 }}
             >
@@ -126,10 +126,10 @@ function Contact() {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </motion.div>
 
-            <div className="bg-black/40 rounded-xl border border-white/10 p-4 sm:p-6 md:p-8 backdrop-blur-xl hover:border-white/20 transition-all duration-300">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-6">Contact Information</h3>
+            <div className="bg-black/40 rounded-xl border border-white/10 p-3 xs:p-4 sm:p-5 md:p-6 lg:p-8 backdrop-blur-xl hover:border-white/20 transition-all duration-300">
+              <h3 className="text-base xs:text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-6">Contact Information</h3>
               
-              <div className="space-y-4 sm:space-y-5">
+              <div className="space-y-3 sm:space-y-4 md:space-y-5">
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
                     <FaPhone className="text-purple-400 w-4 h-4 sm:w-5 sm:h-5" />

@@ -51,7 +51,8 @@ button, a {
 /* Hide particles on mobile devices */
 @media (max-width: 768px) {
   #particles-js {
-    display: none;
+    opacity: 1;
+    display: block;
   }
 }
 

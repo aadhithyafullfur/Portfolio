@@ -42,7 +42,13 @@ const Bitmoji3D = ({ isHovered }) => {
 };
 
 const Bitmoji3DCanvas = memo(({ isHovered }) => (
-  <Canvas>
+  <Canvas
+    gl={{
+      outputColorSpace: 'srgb',
+      antialias: true,
+      alpha: true,
+    }}
+  >
     <Bitmoji3D isHovered={isHovered} />
   </Canvas>
 ));
@@ -72,64 +78,11 @@ const App = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    // Wrap particles initialization in try-catch to prevent breaking the app
-    // if the library has issues
-    try {
-      if (window.particlesJS) {
-        window.particlesJS('particles-js', {
-          particles: {
-            number: {
-              value: 30,
-              density: {
-                enable: true,
-                value_area: 1000
-              }
-            },
-            color: {
-              value: '#A855F7'
-            },
-            shape: {
-              type: 'circle'
-            },
-            opacity: {
-              value: 0.3
-            },
-            size: {
-              value: 2
-            },
-            line_linked: {
-              enable: false
-            },
-            move: {
-              enable: true,
-              speed: 0.3
-            }
-          },
-          interactivity: {
-            detect_on: 'window',
-            events: {
-              onhover: {
-                enable: false
-              },
-              onclick: {
-                enable: false
-              },
-              resize: false
-            }
-          },
-          retina_detect: false
-        });
-      }
-    } catch (error) {
-      // If particles.js fails, silently continue
-      console.log('Particles.js initialization skipped');
-    }
+    // Particles.js removed - using simple background
   }, []);
 
   return (
     <div className="min-h-screen text-white bg-black relative overflow-x-hidden">
-      <div className="fixed inset-0 z-0 bg-gradient-to-br from-transparent via-transparent to-purple-900/10 pointer-events-none"></div>
-      <div id="particles-js" className="fixed inset-0 z-0"></div>
       <div className="relative z-10">
         <Navbar />
 
@@ -147,7 +100,7 @@ const App = () => {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
-              className="lg:w-1/2 text-center lg:text-left w-full"
+              className="w-full lg:w-1/2 text-center lg:text-left"
             >
               <SplitText
                 text="Hi, I am Aadhithya R"
@@ -183,17 +136,17 @@ const App = () => {
               </div>
             </motion.div>
 
-            {/* RIGHT 3D BITMOJI */}
+            {/* RIGHT 3D BITMOJI - HIDDEN ON MOBILE */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
-              className="lg:w-1/2 flex justify-center w-full mt-4 sm:mt-6 md:mt-8 lg:mt-0"
+              className="hidden lg:flex lg:w-1/2 justify-center"
             >
               <div
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className="w-40 h-40 xs:w-48 xs:h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full border-3 sm:border-4 border-purple-600 shadow-lg sm:shadow-xl overflow-hidden hover:shadow-xl sm:hover:shadow-2xl hover:border-purple-500 transition-all duration-300"
+                className="w-72 h-72 rounded-full border-3 sm:border-4 border-purple-600 shadow-lg sm:shadow-xl overflow-hidden hover:shadow-xl sm:hover:shadow-2xl hover:border-purple-500 transition-all duration-300"
               >
                 <Bitmoji3DCanvas isHovered={isHovered} />
               </div>

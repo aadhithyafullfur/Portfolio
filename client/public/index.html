@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0, user-scalable=yes">
   <meta name="theme-color" content="#8A2BE2">
   <meta name="description" content="Aadhithya R - Full Stack Developer Portfolio">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
@@ -29,8 +33,15 @@
   <meta name="twitter:description" content="Full Stack Developer | ML Enthusiast">
   <meta name="twitter:image" content="%PUBLIC_URL%/images/profile.jpg">
   
-  <!-- Particles.js -->
-  <script src="%PUBLIC_URL%/js/particles.js"></script>
+  <!-- Particles.js - Async loading for better performance -->
+  <script async src="%PUBLIC_URL%/js/particles.js"></script>
+  
+  <!-- Performance optimizations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- DNS prefetch for external resources -->
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 </head>
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>

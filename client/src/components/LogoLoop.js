@@ -253,9 +253,9 @@ export const LogoLoop = memo(
             className={cx(
               'inline-flex items-center',
               'motion-reduce:transition-none',
-              scaleOnHover &&
-                'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
+              scaleOnHover && 'transition-transform duration-300 group-hover/item:scale-120'
             )}
+            style={scaleOnHover ? { transitionTimingFunction: 'cubic-bezier(0.4,0,0.2,1)' } : undefined}
             aria-hidden={!!item.href && !item.ariaLabel}
           >
             {item.node}
@@ -267,9 +267,9 @@ export const LogoLoop = memo(
               '[-webkit-user-drag:none] pointer-events-none',
               '[image-rendering:-webkit-optimize-contrast]',
               'motion-reduce:transition-none',
-              scaleOnHover &&
-                'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
+              scaleOnHover && 'transition-transform duration-300 group-hover/item:scale-120'
             )}
+            style={scaleOnHover ? { transitionTimingFunction: 'cubic-bezier(0.4,0,0.2,1)' } : undefined}
             src={item.src}
             srcSet={item.srcSet}
             sizes={item.sizes}

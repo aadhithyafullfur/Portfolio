@@ -1,0 +1,341 @@
+/**
+ * AGGRESSIVE Mobile Performance Optimization
+ * Remove all unnecessary animations on mobile
+ * Focus on smooth, stable performance with NO LAG
+ */
+
+/* ========== DISABLE ALL EXPENSIVE ANIMATIONS ON MOBILE ========== */
+@media (max-width: 768px) {
+  /* Disable ALL Framer Motion animations */
+  [class*="motion"],
+  [class*="animate"],
+  .group:hover,
+  .group-hover\:* {
+    animation: none !important;
+  }
+
+  /* Disable transition delays */
+  * {
+    animation-delay: 0s !important;
+    transition-delay: 0s !important;
+  }
+
+  /* Remove expensive transforms on mobile */
+  *:hover {
+    transform: none !important;
+  }
+
+  /* Disable hover animations on touch devices */
+  @media (hover: none) {
+    *:hover {
+      transform: none !important;
+      scale: 1 !important;
+      filter: none !important;
+    }
+  }
+
+  /* Disable all CSS animations */
+  .animate-bounce,
+  .animate-ping,
+  .animate-pulse,
+  .animate-spin,
+  .animate-float {
+    animation: none !important;
+    opacity: 0.8;
+  }
+
+  /* Reduce or disable backdrop-filter on mobile */
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* Disable blur effects */
+  [class*="blur"] {
+    filter: none !important;
+  }
+
+  /* Simplify transitions */
+  * {
+    transition-duration: 0.15s !important;
+    transition-timing-function: ease-out !important;
+  }
+
+  /* Remove shadow animations */
+  *:hover {
+    box-shadow: none !important;
+  }
+
+  /* Disable gradient animations */
+  [class*="gradient"] {
+    animation: none !important;
+  }
+
+  /* Remove opacity fades on scroll */
+  [class*="opacity"] {
+    animation: none !important;
+  }
+
+  /* Disable scale transforms */
+  .group:hover > *,
+  .group-hover\:scale-* {
+    transform: none !important;
+  }
+
+  /* Remove rotate animations */
+  [class*="rotate"] {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* Disable translate animations */
+  [class*="translate"] {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* Simple fade instead of complex animations */
+  [class*="fade-in"],
+  [class*="slideUp"],
+  [class*="slideDown"],
+  [class*="slideLeft"],
+  [class*="slideRight"] {
+    animation: simple-fade 0.3s ease-out !important;
+  }
+
+  @keyframes simple-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* ========== TABLET OPTIMIZATIONS ========== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Reduce animation complexity on tablets */
+  * {
+    animation-duration: 0.4s !important;
+    transition-duration: 0.2s !important;
+  }
+
+  /* Reduce scale factors */
+  .group:hover {
+    transform: none !important;
+  }
+
+  .group:hover > * {
+    scale: 1 !important;
+  }
+
+  /* Disable expensive filters */
+  [class*="filter"] {
+    filter: none !important;
+  }
+
+  /* Reduce blur */
+  .backdrop-blur-xl {
+    backdrop-filter: blur(2px);
+  }
+}
+
+/* ========== GLOBAL PERFORMANCE RULES ========== */
+
+/* Prevent jank with will-change */
+section {
+  will-change: auto;
+  contain: layout style paint;
+}
+
+/* Optimize text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* GPU acceleration for fixed elements */
+#particles-js {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Disable expensive shadow effects on mobile */
+@media (max-width: 768px) {
+  [class*="shadow"] {
+    box-shadow: none !important;
+  }
+
+  /* Remove glow effects */
+  [class*="glow"] {
+    filter: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Simple borders instead of complex effects */
+  [class*="ring"] {
+    box-shadow: none !important;
+  }
+}
+
+/* ========== SMOOTH SCROLLING ========== */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ========== BUTTON & LINK OPTIMIZATION ========== */
+@media (hover: none) {
+  button:active,
+  a:active,
+  [role="button"]:active {
+    opacity: 0.85;
+  }
+
+  button:hover,
+  a:hover,
+  [role="button"]:hover {
+    background-color: inherit;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+/* Desktop: Light transitions */
+@media (hover: hover) {
+  button,
+  a,
+  [role="button"] {
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  button:hover,
+  a:hover,
+  [role="button"]:hover {
+    transform: none;
+  }
+}
+
+/* ========== REDUCE MOTION PREFERENCE ========== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========== CARD & CONTAINER OPTIMIZATION ========== */
+@media (max-width: 768px) {
+  .card:hover,
+  [class*="card"]:hover,
+  [class*="container"]:hover {
+    /* No hover effects on mobile */
+    border-color: inherit;
+    background-color: inherit;
+    box-shadow: none;
+  }
+
+  /* Simplify certification/project cards */
+  [class*="certification"]:hover,
+  [class*="project"]:hover,
+  [class*="skill"]:hover {
+    transform: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ========== IMAGE OPTIMIZATION ========== */
+img {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  img {
+    will-change: auto;
+  }
+}
+
+/* ========== FORM OPTIMIZATION ========== */
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    transition: none;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: 1px solid #a855f7;
+    box-shadow: none;
+  }
+}
+
+/* ========== PREVENT ZOOM ON INPUT FOCUS ========== */
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* ========== NAVBAR OPTIMIZATION ========== */
+nav {
+  will-change: auto;
+  transition: background-color 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  nav {
+    transition: none;
+  }
+
+  nav a:hover {
+    transform: none;
+  }
+}
+
+/* ========== DISABLE COMPLEX FILTERS ========== */
+@media (max-width: 768px) {
+  /* No brightness/contrast adjustments */
+  [class*="brightness"],
+  [class*="contrast"],
+  [class*="saturate"],
+  [class*="hue"],
+  [class*="invert"] {
+    filter: none !important;
+  }
+}
+
+/* ========== SMOOTH MOBILE TRANSITIONS ========== */
+@media (max-width: 768px) {
+  /* Fast, simple transitions */
+  * {
+    transition-property: background-color, color, border-color;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
+  }
+
+  /* No transitions on animations */
+  [class*="animate"] {
+    transition: none;
+  }
+}
+

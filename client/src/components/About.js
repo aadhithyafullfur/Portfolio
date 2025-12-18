@@ -19,20 +19,20 @@ function About() {
       <motion.div
         initial={{ opacity: 0, x: 50, rotateX: -30 }}
         animate={controls}
-        className="glass p-3 xs:p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl max-w-7xl mx-auto mt-6 sm:mt-10 md:mt-12 lg:mt-16 shadow-2xl backdrop-blur-md"
+        className="bg-black/40 backdrop-blur-sm border border-purple-500/20 hover:border-purple-500/30 p-3 xs:p-4 sm:p-6 md:p-8 lg:p-10 rounded-xl sm:rounded-2xl md:rounded-3xl max-w-7xl mx-auto mt-6 sm:mt-10 md:mt-12 lg:mt-16 shadow-xl hover:shadow-lg hover:shadow-purple-500/10 transition-all duration-500"
         style={{ perspective: '1000px' }}
       >
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 sm:gap-6 md:gap-8 lg:gap-12">
           {/* Professional Avatar Section */}
           <motion.div
-            className="relative w-36 h-36 xs:w-44 xs:h-44 sm:w-52 sm:h-52 md:w-60 md:h-60 lg:w-64 lg:h-64 group mx-auto lg:mx-0 flex-shrink-0"
+            className="relative w-48 h-48 xs:w-56 xs:h-56 sm:w-56 sm:h-56 md:w-56 md:h-56 lg:w-60 lg:h-60 group mx-auto lg:mx-0 flex-shrink-0 active:scale-95"
             initial={{ opacity: 0, x: -20, rotateY: -15 }}
             animate={{ opacity: 1, x: 0, rotateY: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            whileHover={{ scale: 1.02, rotate: 0.5 }}
+            whileHover={{ scale: 1.05 }}
           >
             <div
-              className="w-full h-full bg-cover bg-center rounded-full border-3 border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.4)] animate-float bg-gradient-to-br from-gray-900 to-black"
+              className="w-full h-full bg-cover bg-center rounded-full border-2 sm:border-3 border-purple-500/60 shadow-lg sm:shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 bg-gradient-to-br from-gray-900 to-black transition-all duration-500"
               style={{
                 backgroundImage: "url('/images/bitmoji.png')",
                 backgroundSize: 'cover',
@@ -41,11 +41,11 @@ function About() {
               }}
             />
             {/* Subtle Glow Effect */}
-            <div className="absolute inset-0 rounded-full bg-purple-500/15 blur-lg z-[-1] group-hover:bg-purple-500/25 transition-all duration-300" />
+            <div className="absolute inset-0 rounded-full bg-purple-500/10 blur-lg z-[-1] group-hover:bg-purple-500/20 transition-all duration-300" />
           </motion.div>
 
           {/* Right Section */}
-          <div className="flex-1 space-y-4 sm:space-y-6 md:space-y-8 text-text-main px-2 sm:px-0">
+          <div className="flex-1 space-y-3 sm:space-y-4 md:space-y-6 text-text-main px-2 sm:px-0">
             {/* Animated Heading */}
             <ScrollFloat
               containerClassName="text-center lg:text-left mb-3 sm:mb-4"
@@ -311,3 +311,4 @@ function About() {
 }
 
 export default About;
+

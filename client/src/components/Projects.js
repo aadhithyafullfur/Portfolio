@@ -238,21 +238,21 @@ const ProjectCard = ({ project, index }) => {
     >
       <div
         ref={cardRef}
-        className="flex flex-col h-full bg-gradient-to-br from-white/5 to-white/[0.02] rounded-2xl border border-white/15 overflow-hidden hover:border-purple-500/50 transition-all duration-400 hover:bg-gradient-to-br hover:from-white/8 hover:to-white/[0.03] group/card backdrop-blur-xl p-7 sm:p-8 relative hover:shadow-[0_8px_25px_rgba(132,100,255,0.2)] cursor-pointer"
+        className="flex flex-col h-full bg-black/40 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-purple-500/20 hover:border-purple-500/40 overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-purple-500/10 group/card p-4 sm:p-6 md:p-8 relative active:scale-98"
         style={{ position: 'relative', overflow: 'hidden' }}
       >
         
         {/* Header with Title and Status */}
-        <div className="flex items-start justify-between gap-4 mb-5 relative z-10">
+        <div className="flex items-start justify-between gap-3 sm:gap-4 mb-4 sm:mb-5 relative z-10">
           <div className="flex-grow">
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors leading-tight">
+            <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors leading-tight">
               {project.title}
             </h3>
             {/* Status Badge */}
-            <span className={`inline-flex text-xs font-semibold px-3 py-1.5 rounded-lg border ${
+            <span className={`inline-flex text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all ${
               project.status === 'Completed'
-                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
-                : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                ? 'bg-purple-500/20 text-purple-300 border-purple-500/30'
+                : 'bg-purple-400/20 text-purple-200 border-purple-400/30'
             }`}>
               {project.status}
             </span>
@@ -263,29 +263,29 @@ const ProjectCard = ({ project, index }) => {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-shrink-0 p-2.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-purple-400/50 relative z-20"
+            className="flex-shrink-0 p-2 sm:p-2.5 rounded-lg bg-black/40 hover:bg-purple-600/40 transition-all duration-300 border border-purple-500/20 hover:border-purple-400/50 relative z-20 active:scale-90"
             whileHover={{ scale: 1.1 }}
             title="View on GitHub"
           >
-            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-purple-300" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.086 1.84 1.236 1.84 1.236 1.07 1.835 2.807 1.305 3.492.997.107-.776.42-1.305.763-1.605-2.665-.3-5.466-1.335-5.466-5.93 0-1.31.47-2.38 1.236-3.22-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 013.003-.404 11.5 11.5 0 013.003.404c2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.234 1.91 1.234 3.22 0 4.61-2.807 5.628-5.48 5.922.43.37.823 1.102.823 2.222 0 1.604-.015 2.896-.015 3.286 0 .32.218.694.825.576C20.565 21.795 24 17.297 24 12c0-6.627-5.373-12-12-12z" />
             </svg>
           </motion.a>
         </div>
 
         {/* Description */}
-        <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow group-hover:text-gray-300 transition-colors relative z-10">
+        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 flex-grow group-hover:text-gray-200 transition-colors relative z-10">
           {project.description}
         </p>
 
         {/* Tech Stack */}
-        <div className="mb-6 relative z-10">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Technologies</p>
-          <div className="flex flex-wrap gap-2">
+        <div className="mb-4 sm:mb-6 relative z-10">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 sm:mb-3">Technologies</p>
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {project.tech.map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1.5 text-xs font-semibold bg-white/8 hover:bg-white/15 text-gray-200 border border-white/20 hover:border-purple-400/50 rounded-md backdrop-blur-sm transition-all duration-300 whitespace-nowrap"
+                className="px-2.5 sm:px-3 py-1 text-xs font-semibold bg-black/40 hover:bg-purple-600/30 text-purple-200 border border-purple-500/20 hover:border-purple-400/50 rounded-md backdrop-blur-sm transition-all duration-300 whitespace-nowrap"
               >
                 {tech}
               </span>
@@ -298,9 +298,9 @@ const ProjectCard = ({ project, index }) => {
           href={project.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600/50 to-purple-500/50 hover:from-purple-600 hover:to-purple-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 border border-purple-400/30 hover:border-purple-400/60 backdrop-blur-sm w-full text-sm relative z-10"
+          className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600/80 to-purple-500/80 hover:from-purple-500/90 hover:to-purple-400/90 active:from-purple-700/90 active:to-purple-600/90 text-white font-semibold py-2 sm:py-2.5 px-4 sm:px-5 rounded-lg sm:rounded-xl transition-all duration-300 border border-purple-500/30 hover:border-purple-400/50 backdrop-blur-sm w-full text-xs sm:text-sm relative z-10 active:scale-95"
           whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileTap={{ scale: 0.95 }}
         >
           <span>View Project</span>
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -475,3 +475,4 @@ function Projects() {
 }
 
 export default Projects;
+

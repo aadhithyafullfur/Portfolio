@@ -101,7 +101,7 @@
 }
 
 /* Small Devices (480px - 640px) */
-@media screen and (480px) and (max-width: 640px) {
+@media screen and (min-width: 480px) and (max-width: 640px) {
   .container {
     padding: 0 16px;
   }

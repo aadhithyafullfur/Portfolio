@@ -1,0 +1,440 @@
+/**
+ * COMPREHENSIVE Animation Removal & Optimization for Mobile
+ * Eliminates ALL lag-causing animations on phones and tablets
+ */
+
+/* ========== MOBILE: DISABLE ALL FRAMER-MOTION ANIMATIONS ========== */
+@media (max-width: 1024px) {
+  /* Disable ALL motion components and animations */
+  [data-testid="motion"],
+  .motion-div,
+  [class*="motion-"],
+  [class*="animate-"],
+  .group:hover,
+  .group-hover\:* {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  /* Force static positioning */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  /* Remove ALL hover effects on touch */
+  @media (hover: none) {
+    *:hover,
+    *:focus {
+      transform: none !important;
+      scale: 1 !important;
+      filter: none !important;
+      box-shadow: none !important;
+      color: inherit !important;
+      background-color: inherit !important;
+    }
+
+    /* Only allow slight active state */
+    *:active {
+      opacity: 0.85 !important;
+    }
+  }
+}
+
+/* ========== REMOVE EXPENSIVE CSS ANIMATIONS ========== */
+@media (max-width: 1024px) {
+  /* Kill all bounce animations */
+  .animate-bounce {
+    animation: none !important;
+  }
+
+  /* Kill all ping animations */
+  .animate-ping {
+    animation: none !important;
+    opacity: 0.5;
+  }
+
+  /* Kill all pulse animations */
+  .animate-pulse {
+    animation: none !important;
+    opacity: 0.8;
+  }
+
+  /* Kill all spin animations */
+  .animate-spin {
+    animation: none !important;
+  }
+
+  /* Custom float animation - disable on mobile */
+  .animate-float {
+    animation: none !important;
+  }
+
+  /* Disable wiggle, shake, slide animations */
+  [class*="animate-wiggle"],
+  [class*="animate-shake"],
+  [class*="animate-slide"],
+  [class*="animate-fade"],
+  [class*="animate-scale"],
+  [class*="animate-rotate"],
+  [class*="animate-flip"],
+  [class*="animate-bounce"],
+  [class*="animate-ping"],
+  [class*="animate-pulse"],
+  [class*="animate-spin"] {
+    animation: none !important;
+  }
+}
+
+/* ========== SIMPLIFY ANIMATIONS FOR TABLET ========== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Reduce animation complexity */
+  * {
+    animation-duration: 0.3s !important;
+    transition-duration: 0.15s !important;
+  }
+
+  /* Disable expensive transforms */
+  .group:hover {
+    transform: none !important;
+  }
+
+  /* Reduce scale on hover */
+  .group:hover > * {
+    transform: none !important;
+  }
+
+  /* Simple color transitions only */
+  a, button, [role="button"] {
+    transition: background-color 0.15s ease, color 0.15s ease !important;
+  }
+}
+
+/* ========== DESKTOP: KEEP MODERATE ANIMATIONS ========== */
+@media (min-width: 1025px) {
+  /* Allow faster animations on desktop */
+  * {
+    transition-duration: 0.2s;
+    animation-duration: 0.5s;
+  }
+
+  /* Light hover effects on desktop */
+  a:hover, button:hover, [role="button"]:hover {
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+/* ========== REMOVE BACKDROP FILTERS ========== */
+@media (max-width: 1024px) {
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Remove all filter effects */
+  [class*="blur"],
+  [class*="filter"],
+  [class*="brightness"],
+  [class*="contrast"],
+  [class*="saturate"],
+  [class*="hue-rotate"],
+  [class*="invert"],
+  [class*="sepia"],
+  [class*="drop-shadow"],
+  [class*="shadow"] {
+    filter: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ========== SMOOTH SCROLLING ONLY ========== */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ========== OPTIMIZE BUTTON & LINK INTERACTIONS ========== */
+@media (max-width: 1024px) {
+  button,
+  a,
+  [role="button"] {
+    /* Remove all complex effects */
+    transition: none !important;
+  }
+
+  /* Simple active state only */
+  button:active,
+  a:active,
+  [role="button"]:active {
+    opacity: 0.85;
+  }
+
+  /* No hover effects on mobile/tablet */
+  button:hover,
+  a:hover,
+  [role="button"]:hover {
+    background-color: inherit;
+    box-shadow: none;
+    transform: none;
+    color: inherit;
+  }
+}
+
+/* ========== REMOVE GRADIENT ANIMATIONS ========== */
+@media (max-width: 1024px) {
+  [class*="gradient"],
+  .bg-gradient-to-r,
+  .bg-gradient-to-l,
+  .bg-gradient-to-t,
+  .bg-gradient-to-b,
+  .bg-gradient-to-br,
+  .bg-gradient-to-bl,
+  .bg-gradient-to-tr,
+  .bg-gradient-to-tl {
+    animation: none !important;
+    background: linear-gradient(to right, inherit, inherit) !important;
+  }
+}
+
+/* ========== DISABLE TRANSFORM ANIMATIONS ========== */
+@media (max-width: 1024px) {
+  [class*="translate"],
+  [class*="scale"],
+  [class*="rotate"],
+  [class*="skew"],
+  [class*="transform"] {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* No skew, scale, or rotate on any element */
+  .scale-100, .scale-110, .scale-125, .scale-150,
+  .rotate-0, .rotate-45, .rotate-90, .rotate-180,
+  .skew-x-0, .skew-y-0 {
+    transform: none !important;
+  }
+}
+
+/* ========== FORM OPTIMIZATION ========== */
+@media (max-width: 1024px) {
+  input,
+  textarea,
+  select,
+  [contenteditable] {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus,
+  [contenteditable]:focus {
+    outline: 1px solid #a855f7;
+    box-shadow: none;
+    transform: none;
+  }
+
+  input:hover,
+  textarea:hover,
+  select:hover,
+  [contenteditable]:hover {
+    background-color: inherit;
+    border-color: inherit;
+  }
+
+  /* Prevent zoom on input focus */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* ========== PARTICLE ANIMATION OPTIMIZATION ========== */
+#particles-js {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  #particles-js {
+    /* Use FPS cap via particles config instead */
+    animation: none;
+  }
+}
+
+/* ========== NAVIGATION OPTIMIZATION ========== */
+nav,
+.navbar,
+[role="navigation"] {
+  transition: background-color 0.2s ease;
+  animation: none;
+}
+
+@media (max-width: 1024px) {
+  .navbar,
+  [role="navigation"] {
+    transition: none;
+  }
+
+  .navbar a:hover,
+  [role="navigation"] a:hover {
+    transform: none;
+    color: inherit;
+  }
+}
+
+/* ========== CARD & CONTAINER OPTIMIZATION ========== */
+@media (max-width: 1024px) {
+  .card,
+  [class*="card"],
+  .glass,
+  [class*="glass"],
+  [class*="container"] {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .card:hover,
+  [class*="card"]:hover,
+  .glass:hover,
+  [class*="glass"]:hover,
+  [class*="container"]:hover {
+    border-color: inherit;
+    background-color: inherit;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+/* ========== TEXT ANIMATION REMOVAL ========== */
+@media (max-width: 1024px) {
+  [class*="animate-text"],
+  [class*="text-animate"],
+  .animate-in,
+  .animate-out {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Ensure all text is visible instantly */
+  p, span, h1, h2, h3, h4, h5, h6 {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ========== PREVENT LAYOUT SHIFT ========== */
+@media (max-width: 1024px) {
+  * {
+    contain: layout style paint;
+    will-change: auto;
+  }
+
+  /* Prevent jank with containment */
+  section {
+    contain: layout style paint;
+  }
+}
+
+/* ========== RESPONSIVE IMAGE OPTIMIZATION ========== */
+img {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+}
+
+@media (max-width: 1024px) {
+  img {
+    animation: none;
+    will-change: auto;
+    transform: none;
+  }
+}
+
+/* ========== FINAL SAFETY RULES ========== */
+@media (max-width: 1024px) {
+  /* Catch any remaining animations */
+  @keyframes none {
+    0%, 100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Override with keyframes-free values */
+  [style*="animation"] {
+    animation: none !important;
+  }
+
+  [style*="transition"] {
+    transition: none !important;
+  }
+
+  [style*="transform"] {
+    transform: none !important;
+  }
+
+  /* Remove all vendor prefixes for animations */
+  [style*="-webkit-animation"] {
+    animation: none !important;
+    -webkit-animation: none !important;
+  }
+
+  [style*="-moz-animation"] {
+    animation: none !important;
+    -moz-animation: none !important;
+  }
+}
+
+/* ========== ACCESSIBILITY & PERFORMANCE ========== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========== GPU ACCELERATION (SELECTIVE) ========== */
+@media (min-width: 1025px) {
+  /* Only enable on desktop where it helps */
+  .motion-div,
+  [class*="motion-"],
+  section {
+    will-change: auto;
+  }
+}
+
+/* ========== ENSURE VERTICAL RHYTHM ========== */
+@media (max-width: 1024px) {
+  html {
+    scroll-padding-top: 0;
+  }
+
+  body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}

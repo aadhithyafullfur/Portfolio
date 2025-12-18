@@ -126,12 +126,12 @@ function Contact() {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </motion.div>
 
-            <div className="bg-black/40 rounded-xl border border-white/10 p-3 xs:p-4 sm:p-5 md:p-6 lg:p-8 backdrop-blur-xl hover:border-white/20 transition-all duration-300">
-              <h3 className="text-base xs:text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-6">Contact Information</h3>
+            <div className="bg-black/40 rounded-xl sm:rounded-2xl border border-purple-500/20 p-4 sm:p-5 md:p-6 lg:p-8 backdrop-blur-sm hover:border-purple-500/40 transition-all duration-300">
+              <h3 className="text-base xs:text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-5 md:mb-6">Contact Information</h3>
               
               <div className="space-y-3 sm:space-y-4 md:space-y-5">
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <FaPhone className="text-purple-400 w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
@@ -141,7 +141,7 @@ function Contact() {
                 </div>
 
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <FaEnvelope className="text-purple-400 w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
@@ -151,7 +151,7 @@ function Contact() {
                 </div>
 
                 <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-1">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <FaMapMarkerAlt className="text-purple-400 w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
@@ -163,7 +163,7 @@ function Contact() {
             </div>
 
             {/* Social Links */}
-            <div className="bg-black/40 rounded-xl border border-white/10 p-4 sm:p-6 md:p-8 backdrop-blur-xl">
+            <div className="bg-black/40 rounded-xl sm:rounded-2xl border border-purple-500/20 p-4 sm:p-5 md:p-6 lg:p-8 backdrop-blur-sm hover:border-purple-500/40 transition-all duration-300">
               <p className="text-gray-400 text-xs sm:text-sm font-medium mb-3 sm:mb-4">Follow Me</p>
               <div className="flex gap-2 sm:gap-3">
                 {[
@@ -176,10 +176,10 @@ function Contact() {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-black/40 hover:bg-purple-600/40 border border-purple-500/20 hover:border-purple-400/50 flex items-center justify-center text-purple-300 transition-all duration-300 hover:scale-110 active:scale-95"
                     title={label}
                   >
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <Icon className="w-5 h-5 sm:w-5 sm:h-5" />
                   </a>
                 ))}
               </div>
@@ -189,7 +189,7 @@ function Contact() {
           {/* Contact Form */}
           <motion.div
             variants={itemVariants}
-            className="bg-black/40 rounded-xl border border-white/10 p-4 sm:p-6 md:p-8 backdrop-blur-xl hover:border-white/20 transition-all duration-300"
+            className="bg-black/40 rounded-xl sm:rounded-2xl border border-purple-500/20 p-4 sm:p-6 md:p-8 backdrop-blur-sm hover:border-purple-500/40 transition-all duration-300"
           >
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-6">Send Message</h3>
 
@@ -204,7 +204,7 @@ function Contact() {
                   name="name"
                   value={form.name}
                   onChange={handleChange}
-                  className="w-full px-3 sm:px-4 py-2.5 text-sm bg-white/5 text-white border border-white/10 rounded-lg focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm bg-black/40 text-white border border-purple-500/20 rounded-lg focus:border-purple-500/50 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all backdrop-blur-sm"
                   placeholder="Your name"
                   required
                 />
@@ -221,7 +221,7 @@ function Contact() {
                   name="email"
                   value={form.email}
                   onChange={handleChange}
-                  className="w-full px-3 sm:px-4 py-2.5 text-sm bg-white/5 text-white border border-white/10 rounded-lg focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm bg-black/40 text-white border border-purple-500/20 rounded-lg focus:border-purple-500/50 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all backdrop-blur-sm"
                   placeholder="your@email.com"
                   required
                 />
@@ -238,7 +238,7 @@ function Contact() {
                   value={form.message}
                   onChange={handleChange}
                   rows="3"
-                  className="w-full px-3 sm:px-4 py-2.5 text-sm bg-white/5 text-white border border-white/10 rounded-lg focus:border-white/30 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all resize-none"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm bg-black/40 text-white border border-purple-500/20 rounded-lg focus:border-purple-500/50 focus:outline-none focus:ring-1 focus:ring-purple-500/30 transition-all resize-none backdrop-blur-sm"
                   placeholder="Your message here..."
                   required
                 />
@@ -248,13 +248,13 @@ function Contact() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-purple-600/80 to-purple-500/80 hover:from-purple-500/90 hover:to-purple-400/90 active:from-amber-700/90 active:to-purple-600/90 text-white font-semibold py-2.5 sm:py-3 rounded-lg border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 text-sm sm:text-base"
               >
                 {isLoading ? 'Sending...' : 'Send Message'}
               </button>
 
               {status && (
-                <p className={`text-sm text-center p-2 rounded-lg ${
+                <p className={`text-xs sm:text-sm text-center p-2 rounded-lg ${
                   status.includes('successfully') 
                     ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
                     : 'bg-red-500/20 text-red-300 border border-red-500/30'

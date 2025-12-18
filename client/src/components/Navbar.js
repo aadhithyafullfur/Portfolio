@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import PillNav from './Pill Nav';
+import '../styles/mobile-professional.css';
 
 const navItems = [
-  { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#leetcode', label: 'Stats' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#home', label: 'Home', icon: '🏠' },
+  { href: '#about', label: 'About', icon: '👤' },
+  { href: '#skills', label: 'Skills', icon: '⚡' },
+  { href: '#projects', label: 'Projects', icon: '💼' },
+  { href: '#leetcode', label: 'Stats', icon: '📊' },
+  { href: '#contact', label: 'Contact', icon: '📧' },
 ];
 
 function Navbar() {
@@ -147,87 +148,77 @@ function Navbar() {
         />
       </div>
 
-      {/* Mobile Navigation Header */}
-      <div className="md:hidden relative flex justify-between items-center py-3 px-4">
-        {/* Logo */}
+      {/* Mobile Navigation Header - Professional Design */}
+      <div className="md:hidden relative flex justify-between items-center py-2 px-4">
+        {/* Logo - Smooth Animation */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-lg font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent"
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="text-base sm:text-lg font-bold bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent whitespace-nowrap"
         >
           Aadhithya
         </motion.div>
 
-        {/* Hamburger Menu Button */}
+        {/* Hamburger Menu Button - Touch Optimized */}
         <motion.button
-          whileTap={{ scale: 0.95 }}
+          whileTap={{ scale: 0.92 }}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="w-10 h-10 flex flex-col items-center justify-center space-y-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 transition-all duration-300 border border-purple-500/20 hover:border-purple-400/50"
+          className="hamburger-menu ml-auto"
+          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isMobileMenuOpen}
         >
           <motion.span
-            animate={isMobileMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-            className="w-6 h-0.5 bg-white transition-all duration-300"
+            animate={isMobileMenuOpen ? { rotate: 45, y: 10 } : { rotate: 0, y: 0 }}
+            className="hamburger-line"
           />
           <motion.span
             animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="w-6 h-0.5 bg-white transition-all duration-300"
+            className="hamburger-line"
           />
           <motion.span
-            animate={isMobileMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-            className="w-6 h-0.5 bg-white transition-all duration-300"
+            animate={isMobileMenuOpen ? { rotate: -45, y: -10 } : { rotate: 0, y: 0 }}
+            className="hamburger-line"
           />
         </motion.button>
       </div>
 
-      {/* Mobile Menu Backdrop */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          onClick={() => setIsMobileMenuOpen(false)}
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[9998] md:hidden cursor-pointer"
-        />
-      )}
-
-      {/* Mobile Menu */}
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{
-          opacity: isMobileMenuOpen ? 1 : 0,
-          height: isMobileMenuOpen ? 'auto' : 0,
-        }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="md:hidden overflow-hidden bg-black/60 backdrop-blur-sm border-t border-purple-500/20 z-[9999] relative"
-      >
-        <div className="px-4 py-4 space-y-2">
-          {navItems.map((item, index) => (
-            <motion.button
-              key={item.href}
-              initial={{ opacity: 0, x: -20 }}
-              animate={
-                isMobileMenuOpen
-                  ? { opacity: 1, x: 0 }
-                  : { opacity: 0, x: -20 }
-              }
-              transition={{
-                delay: isMobileMenuOpen ? index * 0.08 : 0,
-                duration: 0.4,
-              }}
-              onClick={() => handleNavClick(item.href)}
-              className={`w-full px-4 py-3 rounded-lg font-semibold transition-all duration-300 text-sm sm:text-base ${
-                activeLink === item.href
-                  ? 'bg-purple-600/80 text-white shadow-lg shadow-purple-500/20 border border-purple-400/50'
-                  : 'bg-purple-500/10 text-purple-200 border border-purple-500/20 hover:bg-purple-500/20 hover:border-purple-400/50'
-              }`}
-            >
-              {item.label}
-            </motion.button>
-          ))}
-        </div>
-      </motion.div>
+      {/* Mobile Menu with Smooth Animation */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="mobile-menu md:hidden"
+          >
+            <div className="px-0 py-3 space-y-1 max-h-[calc(100vh-120px)] overflow-y-auto">
+              {navItems.map((item, index) => (
+                <motion.button
+                  key={item.href}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: isMobileMenuOpen ? index * 0.05 : 0,
+                    ease: 'easeOut'
+                  }}
+                  onClick={() => handleNavClick(item.href)}
+                  className={`mobile-menu-item ${
+                    activeLink === item.href ? 'active' : ''
+                  }`}
+                >
+                  <span className="mr-3 text-lg">{item.icon}</span>
+                  <span>{item.label}</span>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

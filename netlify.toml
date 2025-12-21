@@ -1,0 +1,14 @@
+[build]
+  base = "client"
+  publish = "client/build"
+  command = "npm install && npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--legacy-peer-deps"
+  CI = "false"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

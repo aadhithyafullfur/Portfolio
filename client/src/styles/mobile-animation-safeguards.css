@@ -1,0 +1,224 @@
+/**
+ * MOBILE ANIMATION SAFEGUARDS
+ * Ensures animations work properly on all mobile devices
+ * Degrades gracefully on low-end devices
+ */
+
+/* ========== CRITICAL: ENSURE VISIBILITY ========== */
+/* Prevent any element from becoming invisible due to animations */
+@media (max-width: 768px) {
+  * {
+    /* Ensure nothing is accidentally hidden */
+    visibility: visible !important;
+  }
+
+  /* Override any display: none from animations */
+  [style*="display: none"] {
+    display: block !important;
+  }
+
+  /* Ensure opacity is never 0 from failed animations */
+  [style*="opacity: 0"] {
+    opacity: 1 !important;
+  }
+}
+
+/* ========== ANIMATION PERFORMANCE SAFEGUARDS ========== */
+@media (max-width: 768px) {
+  /* Use simpler animations on mobile */
+  * {
+    animation-duration: 0.3s !important;
+    transition-duration: 0.2s !important;
+  }
+
+  /* Disable complex transforms on low-end devices */
+  @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+
+  /* Simplify hover effects to active states */
+  *:hover {
+    transform: none !important;
+  }
+
+  *:active {
+    transform: scale(0.98) !important;
+    transition: transform 0.1s ease !important;
+  }
+}
+
+/* ========== LOGO LOOP ANIMATION FIX ========== */
+@media (max-width: 768px) {
+  /* Ensure logo loop is always visible */
+  .overflow-x-hidden {
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  /* Force visibility on logo containers */
+  [class*="logo"],
+  [class*="LogoLoop"] {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+  }
+
+  /* Ensure animation runs */
+  @keyframes logoScroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+}
+
+/* ========== FRAMER MOTION SAFEGUARDS ========== */
+@media (max-width: 768px) {
+  /* Prevent Framer Motion from hiding content */
+  [data-framer-component] {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Ensure motion divs are visible */
+  [class*="motion"] {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ========== INTERSECTION OBSERVER FIX ========== */
+@media (max-width: 768px) {
+  /* Ensure elements waiting for IntersectionObserver are visible */
+  [data-observe],
+  [data-in-view] {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ========== CRITICAL: BACKGROUND SAFEGUARDS ========== */
+@media (max-width: 768px) {
+  /* Force black background on all major containers */
+  html,
+  body,
+  #root,
+  [id*="app"],
+  [class*="App"],
+  main {
+    background-color: #000000 !important;
+  }
+
+  /* Prevent any white backgrounds */
+  *:not([class*="white"]):not([class*="light"]) {
+    background-color: transparent;
+  }
+}
+
+/* ========== LOW-END DEVICE DETECTION ========== */
+@media (max-width: 768px) and (max-resolution: 1dppx) {
+  /* Very simple animations for low-end devices */
+  * {
+    animation: none !important;
+    transition: opacity 0.15s ease !important;
+  }
+
+  /* Disable blur effects */
+  *[class*="blur"] {
+    backdrop-filter: none !important;
+    filter: none !important;
+  }
+}
+
+/* ========== ENSURE SCROLLING WORKS ========== */
+@media (max-width: 768px) {
+  html {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    position: relative !important; /* Never fixed */
+  }
+
+  /* Prevent body from being hidden */
+  body[style*="overflow: hidden"] {
+    overflow-y: auto !important;
+  }
+}
+
+/* ========== MENU OVERLAY FIX ========== */
+@media (max-width: 768px) {
+  /* Ensure menu overlays work properly */
+  [class*="overlay"],
+  [class*="backdrop"],
+  [class*="modal"] {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 9998 !important;
+  }
+
+  /* Ensure menus are above overlays */
+  [class*="menu"],
+  nav {
+    z-index: 9999 !important;
+  }
+}
+
+/* ========== GPU ACCELERATION ========== */
+@media (max-width: 768px) {
+  /* Enable GPU acceleration for better performance */
+  * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+}
+
+/* ========== CRITICAL: PREVENT LAYOUT COLLAPSE ========== */
+@media (max-width: 768px) {
+  /* Fix min-height issues */
+  .min-h-screen,
+  [class*="min-h-screen"] {
+    min-height: 100vh !important;
+    min-height: -webkit-fill-available !important;
+  }
+
+  /* Prevent height: 100vh issues on iOS */
+  [style*="height: 100vh"] {
+    height: 100vh !important;
+    height: -webkit-fill-available !important;
+  }
+}
+
+/* ========== SAFE AREA INSETS ========== */
+@supports (padding: max(0px)) {
+  @media (max-width: 768px) {
+    body {
+      padding-left: max(0px, env(safe-area-inset-left)) !important;
+      padding-right: max(0px, env(safe-area-inset-right)) !important;
+    }
+  }
+}
+
+/* ========== PERFORMANCE MONITORING ========== */
+@media (max-width: 768px) {
+  /* Log performance issues to console */
+  @supports (animation-timeline: auto) {
+    /* Modern browsers only */
+    * {
+      animation-timeline: auto;
+    }
+  }
+}

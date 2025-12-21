@@ -88,43 +88,52 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, isHovered, pauseOn
     if (!track) return;
 
     // Use simplified animation or no animation for performance-constrained devices
-    const shouldSimplifyAnimation = prefersReducedMotion || isMobile || isLowEnd;
+    const shouldSimplifyAnimation = prefersReducedMotion || isLowEnd;
+    const isMobileDevice = isMobile;
 
     if (seqWidth > 0) {
       offsetRef.current = ((offsetRef.current % seqWidth) + seqWidth) % seqWidth;
       track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
+      // CRITICAL FIX: Ensure track is always visible
+      track.style.visibility = 'visible';
+      track.style.opacity = '1';
     }
 
-    if (shouldSimplifyAnimation) {
-      // Use CSS animation instead of RAF for better performance on mobile
-      if (prefersReducedMotion) {
-        track.style.transform = 'translate3d(0, 0, 0)';
-        track.style.animation = 'none';
-      } else {
-        // Simple CSS animation for mobile devices
-        const duration = seqWidth / Math.abs(targetVelocity || 50);
-        track.style.animation = `logoScroll ${duration}s linear infinite`;
-        track.style.animationDirection = targetVelocity < 0 ? 'reverse' : 'normal';
-        
-        // Add CSS keyframes if not already present
-        if (!document.querySelector('#logo-scroll-keyframes')) {
-          const style = document.createElement('style');
-          style.id = 'logo-scroll-keyframes';
-          style.textContent = `
-            @keyframes logoScroll {
-              from { transform: translate3d(0, 0, 0); }
-              to { transform: translate3d(-${seqWidth}px, 0, 0); }
-            }
-          `;
-          document.head.appendChild(style);
-        }
+    if (prefersReducedMotion) {
+      // CRITICAL FIX: Still show content, just without animation
+      track.style.transform = 'translate3d(0, 0, 0)';
+      track.style.animation = 'none';
+      track.style.visibility = 'visible';
+      track.style.opacity = '1';
+      return () => {
+        lastTimestampRef.current = null;
+      };
+    }
+
+    if (isMobileDevice || isLowEnd) {
+      // CRITICAL FIX: Use CSS animation for mobile, ensuring it's always visible
+      const duration = seqWidth / Math.abs(targetVelocity || 50);
+      track.style.animation = `logoScroll ${duration}s linear infinite`;
+      track.style.animationDirection = targetVelocity < 0 ? 'reverse' : 'normal';
+      track.style.visibility = 'visible';
+      track.style.opacity = '1';
+      
+      // Add CSS keyframes if not already present
+      if (!document.querySelector('#logo-scroll-keyframes')) {
+        const style = document.createElement('style');
+        style.id = 'logo-scroll-keyframes';
+        style.textContent = `
+          @keyframes logoScroll {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(-${seqWidth}px, 0, 0); }
+          }
+        `;
+        document.head.appendChild(style);
       }
       
       return () => {
         lastTimestampRef.current = null;
-        if (!prefersReducedMotion) {
-          track.style.animation = '';
-        }
+        track.style.animation = '';
       };
     }
 

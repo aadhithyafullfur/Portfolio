@@ -13,12 +13,22 @@
   html, body {
     width: 100%;
     height: 100%;
-    position: fixed;
+    /* CRITICAL FIX: Removed position: fixed - was causing white screen bug */
   }
 
   body {
-    overflow-y: scroll;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    /* Ensure background is always visible */
+    background-color: #000000;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+
+  html {
+    /* Ensure html also has background */
+    background-color: #000000;
+    height: -webkit-fill-available;
   }
 
   /* Prevent horizontal scroll */

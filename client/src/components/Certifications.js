@@ -77,7 +77,7 @@ function Certifications() {
   };
 
   return (
-    <section id="certifications" className="w-full py-6 sm:py-8 md:py-12 lg:py-16 px-3 xs:px-4 sm:px-6 bg-transparent relative">
+    <section id="certifications" className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8 bg-transparent relative">
       <motion.div
         className="max-w-7xl mx-auto"
         initial="hidden"
@@ -212,11 +212,12 @@ function Certifications() {
                       
                       {/* Image Section - Mobile Optimized */}
                       {achievement.image && (
-                        <div className="relative h-32 sm:h-40 md:h-48 lg:h-56 overflow-hidden bg-black/60 active:opacity-90">
+                        <div className="relative h-40 sm:h-48 md:h-56 lg:h-64 overflow-hidden bg-black/60 active:opacity-90">
                           <img 
                             src={achievement.image} 
                             alt={achievement.name}
-                            className="w-full h-full object-cover group-active:scale-125 group-hover:scale-110 transition-transform duration-500 will-change-transform"
+                            className="w-full h-full object-cover group-active:scale-105 group-hover:scale-105 transition-transform duration-500 will-change-transform"
+                            loading="lazy"
                             onError={(e) => {
                               e.target.style.display = 'none';
                             }}

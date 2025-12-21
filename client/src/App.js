@@ -82,30 +82,30 @@ const App = () => {
   }, []);
 
   return (
-    <div className="min-h-screen text-white bg-black relative overflow-x-hidden">
-      <div className="relative z-10">
+    <div className="min-h-screen text-white bg-black relative overflow-x-hidden" style={{ backgroundColor: '#000000', minHeight: '100vh' }}>
+      <div className="relative z-10" style={{ backgroundColor: 'transparent' }}>
         <Navbar />
 
         <main>
         {/* HOME SECTION */}
         <Section
           id="home"
-          className="min-h-screen flex items-center justify-center py-12 sm:py-16 md:py-20"
+          className="min-h-screen flex items-center justify-center py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-8"
         >
-          {/* ✅ MOBILE OPTIMIZED HERO SECTION */}
-          <div className="w-full flex flex-col-reverse lg:flex-row items-center justify-between gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-20 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8">
+          {/* ✅ FULLY RESPONSIVE HERO SECTION */}
+          <div className="w-full max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between gap-6 sm:gap-8 md:gap-10 lg:gap-16 xl:gap-20">
             
             {/* LEFT TEXT */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
-              className="w-full lg:w-1/2 text-center lg:text-left"
+              className="w-full lg:w-1/2 text-center lg:text-left space-y-4 sm:space-y-5 md:space-y-6"
             >
               <SplitText
                 text="Hi, I am Aadhithya R"
-                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold leading-tight"
-                tag="h2"
+                className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold leading-tight"
+                tag="h1"
                 splitType="chars"
                 delay={80}
               />
@@ -119,34 +119,44 @@ const App = () => {
                 ]}
                 speed={50}
                 repeat={Infinity}
-                wrapper="h3"
-                className="text-base xs:text-lg sm:text-2xl md:text-3xl mt-3 sm:mt-4 text-purple-400"
+                wrapper="h2"
+                className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl text-purple-400 font-semibold"
               />
 
-              <p className="mt-4 sm:mt-6 text-sm xs:text-base text-gray-300 leading-relaxed">
+              <p className="mt-4 sm:mt-5 md:mt-6 text-sm xs:text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Passionate about building scalable web applications and AI-powered solutions.
               </p>
 
-              <div className="flex justify-center lg:justify-start gap-4 sm:gap-6 mt-5 sm:mt-6 flex-wrap">
-                <a href="https://github.com/aadhithyafullfur" className="hover:text-purple-400 transition-colors"><FaGithub size={18} className="sm:w-6 sm:h-6" /></a>
-                <a href="https://www.linkedin.com/in/aadhithya-r-077a7a320/" className="hover:text-purple-400 transition-colors"><FaLinkedin size={18} className="sm:w-6 sm:h-6" /></a>
-                <a href="https://www.instagram.com/aadhi_.x18/" className="hover:text-purple-400 transition-colors"><FaInstagram size={18} className="sm:w-6 sm:h-6" /></a>
-                <a href="mailto:aadhithya@example.com" className="hover:text-purple-400 transition-colors"><FaEnvelope size={18} className="sm:w-6 sm:h-6" /></a>
-                <a href="Aadhithya R resume .pdf" download className="hover:text-purple-400 transition-colors"><FaDownload size={18} className="sm:w-6 sm:h-6" /></a>
+              <div className="flex justify-center lg:justify-start gap-3 sm:gap-4 md:gap-5 mt-6 sm:mt-7 md:mt-8 flex-wrap">
+                <a href="https://github.com/aadhithyafullfur" target="_blank" rel="noopener noreferrer" className="p-3 sm:p-3.5 md:p-4 bg-black/40 hover:bg-purple-600/40 border border-purple-500/20 hover:border-purple-400/50 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-110 active:scale-95" aria-label="GitHub Profile">
+                  <FaGithub className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-purple-300" />
+                </a>
+                <a href="https://www.linkedin.com/in/aadhithya-r-077a7a320/" target="_blank" rel="noopener noreferrer" className="p-3 sm:p-3.5 md:p-4 bg-black/40 hover:bg-purple-600/40 border border-purple-500/20 hover:border-purple-400/50 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-110 active:scale-95" aria-label="LinkedIn Profile">
+                  <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-purple-300" />
+                </a>
+                <a href="https://www.instagram.com/aadhi_.x18/" target="_blank" rel="noopener noreferrer" className="p-3 sm:p-3.5 md:p-4 bg-black/40 hover:bg-purple-600/40 border border-purple-500/20 hover:border-purple-400/50 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-110 active:scale-95" aria-label="Instagram Profile">
+                  <FaInstagram className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-purple-300" />
+                </a>
+                <a href="mailto:aadhithya@example.com" className="p-3 sm:p-3.5 md:p-4 bg-black/40 hover:bg-purple-600/40 border border-purple-500/20 hover:border-purple-400/50 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-110 active:scale-95" aria-label="Email Contact">
+                  <FaEnvelope className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-purple-300" />
+                </a>
+                <a href="Aadhithya R resume .pdf" download className="p-3 sm:p-3.5 md:p-4 bg-gradient-to-r from-purple-600/80 to-purple-500/80 hover:from-purple-500/90 hover:to-purple-400/90 border border-purple-500/30 hover:border-purple-400/50 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-110 active:scale-95" aria-label="Download Resume">
+                  <FaDownload className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+                </a>
               </div>
             </motion.div>
 
-            {/* RIGHT 3D BITMOJI - HIDDEN ON MOBILE */}
+            {/* RIGHT 3D BITMOJI - RESPONSIVE */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
-              className="hidden lg:flex lg:w-1/2 justify-center"
+              className="w-full lg:w-1/2 flex justify-center"
             >
               <div
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className="w-72 h-72 rounded-full border-3 sm:border-4 border-purple-600 shadow-lg sm:shadow-xl overflow-hidden hover:shadow-xl sm:hover:shadow-2xl hover:border-purple-500 transition-all duration-300"
+                className="w-48 h-48 xs:w-56 xs:h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-full border-2 sm:border-3 md:border-4 border-purple-600 shadow-xl sm:shadow-2xl overflow-hidden hover:shadow-2xl hover:border-purple-500 transition-all duration-300 hover:scale-105 active:scale-95"
               >
                 <Bitmoji3DCanvas isHovered={isHovered} />
               </div>

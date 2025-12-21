@@ -1,0 +1,246 @@
+/**
+ * DESKTOP-ONLY CORE STYLES
+ * Production-ready, stable, no responsive code
+ */
+
+/* ========== RESET & FOUNDATION ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #000000;
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #e0e0e0;
+  background-color: #000000;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ========== LAYOUT CONTAINERS ========== */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  padding: 5rem 0;
+}
+
+/* ========== FLEX UTILITIES ========== */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.gap-8 {
+  gap: 2rem;
+}
+
+/* ========== GRID UTILITIES ========== */
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ========== BUTTONS ========== */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+button:focus-visible {
+  outline: 2px solid #A855F7;
+  outline-offset: 2px;
+}
+
+/* ========== LINKS ========== */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+a:focus-visible {
+  outline: 2px solid #A855F7;
+  outline-offset: 2px;
+}
+
+/* ========== IMAGES ========== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ========== CARDS ========== */
+.card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 10px 40px rgba(168, 85, 247, 0.15);
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.5);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.8);
+}
+
+/* ========== UTILITIES ========== */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.bg-black {
+  background-color: #000000;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+/* ========== PREVENT LAYOUT ISSUES ========== */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+/* ========== Z-INDEX LAYERS ========== */
+.z-10 {
+  z-index: 10;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.z-9999 {
+  z-index: 9999;
+}

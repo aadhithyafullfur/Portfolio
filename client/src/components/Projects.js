@@ -45,18 +45,18 @@ const projects = [
 const getProjectVariants = (isReducedMotion) => ({
   hidden: { 
     opacity: 0, 
-    y: isReducedMotion ? 0 : (window.innerWidth <= 768 ? 15 : 20) 
+    y: isReducedMotion ? 0 : 20
   },
   visible: { 
     opacity: 1, 
     y: 0,
     transition: {
-      duration: isReducedMotion ? 0.3 : (window.innerWidth <= 768 ? 0.5 : 0.6),
+      duration: isReducedMotion ? 0.3 : 0.6,
       ease: 'easeOut'
     }
   },
   hover: { 
-    scale: isReducedMotion ? 1 : (window.innerWidth <= 768 ? 1.02 : 1.03),
+    scale: isReducedMotion ? 1 : 1.02,
     transition: {
       duration: isReducedMotion ? 0.1 : 0.2,
       ease: 'easeOut'
@@ -421,7 +421,7 @@ function Projects() {
   }, []);
 
   return (
-    <div className="w-full py-6 sm:py-8 md:py-12 lg:py-16 px-3 xs:px-4 sm:px-6 lg:px-8 projects-section">
+    <section id="projects" className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8 projects-section">
       <style>{`
         .project-card {
           --glow-x: 50%;
@@ -464,13 +464,13 @@ function Projects() {
         </motion.div>
 
         {/* 2x2 Grid Layout with MagicBento ParticleCard Style */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-6" ref={gridRef}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8" ref={gridRef}>
           {projects.map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

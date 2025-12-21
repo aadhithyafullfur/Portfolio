@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import LogoLoop from './LogoLoop';
 
@@ -53,40 +53,40 @@ function Skills() {
     [skills]
   );
 
-  // Animation variants for container and items
+  // Responsive animation variants (no window checks)
   const containerVariants = {
-    hidden: { opacity: 0, x: window.innerWidth <= 768 ? 30 : 50 },
+    hidden: { opacity: 0, x: 40 },
     visible: { 
       opacity: 1, 
       x: 0,
       transition: {
-        staggerChildren: window.innerWidth <= 768 ? 0.1 : 0.15,
+        staggerChildren: 0.12,
         when: "beforeChildren",
-        duration: window.innerWidth <= 768 ? 0.6 : 0.8,
+        duration: 0.7,
         ease: 'easeOut'
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: window.innerWidth <= 768 ? 15 : 20 },
+    hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: {
-        duration: window.innerWidth <= 768 ? 0.4 : 0.5,
+        duration: 0.5,
         ease: 'easeOut'
       }
     }
   };
 
   return (
-    <div className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8">
+    <section id="skills" className="w-full py-6 sm:py-8 md:py-10 lg:py-12 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8">
       <motion.div
         className="max-w-6xl mx-auto"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: window.innerWidth <= 768 ? 0.15 : 0.2 }}
+        viewport={{ once: true, amount: 0.15 }}
         variants={containerVariants}
       >
         {/* Section Title */}
@@ -107,8 +107,8 @@ function Skills() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: window.innerWidth <= 768 ? 0.15 : 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-5 mb-10 sm:mb-12 md:mb-16 lg:mb-20"
+          viewport={{ once: true, amount: 0.15 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6 mb-8 sm:mb-10 md:mb-12 lg:mb-16"
         >
           {skillCategories.map((category, index) => (
             <motion.div
@@ -151,22 +151,24 @@ function Skills() {
           </p>
           
           {/* Desktop & Mobile: Animated Logo Loop */}
-          <LogoLoop
-            logos={logoArray}
-            speed={60}
-            direction="left"
-            logoHeight={48}
-            gap={40}
-            pauseOnHover={true}
-            scaleOnHover={true}
-            fadeOut={true}
-            fadeOutColor="#000000"
-            ariaLabel="Technology skills and tools"
-            className="py-4"
-          />
+          <div className="w-full overflow-hidden px-2 sm:px-0">
+            <LogoLoop
+              logos={logoArray}
+              speed={60}
+              direction="left"
+              logoHeight={44}
+              gap={36}
+              pauseOnHover={false}
+              scaleOnHover={false}
+              fadeOut={true}
+              fadeOutColor="#000000"
+              ariaLabel="Technology skills and tools"
+              className="py-4"
+            />
+          </div>
         </motion.div>
       </motion.div>
-    </div>
+    </section>
   );
 }
 

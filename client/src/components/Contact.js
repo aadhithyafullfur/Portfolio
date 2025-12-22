@@ -16,25 +16,25 @@ function Contact() {
   const [status, setStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Animation variants
+  // Responsive animation variants (no window checks)
   const containerVariants = {
-    hidden: { opacity: 0, y: window.innerWidth <= 768 ? 30 : 50 },
+    hidden: { opacity: 0, y: 40 },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: { 
-        duration: window.innerWidth <= 768 ? 0.6 : 0.8,
-        staggerChildren: 0.3
+        duration: 0.7,
+        staggerChildren: 0.2
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: window.innerWidth <= 768 ? 20 : 30 },
+    hidden: { opacity: 0, y: 25 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: window.innerWidth <= 768 ? 0.5 : 0.6 }
+      transition: { duration: 0.5 }
     }
   };
 
@@ -55,32 +55,39 @@ function Contact() {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      setIsLoading(true);
       return;
     }
 
-    try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001/api/contact';
-      
-      // Only make API call if URL is available
-      if (apiUrl !== 'http://localhost:5001/api/contact') {
-        const response = await axios.post(apiUrl, form, {
-          timeout: 10000,
-          headers: { 'Content-Type': 'application/json' },
-        });
+    setIsLoading(true);
+    setStatus('');
+    setErrors({});
 
-        if (response.status === 200) {
-          setStatus('Message sent successfully!');
-          setForm({ name: '', email: '', message: '' });
-        }
-      } else {
-        // Fallback for local development
-        setStatus('Thanks for your message! I\'ll get back to you soon.');
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/contact';
+      
+      const response = await axios.post(apiUrl, form, {
+        timeout: 10000,
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.status === 200 && response.data.success) {
+        setStatus('✅ Message Sent Successfully!');
         setForm({ name: '', email: '', message: '' });
+      } else {
+        setStatus('❌ Failed to send message. Please try again.');
       }
     } catch (error) {
       console.error('Error sending message:', error);
-      setStatus('Failed to send message. Please try again.');
+      
+      if (error.code === 'ECONNABORTED') {
+        setStatus('❌ Request timeout. Please check your connection.');
+      } else if (error.response) {
+        setStatus(`❌ ${error.response.data.message || 'Server error. Please try again.'}`);
+      } else if (error.request) {
+        setStatus('❌ Cannot reach server. Please try again later.');
+      } else {
+        setStatus('❌ Failed to send message. Please try again.');
+      }
     } finally {
       setIsLoading(false);
       setTimeout(() => setStatus(''), 5000);
@@ -93,7 +100,7 @@ function Contact() {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: window.innerWidth <= 768 ? 0.2 : 0.3 }}
+        viewport={{ once: true, amount: 0.15 }}
         className="max-w-6xl mx-auto"
       >
         {/* Section Title */}
@@ -254,13 +261,18 @@ function Contact() {
               </button>
 
               {status && (
-                <p className={`text-xs sm:text-sm text-center p-2 rounded-lg ${
-                  status.includes('successfully') 
-                    ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
-                    : 'bg-red-500/20 text-red-300 border border-red-500/30'
-                }`}>
+                <motion.p 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className={`text-xs sm:text-sm text-center p-3 rounded-lg font-medium ${
+                    status.includes('✅') 
+                      ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
+                      : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                  }`}
+                >
                   {status}
-                </p>
+                </motion.p>
               )}
             </form>
           </motion.div>

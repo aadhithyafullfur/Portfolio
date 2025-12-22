@@ -30,24 +30,24 @@ const ScrollFloat = ({
     const el = containerRef.current;
     if (!el) return;
 
-    // Performance checks
-    const isMobile = window.innerWidth <= 768;
+    // Performance checks (only for reduced motion, not mobile)
     const isLowEnd = navigator.hardwareConcurrency <= 4 || navigator.deviceMemory <= 4;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Use simpler animation for performance-constrained devices
-    if (isMobile || isLowEnd || prefersReducedMotion) {
-      // Simple fade-in without complex transforms
+    // Use simpler animation ONLY for reduced motion preference
+    if (prefersReducedMotion) {
+      // Simple fade-in for accessibility
       gsap.fromTo(el, 
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 10 },
         { 
           opacity: 1, 
           y: 0, 
-          duration: 0.6,
+          duration: 0.3,
+          ease: 'none',
           scrollTrigger: {
             trigger: el,
-            start: 'top bottom-=100px',
-            toggleActions: 'play none none reverse'
+            start: 'top bottom-=50px',
+            toggleActions: 'play none none none'
           }
         }
       );
@@ -57,51 +57,52 @@ const ScrollFloat = ({
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
     const charElements = el.querySelectorAll('.inline-block');
 
+    // Use optimized animation for all devices (mobile-friendly)
     // Limit character animations for very long text (performance)
-    if (charElements.length > 50) {
-      // Simple fade-in for long text
+    if (charElements.length > 50 || isLowEnd) {
+      // Simpler animation for long text or low-end devices
       gsap.fromTo(el, 
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 20 },
         { 
           opacity: 1, 
           y: 0, 
-          duration: animationDuration * 0.5,
+          duration: animationDuration * 0.6,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: el,
             scroller,
             start: scrollStart,
-            toggleActions: 'play none none reverse'
+            toggleActions: 'play none none none'
           }
         }
       );
       return;
     }
 
-    // Full character animation for desktop and short text
+    // Mobile-optimized character animation (works on all devices)
     gsap.fromTo(
       charElements,
       {
         willChange: 'opacity, transform',
         opacity: 0,
-        yPercent: 80, // Reduced from 120
-        scaleY: 1.5,  // Reduced from 2.3
-        scaleX: 0.9,  // Reduced from 0.7
+        yPercent: 50,  // Lighter transform for mobile
+        scaleY: 1.2,   // Subtle scale for mobile
         transformOrigin: '50% 0%'
       },
       {
-        duration: animationDuration * 0.8, // Slightly faster
-        ease: 'power2.out', // Simpler easing
+        duration: animationDuration * 0.7, // Faster for mobile
+        ease: 'power2.out',
         opacity: 1,
         yPercent: 0,
         scaleY: 1,
-        scaleX: 1,
-        stagger: Math.min(stagger, 0.02), // Limit stagger delay
+        stagger: Math.min(stagger, 0.015), // Tighter stagger
         scrollTrigger: {
           trigger: el,
           scroller,
           start: scrollStart,
           end: scrollEnd,
-          scrub: 1 // Smoother scrub
+          toggleActions: 'play none none none', // No scrub on mobile
+          once: true // Only animate once for better performance
         }
       }
     );

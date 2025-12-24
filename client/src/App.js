@@ -112,9 +112,9 @@ const App = () => {
 
               <TypeAnimation
                 sequence={[
-                  'A Full-Stack Developer 💻',
+                  'A Full-Stack Developer',
                   2000,
-                  'ML Enthusiast 🤖',
+                  'ML Enthusiast',
                   2000,
                 ]}
                 speed={50}

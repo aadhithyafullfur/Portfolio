@@ -63,34 +63,51 @@ function Contact() {
     setErrors({});
 
     try {
+      // Get API URL from environment variable
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/contact';
       
+      console.log('Sending message to:', apiUrl);
+      console.log('Form data:', form);
+      
       const response = await axios.post(apiUrl, form, {
-        timeout: 10000,
-        headers: { 'Content-Type': 'application/json' },
+        timeout: 15000,
+        headers: { 
+          'Content-Type': 'application/json',
+        },
+        withCredentials: false
       });
+
+      console.log('Response:', response);
 
       if (response.status === 200 && response.data.success) {
         setStatus('✅ Message Sent Successfully!');
         setForm({ name: '', email: '', message: '' });
+        setErrors({});
       } else {
         setStatus('❌ Failed to send message. Please try again.');
       }
     } catch (error) {
       console.error('Error sending message:', error);
+      console.error('Error details:', {
+        message: error.message,
+        code: error.code,
+        response: error.response?.data,
+        status: error.response?.status
+      });
       
       if (error.code === 'ECONNABORTED') {
         setStatus('❌ Request timeout. Please check your connection.');
       } else if (error.response) {
-        setStatus(`❌ ${error.response.data.message || 'Server error. Please try again.'}`);
+        const errorMessage = error.response.data?.message || 'Server error. Please try again.';
+        setStatus(`❌ ${errorMessage}`);
       } else if (error.request) {
-        setStatus('❌ Cannot reach server. Please try again later.');
+        setStatus('❌ Cannot reach server. Server may be offline. Please try again later.');
       } else {
         setStatus('❌ Failed to send message. Please try again.');
       }
     } finally {
       setIsLoading(false);
-      setTimeout(() => setStatus(''), 5000);
+      setTimeout(() => setStatus(''), 8000);
     }
   };
 

@@ -160,7 +160,7 @@ function Navbar() {
       <div className="hidden md:flex relative justify-center items-center py-3 sm:py-4 px-4 sm:px-6 md:px-8">
         {/* Main Navigation */}
         <PillNav
-          logo="images/profile.jpg"
+          logo="/images/bitmoji.png"
           logoAlt="Aadhithya Portfolio"
           items={pillNavItems}
           activeHref={activeLink}

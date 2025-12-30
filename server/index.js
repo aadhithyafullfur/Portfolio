@@ -2,12 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
+import Groq from 'groq-sdk';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
+
+// Initialize Groq client
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY
+});
 
 app.use(cors({
   origin: [
@@ -32,7 +38,7 @@ async function connectDB(retries = 5) {
     try {
       const client = new MongoClient(MONGO_URI, {
         serverSelectionTimeoutMS: 5000,
-        socketTimeoutMS: 45000,
+        socketTimeoutMS:  45000,
         ssl: true,
         tls: true,
         tlsAllowInvalidCertificates: true,
@@ -142,6 +148,114 @@ app.post('/api/contact', async (req, res) => {
     res.status(500).json({ 
       success: false, 
       message: 'Failed to send message. Please try again later.' 
+    });
+  }
+});
+
+// Chatbot API endpoint with Groq
+app.post('/api/chat', async (req, res) => {
+  console.log('💬 Received chatbot request:', req.body);
+  const { message } = req.body;
+
+  if (!message) {
+    return res.status(400).json({ 
+      success: false, 
+      error: 'Message is required' 
+    });
+  }
+
+  try {
+    console.log('💬 Processing chat request with message:', message);
+    
+    // Portfolio data for context
+    const portfolioContext = `
+You are an AI assistant for Aadhithya R's portfolio website. Answer questions about him professionally and helpfully.
+
+Portfolio Information:
+- Name: Aadhithya R
+- Location: Erode, Tamil Nadu, India
+- Email: aadhithyaa120@gmail.com
+- Education: B.Tech in AI & Data Science from Kongu Engineering College
+- Roles: Full Stack Developer, ML Engineer, Data Analyst, AI Specialist
+
+Projects:
+1. QuikCart - E-commerce platform with real-time features including live chat, notifications, and seamless shopping experience
+2. Traffic Prediction System - ML-based traffic forecasting system using advanced machine learning algorithms
+3. FarmConnect - Agricultural marketplace platform connecting farmers with buyers
+4. Brain Tumor Detection AI - Medical imaging AI system for detecting brain tumors using deep learning
+
+Technical Skills:
+- Languages: C, Python, Java, JavaScript, TypeScript
+- Frontend: React, HTML, CSS, Tailwind CSS, Bootstrap
+- Backend: Node.js, Express.js, Flask
+- Database: MongoDB, MySQL, PostgreSQL
+- Tools & Technologies: Git, Docker, AWS, Machine Learning, Deep Learning, Data Analysis
+- Frameworks: Spring Boot, Django, TensorFlow, PyTorch
+
+Links:
+- GitHub: https://github.com/aadhithyaa
+- LinkedIn: https://linkedin.com/in/aadhithya-r
+- Portfolio: https://portfolio-aadhithyafullfur.vercel.app
+
+Keep responses concise, friendly, and professional. If asked about specific project details, provide relevant technical information.
+    `;
+
+    // Call Groq API
+    console.log('📞 Calling Groq API with model:', 'llama-3.1-8b-instant');
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        {
+          role: "system",
+          content: portfolioContext
+        },
+        {
+          role: "user",
+          content: message
+        }
+      ],
+      temperature: 0.7,
+      max_tokens: 500,
+      top_p: 1,
+      stream: false,
+      stop: null
+    });
+    console.log('✅ Groq API response received');
+
+    const reply = completion.choices[0].message.content;
+
+    res.status(200).json({ 
+      success: true, 
+      reply: reply
+    });
+  } catch (err) {
+    console.error('❌ Error processing chat:', err);
+    console.error('Error details:', {
+      message: err.message,
+      status: err.status,
+      code: err.code,
+      type: err.type,
+      stack: err.stack
+    });
+    
+    // Handle specific Groq errors
+    if (err.status === 401 || err.message.includes('Authentication')) {
+      return res.status(500).json({ 
+        success: false, 
+        error: 'AI service authentication failed. Please check API configuration.' 
+      });
+    }
+    
+    if (err.status === 400 || err.message.includes('Bad Request')) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Invalid request format. Please check your message content.' 
+      });
+    }
+    
+    res.status(500).json({ 
+      success: false, 
+      error: `Failed to process your message: ${err.message}` 
     });
   }
 });

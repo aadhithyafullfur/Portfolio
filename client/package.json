@@ -7,7 +7,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:5001",
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@gsap/react": "^2.1.2",
     "@icons-pack/react-simple-icons": "^13.1.0",
     "@react-three/drei": "9.56.0",

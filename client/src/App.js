@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { TypeAnimation } from 'react-type-animation';
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaDownload } from 'react-icons/fa';
 import { Canvas, useFrame } from '@react-three/fiber';
+import ChatbotButton from './components/ChatbotButton';
 
 // Lazy loaded components
 const About = lazy(() => import('./components/About.js'));
@@ -206,6 +207,7 @@ const App = () => {
       <Suspense fallback={null}>
         <Footer />
       </Suspense>
+      <ChatbotButton />
       </div>
     </div>
   );

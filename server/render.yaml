@@ -1,12 +1,16 @@
-name: portfolio-server
 services:
   - type: web
     name: portfolio-backend
     env: node
-    buildCommand: npm install
-    startCommand: npm start
+    region: oregon  # Optional: specify region
+    buildCommand: "npm install"
+    startCommand: "npm start"
     envVars:
+      - key: NODE_VERSION
+        value: "18"  # Specify Node.js version
       - key: PORT
-        value: 10000
+        sync: false  # Render will provide the port
       - key: MONGO_URI
+        sync: false
+      - key: GROQ_API_KEY
         sync: false

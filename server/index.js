@@ -7,7 +7,7 @@ import Groq from 'groq-sdk';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = parseInt(process.env.PORT) || 5001;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Initialize Groq client
@@ -22,7 +22,9 @@ app.use(cors({
     'http://127.0.0.1:3000',
     'http://127.0.0.1:3001',
     'https://portfolio-aadhithyafullfur.vercel.app',
-    /\.vercel\.app$/
+    /.vercel\.app$/,
+        'https://portfolio-aadhithya-r.onrender.com', // Render deployment URL
+        /.onrender\.com$/  // Allow all onrender.com subdomains
   ],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -39,10 +41,10 @@ async function connectDB(retries = 5) {
       const client = new MongoClient(MONGO_URI, {
         serverSelectionTimeoutMS: 5000,
         socketTimeoutMS:  45000,
-        ssl: true,
-        tls: true,
-        tlsAllowInvalidCertificates: true,
-        tlsAllowInvalidHostnames: true
+        maxPoolSize: 10, // Maintain up to 10 socket connections
+        // Use the following options for newer MongoDB drivers
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
       });
       await client.connect();
       db = client.db('portfolioDB');
@@ -66,6 +68,11 @@ connectDB();
 
 app.get('/', (req, res) => {
   res.send('Portfolio API Running');
+});
+
+// Health check endpoint for Render
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
 app.post('/api/contact', async (req, res) => {
@@ -168,37 +175,124 @@ app.post('/api/chat', async (req, res) => {
     console.log('💬 Processing chat request with message:', message);
     
     // Portfolio data for context
-    const portfolioContext = `
-You are an AI assistant for Aadhithya R's portfolio website. Answer questions about him professionally and helpfully.
+const portfolioContext = `
+You are an AI assistant for Aadhithya R's portfolio website.
+Answer questions about him in a professional, friendly, and confident tone.
+Help recruiters, collaborators, and visitors understand his skills, projects, and personality clearly.
 
-Portfolio Information:
+====================
+👤 PERSONAL PROFILE
+====================
 - Name: Aadhithya R
 - Location: Erode, Tamil Nadu, India
 - Email: aadhithyaa120@gmail.com
-- Education: B.Tech in AI & Data Science from Kongu Engineering College
-- Roles: Full Stack Developer, ML Engineer, Data Analyst, AI Specialist
+- Education: B.Tech in Artificial Intelligence & Data Science
+- College: Kongu Engineering College
+- Roles: Full Stack Developer, AI/ML Engineer, Data Analyst, Software Developer
+- Career Level: Fresher / Entry-level IT professional actively seeking opportunities
 
-Projects:
-1. QuikCart - E-commerce platform with real-time features including live chat, notifications, and seamless shopping experience
-2. Traffic Prediction System - ML-based traffic forecasting system using advanced machine learning algorithms
-3. FarmConnect - Agricultural marketplace platform connecting farmers with buyers
-4. Brain Tumor Detection AI - Medical imaging AI system for detecting brain tumors using deep learning
+====================
+💡 ABOUT HIM
+====================
+Aadhithya is a passionate and motivated technology enthusiast with a strong interest in building real-world, impactful applications using Artificial Intelligence, Machine Learning, and Full Stack Web Development. He enjoys converting complex problems into simple, scalable solutions and continuously learning new technologies.
 
-Technical Skills:
-- Languages: C, Python, Java, JavaScript, TypeScript
-- Frontend: React, HTML, CSS, Tailwind CSS, Bootstrap
-- Backend: Node.js, Express.js, Flask
-- Database: MongoDB, MySQL, PostgreSQL
-- Tools & Technologies: Git, Docker, AWS, Machine Learning, Deep Learning, Data Analysis
-- Frameworks: Spring Boot, Django, TensorFlow, PyTorch
+He has hands-on experience in building end-to-end applications, from frontend UI design to backend APIs and AI model integration.
 
-Links:
+====================
+🛠️ TECHNICAL SKILLS
+====================
+Languages:
+- C, Python, Java, JavaScript, TypeScript
+
+Frontend:
+- React, HTML, CSS, Tailwind CSS, Bootstrap
+
+Backend:
+- Node.js, Express.js, Flask, Spring Boot, Django
+
+Databases:
+- MongoDB, MySQL, PostgreSQL
+
+AI / ML:
+- Machine Learning, Deep Learning
+- TensorFlow, PyTorch
+- Data Analysis, Model Training & Evaluation
+
+Tools & Technologies:
+- Git, GitHub, Docker, AWS
+- REST APIs, Cloud Deployment
+- Linux, VS Code
+
+====================
+📂 PROJECTS
+====================
+1. QuikCart  
+   - A full-stack e-commerce platform with real-time features
+   - Includes live chat, notifications, and smooth shopping experience
+   - Focused on scalability and user experience
+
+2. Traffic Prediction System  
+   - Machine learning–based traffic forecasting system
+   - Uses historical and real-time data for congestion prediction
+   - Designed to support smart city solutions
+
+3. FarmConnect  
+   - Farmer-to-market agricultural marketplace platform
+   - Connects farmers directly with buyers
+   - Aims to reduce middlemen and increase farmer profit
+
+4. Brain Tumor Detection AI  
+   - Deep learning–based medical imaging system
+   - Classifies MRI scans to detect brain tumors
+   - Built using CNNs and transfer learning models
+
+====================
+🎯 INTERESTS & HOBBIES
+====================
+- Building AI-powered applications
+- Full Stack Web Development
+- Exploring new AI tools and frameworks
+- Participating in hackathons and coding challenges
+- Learning cloud and deployment technologies
+- Improving UI/UX designs
+- Solving real-world problems using technology
+- Tech content exploration (AI, startups, software trends)
+
+====================
+🌱 STRENGTHS
+====================
+- Strong problem-solving skills
+- Quick learner and adaptable
+- Good understanding of both frontend and backend
+- Ability to work independently and in teams
+- Passionate about continuous improvement
+- Good communication and presentation skills
+
+====================
+🎯 CAREER GOALS
+====================
+- To start a career as a Software Developer / AI Engineer
+- To work on impactful AI-driven products
+- To grow into a skilled full-stack and AI specialist
+- To contribute to innovative tech solutions in real-world domains
+
+====================
+🔗 LINKS
+====================
 - GitHub: https://github.com/aadhithyaa
 - LinkedIn: https://linkedin.com/in/aadhithya-r
 - Portfolio: https://portfolio-aadhithyafullfur.vercel.app
 
-Keep responses concise, friendly, and professional. If asked about specific project details, provide relevant technical information.
-    `;
+====================
+📌 RESPONSE GUIDELINES
+====================
+- Keep answers concise, clear, and professional
+- Highlight technical strengths and project experience
+- Tailor responses for recruiters, interviewers, and collaborators
+- When asked about projects, explain the tech stack and problem solved
+- Maintain a confident and positive tone
+`;
+
 
     // Call Groq API
     console.log('📞 Calling Groq API with model:', 'llama-3.1-8b-instant');
@@ -279,4 +373,16 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} 🚀`);
+  console.log(`Health check: http://localhost:${PORT}/health`);
+});
+
+// Graceful shutdown handling for Render
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT received, shutting down gracefully');
+  process.exit(0);
 });

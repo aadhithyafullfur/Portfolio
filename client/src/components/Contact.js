@@ -63,8 +63,10 @@ function Contact() {
     setErrors({});
 
     try {
-      // Get API URL from environment variable
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/contact';
+      // Use environment variable for API URL, fallback to relative path for proxy
+      const apiUrl = process.env.REACT_APP_API_URL 
+        ? `${process.env.REACT_APP_API_URL}/api/contact`
+        : '/api/contact';
       
       console.log('Sending message to:', apiUrl);
       console.log('Form data:', form);

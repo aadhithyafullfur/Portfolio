@@ -1,16 +1,5 @@
 ﻿{
-  "version": 2,
-  "name": "portfolio-client",
-  "builds": [
-    {
-      "src": "build/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+  "rewrites": [
+    {"source": "/(.*)", "destination": "/index.html"}
   ]
 }

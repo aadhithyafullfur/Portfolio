@@ -15,8 +15,7 @@
     "dotenv": "^16.6.1",
     "express": "^4.22.1",
     "groq-sdk": "^0.37.0",
-    "mongodb": "^5.2.0",
-    "openai": "^6.15.0"
+    "mongodb": "^5.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

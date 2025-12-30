@@ -38,7 +38,8 @@ const Chatbot = ({ isOpen, onClose }) => {
     try {
       setIsLoading(true);
       
-      const response = await fetch('http://localhost:5001/api/chat', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+      const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
